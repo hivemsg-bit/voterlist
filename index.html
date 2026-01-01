@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <script>
+      // Safe env fallback
+      window.process = { env: { API_KEY: "" } };
+
       tailwind.config = {
         theme: {
           extend: {
@@ -49,7 +52,7 @@
       .grid-bg { background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 30px 30px; }
       
       #root:empty::before {
-        content: "INITIALIZING AI DATA ARCHIVE...";
+        content: "INITIALIZING DATA ARCHIVE...";
         position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
         font-family: 'JetBrains Mono', monospace; color: #06b6d4; font-size: 14px;
         letter-spacing: 6px; animation: blink 1s infinite;
@@ -84,6 +87,6 @@
   <body>
     <div class="scanline"></div>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

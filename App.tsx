@@ -4,7 +4,7 @@ import {
   Download, Terminal, Sparkles, ArrowLeft, X, Mail, 
   User, MessageSquare, Zap, Tag, Table, Globe, 
   Lock, Smartphone, CreditCard, Clock, CheckCircle2, ShieldCheck,
-  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2
+  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2, Send
 } from 'lucide-react';
 import { INDIAN_STATES, APP_NAME, CONTACT_WHATSAPP } from './constants.ts';
 import { StateData, ViewState, AssemblyConstituency } from './types.ts';
@@ -89,6 +89,73 @@ AC नंबर: ${ac.number}
   );
 };
 
+const ContactView = () => {
+  const handleBulkWhatsApp = () => {
+    const text = `Hi! I want to enquire about *Bulk Orders* for Electoral Data in Excel format. Please share the pricing for full states.`;
+    window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  return (
+    <div className="min-h-screen pt-40 pb-32 px-6 max-w-[1000px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="text-center space-y-6 mb-20">
+        <Badge color="gold">Official Order Desk</Badge>
+        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Bulk Data Enquiry</h1>
+        <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+          Need data for an entire state or multiple constituencies? Our bulk processing engine provides the most competitive rates for high-volume electoral intelligence.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between">
+          <div className="space-y-6">
+            <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-lg">
+              <Zap className="text-brand-cyan w-8 h-8" />
+            </div>
+            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Fast Track</h3>
+            <p className="text-slate-400 font-mono text-sm leading-relaxed uppercase tracking-widest">
+              Direct connection to our verified WhatsApp data desk for immediate pricing and samples.
+            </p>
+          </div>
+          <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3">
+            <Smartphone className="w-5 h-5" /> WhatsApp Support
+          </button>
+        </div>
+
+        <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 space-y-8">
+          <h3 className="text-2xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
+            <Terminal className="text-brand-cyan w-6 h-6" /> System Status
+          </h3>
+          <div className="space-y-4 font-mono text-[11px] uppercase tracking-widest">
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
+              <span className="text-slate-500">Node Status</span>
+              <span className="text-brand-success font-bold">Online</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
+              <span className="text-slate-500">Average Response</span>
+              <span className="text-brand-cyan font-bold">&lt; 5 mins</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
+              <span className="text-slate-500">Bulk Capacity</span>
+              <span className="text-brand-gold font-bold">Unlimited</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
+              <span className="text-slate-500">Current Queue</span>
+              <span className="text-slate-400">Low Latency</span>
+            </div>
+          </div>
+          <div className="pt-4">
+             <div className="p-4 bg-slate-900/50 rounded-xl border border-white/5">
+                <p className="text-[10px] text-slate-500 leading-relaxed italic">
+                  "Our system processes millions of voter records daily. For custom extraction requests, please specify the State and AC numbers in your message."
+                </p>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AIStatusIndicator = () => (
   <div className="flex items-center gap-4 bg-slate-900/60 border border-white/10 px-5 py-2.5 rounded-full font-mono text-[10px] text-brand-cyan uppercase tracking-widest shadow-inner">
     <div className="flex items-center gap-2">
@@ -121,7 +188,6 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
   useEffect(() => {
     const fetchInsight = async () => {
       setAiLoading(true);
-      // Now uses the static-optimized service for 100% reliability
       const text = await getPoliticalInsight(state.name, 'STATE');
       setAiInsight(text);
       setAiLoading(false);
@@ -224,7 +290,7 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
   );
 };
 
-const Header = ({ onHome }: { onHome: () => void }) => (
+const Header = ({ onHome, onContact }: { onHome: () => void, onContact: () => void }) => (
   <header className="fixed top-0 w-full z-[90] bg-slate-950/70 backdrop-blur-2xl border-b border-white/5">
     <div className="max-w-[1500px] mx-auto px-8 h-24 flex justify-between items-center">
       <div className="flex items-center gap-5 cursor-pointer group" onClick={onHome}>
@@ -239,9 +305,12 @@ const Header = ({ onHome }: { onHome: () => void }) => (
       
       <div className="flex items-center gap-8">
         <div className="hidden xl:block"><AIStatusIndicator /></div>
-        <a href={`https://wa.me/${CONTACT_WHATSAPP}`} className="bg-white hover:bg-brand-cyan text-slate-950 px-8 py-3.5 rounded-2xl text-[11px] font-black transition-all uppercase tracking-[0.3em] shadow-xl active:scale-95">
+        <button 
+          onClick={onContact}
+          className="bg-white hover:bg-brand-cyan text-slate-950 px-8 py-3.5 rounded-2xl text-[11px] font-black transition-all uppercase tracking-[0.3em] shadow-xl active:scale-95"
+        >
           Order Desk
-        </a>
+        </button>
       </div>
     </div>
   </header>
@@ -257,9 +326,20 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navigateHome = () => {
+    setView('HOME');
+    setActiveState(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateContact = () => {
+    setView('CONTACT');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 grid-bg font-sans selection:bg-brand-cyan selection:text-slate-950 text-slate-300">
-      <Header onHome={() => setView('HOME')} />
+      <Header onHome={navigateHome} onContact={navigateContact} />
       
       <main>
         {view === 'HOME' ? (
@@ -282,9 +362,9 @@ const App = () => {
                   <button onClick={() => document.getElementById('hub')?.scrollIntoView({behavior:'smooth'})} className="w-full sm:w-auto bg-brand-blue hover:bg-blue-600 text-white px-14 py-6 rounded-[2rem] font-black text-sm transition-all shadow-[0_20px_40px_rgba(37,99,235,0.25)] uppercase tracking-[0.3em] group">
                     Initialize Hub <ChevronRight className="inline-block w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
                   </button>
-                  <a href={`https://wa.me/${CONTACT_WHATSAPP}`} className="w-full sm:w-auto flex items-center justify-center gap-4 bg-slate-900/50 border border-slate-700 hover:border-brand-cyan text-white px-10 py-6 rounded-[2rem] font-black text-sm transition-all uppercase tracking-widest shadow-xl">
+                  <button onClick={navigateContact} className="w-full sm:w-auto flex items-center justify-center gap-4 bg-slate-900/50 border border-slate-700 hover:border-brand-cyan text-white px-10 py-6 rounded-[2rem] font-black text-sm transition-all uppercase tracking-widest shadow-xl">
                     <Smartphone className="w-5 h-5 text-brand-cyan" /> Secure Order Desk
-                  </a>
+                  </button>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-12 pt-24 max-w-4xl mx-auto">
@@ -343,7 +423,9 @@ const App = () => {
             </section>
           </>
         ) : view === 'STATE_VIEW' && activeState ? (
-          <ACList state={activeState} onBack={() => setView('HOME')} />
+          <ACList state={activeState} onBack={navigateHome} />
+        ) : view === 'CONTACT' ? (
+          <ContactView />
         ) : null}
       </main>
 
@@ -362,9 +444,9 @@ const App = () => {
           <div>
             <h4 className="text-white font-black mb-10 text-xs uppercase tracking-[0.4em]">Intelligence Nodes</h4>
             <ul className="space-y-6 text-[11px] text-slate-500 font-black uppercase tracking-[0.3em]">
-              <li className="hover:text-brand-cyan cursor-pointer transition-colors">State Archives</li>
-              <li className="hover:text-brand-cyan cursor-pointer transition-colors">Voter Analysis</li>
-              <li className="hover:text-brand-cyan cursor-pointer transition-colors">Excel Extraction</li>
+              <li onClick={navigateHome} className="hover:text-brand-cyan cursor-pointer transition-colors">State Archives</li>
+              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Voter Analysis</li>
+              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Excel Extraction</li>
             </ul>
           </div>
 
