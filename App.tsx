@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { 
   Database, 
@@ -20,7 +21,11 @@ import {
   Zap,
   Tag,
   FileText,
-  Table
+  Table,
+  Globe,
+  Lock,
+  Smartphone,
+  Eye
 } from 'lucide-react';
 import { INDIAN_STATES, APP_NAME, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
@@ -99,14 +104,14 @@ const Header = ({ setView, onOpenEnquiry }: { setView: (v: ViewState) => void, o
       <div className="flex justify-between items-center h-16">
         <div 
           className="flex items-center cursor-pointer gap-3" 
-          onClick={() => setView('HOME')}
+          onClick={() => { setView('HOME'); window.scrollTo(0,0); }}
         >
           <div className="w-8 h-8 bg-brand-blue rounded flex items-center justify-center glow-shadow">
             <Terminal className="text-white w-5 h-5" />
           </div>
           <div className="leading-none">
             <h1 className="text-lg font-bold text-white tracking-tight">{APP_NAME}</h1>
-            <p className="text-[10px] text-brand-cyan font-mono">AI DATA CORE v4.0</p>
+            <p className="text-[10px] text-brand-cyan font-mono">AI DATA CORE v4.1</p>
           </div>
         </div>
         <nav className="flex items-center gap-4">
@@ -173,23 +178,45 @@ const AIInsightPanel = ({ target, type }: { target: string, type: 'STATE' | 'AC'
   );
 };
 
-const ProductPreviewCard = ({ icon: Icon, title, desc, color }: { icon: any, title: string, desc: string, color: string }) => (
-  <div className={`glass-panel p-6 rounded-2xl border-t-2 ${color} relative group overflow-hidden`}>
-    <div className="absolute top-0 right-0 p-2 opacity-5 group-hover:opacity-10 transition-opacity">
-      <Icon className="w-20 h-20" />
-    </div>
-    <div className="flex items-center gap-4 mb-4">
-      <div className="w-12 h-12 rounded-lg bg-slate-900 flex items-center justify-center border border-white/5">
-        <Icon className={`w-6 h-6 ${color.replace('border-t-', 'text-')}`} />
+const DocumentPreview = ({ type }: { type: 'PDF' | 'EXCEL' }) => (
+  <div className="relative w-full aspect-[4/5] bg-slate-900 rounded-lg border border-white/10 overflow-hidden shadow-2xl group">
+    <div className="ai-scan-line"></div>
+    {/* Document Header */}
+    <div className={`${type === 'PDF' ? 'bg-red-600' : 'bg-emerald-600'} h-8 w-full flex items-center px-3 justify-between`}>
+      <div className="flex gap-1">
+        <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
+        <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
       </div>
-      <div>
-        <h4 className="text-white font-bold">{title}</h4>
-        <p className="text-[10px] text-slate-500 uppercase tracking-widest">{desc}</p>
+      <span className="text-[8px] font-bold text-white uppercase tracking-widest">{type} PREVIEW</span>
+    </div>
+    
+    {/* Document Content Mockup */}
+    <div className="p-4 space-y-3">
+      {[1, 2, 3, 4, 5, 6].map(i => (
+        <div key={i} className="flex gap-2">
+          <div className="h-2 w-4 bg-slate-800 rounded"></div>
+          <div className="h-2 flex-1 bg-slate-800 rounded"></div>
+          <div className="h-2 w-8 bg-slate-800 rounded"></div>
+        </div>
+      ))}
+      <div className="pt-4 border-t border-white/5">
+        <div className="flex items-center gap-2">
+          <Activity className={`w-3 h-3 ${type === 'PDF' ? 'text-red-400' : 'text-emerald-400'} animate-pulse`} />
+          <div className="h-1.5 w-20 bg-slate-700 rounded"></div>
+        </div>
       </div>
     </div>
-    <div className="flex items-center gap-2 mt-2">
-      <div className="h-1 flex-1 bg-slate-800 rounded-full overflow-hidden">
-        <div className={`h-full animate-pulse ${color.replace('border-t-', 'bg-')}`} style={{ width: '70%' }}></div>
+
+    {/* Center Icon Overlay */}
+    <div className="absolute inset-0 flex items-center justify-center opacity-20 group-hover:opacity-40 transition-opacity">
+      {type === 'PDF' ? <FileText className="w-16 h-16 text-red-500" /> : <Table className="w-16 h-16 text-emerald-500" />}
+    </div>
+
+    {/* Label */}
+    <div className="absolute bottom-4 left-0 w-full px-4">
+      <div className="bg-slate-950/80 backdrop-blur border border-white/5 p-2 rounded flex items-center justify-between">
+         <span className="text-[10px] font-bold text-white">{type === 'PDF' ? 'Voter List PDF' : 'Election Excel'}</span>
+         <Badge color={type === 'PDF' ? 'red' : 'green'}>AI Verified</Badge>
       </div>
     </div>
   </div>
@@ -215,20 +242,19 @@ const Hero = ({ onStart, onOpenEnquiry }: { onStart: () => void, onOpenEnquiry: 
         Verified and formatted for instant use.
       </p>
 
-      {/* Product Image Previews */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12 px-4">
-        <ProductPreviewCard 
-          icon={FileText} 
-          title="Voter PDF Analytics" 
-          desc="Booth Wise Voter Summary" 
-          color="border-t-brand-blue" 
-        />
-        <ProductPreviewCard 
-          icon={Table} 
-          title="Campaign Excel Sheet" 
-          desc="Raw Data for CRM & SMS" 
-          color="border-t-brand-success" 
-        />
+      {/* Visual Image Previews for Voter List & Excel */}
+      <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto mb-16 items-center justify-center px-4">
+        <div className="w-full max-w-[280px] transform hover:scale-105 transition-all rotate-[-3deg]">
+          <DocumentPreview type="PDF" />
+        </div>
+        <div className="hidden md:flex flex-col items-center gap-2">
+          <div className="h-16 w-px bg-gradient-to-b from-transparent via-brand-cyan to-transparent"></div>
+          <Sparkles className="w-6 h-6 text-brand-cyan animate-pulse" />
+          <div className="h-16 w-px bg-gradient-to-b from-brand-cyan via-brand-cyan to-transparent"></div>
+        </div>
+        <div className="w-full max-w-[280px] transform hover:scale-105 transition-all rotate-[3deg]">
+          <DocumentPreview type="EXCEL" />
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -361,7 +387,7 @@ const DataView = ({ state, onBack, onOpenEnquiry }: { state: StateData; onBack: 
                <div className="text-brand-success text-[10px] font-bold font-mono uppercase tracking-tighter animate-pulse">
                  AC+ voterlist in excel
                </div>
-               <p className="text-[9px] text-slate-500 font-mono mt-1">INCLUDES BOOTH-WISE SUMMARY</p>
+               <p className="text-[9px] text-slate-500 font-mono mt-1 uppercase">Price Range: ₹4,000 - ₹5,000</p>
             </div>
             
             <div className="col-span-12 md:col-span-3 flex justify-end mt-4 md:mt-0">
@@ -387,23 +413,133 @@ const DataView = ({ state, onBack, onOpenEnquiry }: { state: StateData; onBack: 
   );
 };
 
-const Footer = () => (
-  <footer className="bg-slate-950 py-16 border-t border-white/5">
-    <div className="max-w-[1400px] mx-auto px-4 text-center">
-      <div className="flex justify-center mb-8">
-        <div className="w-12 h-1 border-t-2 border-brand-blue"></div>
+const Footer = ({ onOpenEnquiry, setView }: { onOpenEnquiry: () => void, setView: (v: ViewState) => void }) => {
+  return (
+    <footer className="bg-slate-950 border-t border-white/5 pt-16 pb-8 relative overflow-hidden">
+      {/* Footer Glow Background */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-brand-blue/10 blur-[120px] rounded-full pointer-events-none"></div>
+      
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          {/* Brand Identity */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => { setView('HOME'); window.scrollTo(0,0); }}>
+              <div className="w-10 h-10 bg-brand-blue rounded flex items-center justify-center glow-shadow">
+                <Terminal className="text-white w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white leading-none">{APP_NAME}</h3>
+                <p className="text-[10px] text-brand-cyan font-mono mt-1">SECURE DATA CORE v4.1</p>
+              </div>
+            </div>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              India's premier AI-powered portal to buy <span className="text-white font-semibold">AC+ voterlist in excel</span>. 
+              We provide verified election data for every assembly constituency with 99.9% accuracy.
+            </p>
+            <div className="flex items-center gap-4">
+              <a href={`https://wa.me/${CONTACT_WHATSAPP}`} className="p-2 rounded-lg bg-slate-900 border border-white/5 hover:bg-brand-blue hover:text-white transition-all">
+                <Smartphone className="w-5 h-5" />
+              </a>
+              <a href={`https://wa.me/${CONTACT_WHATSAPP}`} className="p-2 rounded-lg bg-slate-900 border border-white/5 hover:bg-brand-blue hover:text-white transition-all">
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Core Services */}
+          <div>
+            <h4 className="text-white font-bold mb-6 flex items-center gap-2">
+              <Database className="w-4 h-4 text-brand-cyan" /> Data Services
+            </h4>
+            <ul className="space-y-4 text-sm text-slate-400 font-medium">
+              <li className="hover:text-brand-cyan transition-colors cursor-pointer flex items-center gap-2">
+                <ChevronRight className="w-3 h-3" /> AC Voter Lists (Excel)
+              </li>
+              <li className="hover:text-brand-cyan transition-colors cursor-pointer flex items-center gap-2">
+                <ChevronRight className="w-3 h-3" /> Booth Analytics (PDF)
+              </li>
+              <li className="hover:text-brand-cyan transition-colors cursor-pointer flex items-center gap-2">
+                <ChevronRight className="w-3 h-3" /> Demographic Reports
+              </li>
+              <li className="hover:text-brand-cyan transition-colors cursor-pointer flex items-center gap-2">
+                <ChevronRight className="w-3 h-3" /> Caste Matrix Data
+              </li>
+              <li className="hover:text-brand-cyan transition-colors cursor-pointer flex items-center gap-2">
+                <ChevronRight className="w-3 h-3" /> Bulk Data Packages
+              </li>
+            </ul>
+          </div>
+
+          {/* Quick Support */}
+          <div>
+            <h4 className="text-white font-bold mb-6 flex items-center gap-2">
+              <Activity className="w-4 h-4 text-brand-cyan" /> Instant Support
+            </h4>
+            <div className="space-y-4">
+              <div 
+                onClick={onOpenEnquiry}
+                className="p-4 rounded-xl bg-slate-900/50 border border-white/5 hover:border-brand-blue transition-all cursor-pointer group"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Pricing Inquiry</span>
+                  <ArrowUpRight className="w-4 h-4 text-slate-600 group-hover:text-brand-blue" />
+                </div>
+                <p className="text-white font-bold">₹4,000 - ₹5,000 / AC</p>
+                <p className="text-[10px] text-slate-500 mt-1 uppercase">Instant Quote via AI Agent</p>
+              </div>
+              <a 
+                href={`https://wa.me/${CONTACT_WHATSAPP}`}
+                className="block p-4 rounded-xl bg-brand-blue/10 border border-brand-blue/30 hover:bg-brand-blue/20 transition-all text-center"
+              >
+                <span className="text-brand-cyan text-xs font-bold uppercase tracking-widest">Connect on WhatsApp</span>
+                <p className="text-white font-bold mt-1">Talk to Expert</p>
+              </a>
+            </div>
+          </div>
+
+          {/* Monitor Panel */}
+          <div>
+            <h4 className="text-white font-bold mb-6 flex items-center gap-2">
+              <Lock className="w-4 h-4 text-brand-cyan" /> System Monitor
+            </h4>
+            <div className="glass-panel p-4 rounded-xl space-y-3 font-mono">
+              <div className="flex justify-between items-center text-[10px]">
+                <span className="text-slate-500">DATABASE INTEGRITY</span>
+                <span className="text-brand-success">100% OK</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px]">
+                <span className="text-slate-500">ECI SYNC STATUS</span>
+                <span className="text-brand-cyan uppercase animate-pulse">Live Tracking</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px]">
+                <span className="text-slate-500">UPTIME</span>
+                <span className="text-slate-300">99.98%</span>
+              </div>
+              <div className="h-px bg-white/5"></div>
+              <div className="flex items-center gap-2 text-[9px] text-slate-500">
+                <Globe className="w-3 h-3" /> 
+                ENCRYPTED TRANSFERS ENABLED
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-6 text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+            <span className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-white transition-colors cursor-pointer">Terms of Delivery</span>
+            <span className="hover:text-white transition-colors cursor-pointer">Data Compliance</span>
+          </div>
+          
+          <div className="text-[10px] text-slate-600 font-mono uppercase tracking-[0.3em]">
+            © 2025 {APP_NAME.toUpperCase()} • DESIGNED BY AI ARCHITECTS
+          </div>
+        </div>
       </div>
-      <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-sm">Official Data Integrity Portal</h3>
-      <p className="text-slate-500 text-xs mb-8 max-w-xl mx-auto leading-relaxed font-mono uppercase">
-        India's most trusted source to buy AC+ voterlist in excel. Professional-grade demographic insights for winning campaigns. 
-        Data pricing optimized between ₹4,000 to ₹5,000 per assembly constituency.
-      </p>
-      <div className="text-[9px] text-slate-700 font-mono uppercase tracking-[0.5em]">
-        © 2025 BHARAT DATA CORE • SECURE DATA SYSTEMS • AI INFUSED V4.1
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 const App = () => {
   const [viewState, setViewState] = useState<ViewState>('HOME');
@@ -417,21 +553,22 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 grid-bg selection:bg-brand-blue selection:text-white">
+    <div className="min-h-screen bg-slate-950 grid-bg selection:bg-brand-blue selection:text-white flex flex-col">
       <Header setView={setViewState} onOpenEnquiry={() => setIsEnquiryOpen(true)} />
       <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
       
-      <main>
+      <main className="flex-grow">
         {viewState === 'HOME' ? (
           <>
             <Hero onStart={() => document.getElementById('database')?.scrollIntoView({ behavior: 'smooth' })} onOpenEnquiry={() => setIsEnquiryOpen(true)} />
             <StateGrid onSelect={handleStateSelect} />
-            <Footer />
           </>
         ) : selectedState ? (
           <DataView state={selectedState} onBack={() => setViewState('HOME')} onOpenEnquiry={() => setIsEnquiryOpen(true)} />
         ) : null}
       </main>
+
+      <Footer onOpenEnquiry={() => setIsEnquiryOpen(true)} setView={setViewState} />
       
       {/* Floating Action Button for Mobile Enquiry */}
       <button 

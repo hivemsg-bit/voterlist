@@ -9,6 +9,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
+      // Shim process.env for browser environment to prevent blank page crashes
+      window.process = { env: { API_KEY: "" } };
+      
       tailwind.config = {
         theme: {
           extend: {
@@ -36,6 +39,7 @@
               'blob': 'blob 7s infinite',
               'scan': 'scan 3s linear infinite',
               'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
             keyframes: {
               blob: {
@@ -76,6 +80,14 @@
       .glow-shadow {
         box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
       }
+      .ai-scan-line {
+        background: linear-gradient(to bottom, transparent, #06b6d4, transparent);
+        height: 100px;
+        width: 100%;
+        position: absolute;
+        opacity: 0.2;
+        animation: scan 4s linear infinite;
+      }
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
@@ -107,5 +119,7 @@
 </head>
   <body>
     <div id="root"></div>
+    <!-- Crucial for Vercel: This tag tells the browser to execute your TypeScript code -->
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
