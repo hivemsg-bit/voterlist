@@ -23,6 +23,11 @@ export interface Enquiry {
   phone: string;
   message: string;
   timestamp: string;
+  type: 'GENERAL' | 'PURCHASE';
+  status: 'UNPAID' | 'PAID';
+  acName?: string;
+  stateName?: string;
+  amount?: number;
 }
 
 export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'ADMIN';

@@ -1,4 +1,5 @@
-import { StateData, AssemblyConstituency } from './types';
+
+import { StateData, AssemblyConstituency } from './types.ts';
 
 export const APP_NAME = "Bharat Election Data";
 export const CONTACT_WHATSAPP = "+919876543210"; 
