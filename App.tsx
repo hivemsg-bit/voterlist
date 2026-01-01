@@ -25,7 +25,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
   if (!isOpen || !ac) return null;
 
   const handleWhatsApp = () => {
-    const text = `नमस्ते! मुझे *AC+ Voterlist in Excel* फाइल चाहिए।\nविधानसभा: ${ac.name}\nAC नंबर: ${ac.number}\nराज्य: ${stateName}\nकीमत: ₹${ac.price}\nकृपया मुझे सुरक्षित डाउनलोड लिंक और पेमेंट डिटेल्स भेजें।`;
+    const text = `नमस्ते! मुझे *AC+ Voterlist in Excel* फाइल चाहिए।\nविधानसभा: ${ac.name}\nAC नंबर: ${ac.number}\nराज्य: ${stateName}\nकीमत: ₹${ac.price}\nकृपया पेमेंट और डाउनलोड लिंक भेजें।`;
     window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -38,8 +38,8 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
               <ShieldCheck className="text-brand-cyan w-7 h-7 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-xl font-black text-white tracking-tighter uppercase font-mono">Secure Node Access</h2>
-              <p className="text-[9px] text-brand-cyan font-mono tracking-widest uppercase opacity-70">Handshake verified • Node: {ac.number}</p>
+              <h2 className="text-xl font-black text-white tracking-tighter uppercase font-mono">Secure Order</h2>
+              <p className="text-[9px] text-brand-cyan font-mono tracking-widest uppercase opacity-70">Verified Protocol • ID: {ac.number}</p>
             </div>
           </div>
           <button onClick={onClose} className="bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
@@ -47,7 +47,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
         
         <div className="p-8 space-y-6">
           <div className="bg-slate-900/80 border border-brand-cyan/30 rounded-2xl p-6 space-y-4 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
               <FileSpreadsheet className="w-24 h-24" />
             </div>
             <div className="space-y-1 relative">
@@ -57,26 +57,26 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
             <div className="flex items-center gap-3 relative">
               <Badge color="green">AC+ Voterlist in Excel</Badge>
               <div className="w-1 h-1 bg-slate-700 rounded-full"></div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase">2025 Latest Build</span>
+              <span className="text-[10px] font-mono text-slate-400 uppercase">2025 Edition</span>
             </div>
             <div className="pt-6 border-t border-white/5 flex justify-between items-end relative">
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1">Transaction Value</p>
+                <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1">Price Tier</p>
                 <p className="text-4xl font-black text-brand-gold terminal-glow">₹{ac.price.toLocaleString()}</p>
               </div>
               <div className="text-right">
-                <p className="text-[9px] text-brand-success font-mono uppercase font-bold">Status: Synchronized</p>
+                <p className="text-[9px] text-brand-success font-mono uppercase font-bold">Stock: Ready</p>
               </div>
             </div>
           </div>
 
           <button onClick={handleWhatsApp} className="w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm transition-all shadow-xl shadow-blue-600/30 flex items-center justify-center gap-4 group uppercase tracking-[0.2em]">
             <Smartphone className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            Confirm Purchase
+            Buy Excel on WhatsApp
           </button>
           
           <p className="text-[10px] text-center text-slate-500 font-mono uppercase tracking-widest opacity-60">
-            Automated Delivery via WhatsApp Protocol within 120 seconds.
+            Automated Delivery via WhatsApp Desk.
           </p>
         </div>
       </div>
@@ -86,7 +86,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
 
 const ContactView = ({ onBack }: { onBack: () => void }) => {
   const handleBulkWhatsApp = () => {
-    const text = `Hi! I want to enquire about *Bulk Orders* for Electoral Data in Excel format. Please share the pricing for full states.`;
+    const text = `Hi! I want to enquire about *Bulk Orders* for Electoral Data. Please share pricing for multiple Assembly Constituencies.`;
     window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -97,51 +97,51 @@ const ContactView = ({ onBack }: { onBack: () => void }) => {
       </button>
 
       <div className="text-center space-y-6 mb-20">
-        <Badge color="gold">Official Order Desk</Badge>
+        <Badge color="gold">Professional Service Desk</Badge>
         <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Order Desk</h1>
         <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Bulk queries and full-state electoral data requests are handled by our dedicated procurement team.
+          Need full states or bulk AC data? Our procurement team is ready to process your request with 100% data accuracy.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between hover:bg-slate-900/50 transition-all">
+        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between hover:bg-slate-900/40 transition-all group">
           <div className="space-y-6">
-            <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-lg">
+            <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-lg group-hover:scale-110 transition-transform">
               <Zap className="text-brand-cyan w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Direct Purchase</h3>
+            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Fast Inquiry</h3>
             <p className="text-slate-400 font-mono text-sm leading-relaxed uppercase tracking-widest">
-              Get instant pricing and sample sheets via WhatsApp. Verified delivery in minutes.
+              Direct access to our senior data analyst via WhatsApp.
             </p>
           </div>
-          <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3">
-            <Smartphone className="w-5 h-5" /> Chat with Admin
+          <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-600/20">
+            <Smartphone className="w-5 h-5" /> Message Now
           </button>
         </div>
 
-        <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 space-y-8">
+        <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 space-y-8 bg-slate-900/20">
           <h3 className="text-2xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
-            <Info className="text-brand-cyan w-6 h-6" /> Node Telemetry
+            <Terminal className="text-brand-cyan w-6 h-6" /> System Telemetry
           </h3>
-          <div className="space-y-4 font-mono text-[11px] uppercase tracking-widest">
+          <div className="space-y-4 font-mono text-[11px] uppercase tracking-widest font-bold">
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Security Check</span>
-              <span className="text-brand-success font-bold">Passed</span>
+              <span className="text-slate-500">Node Status</span>
+              <span className="text-brand-success">Synchronized</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Processing Speed</span>
-              <span className="text-brand-cyan font-bold">Fast</span>
+              <span className="text-slate-500">Extraction Speed</span>
+              <span className="text-brand-cyan">Optimized</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Excel Data Sync</span>
-              <span className="text-brand-gold font-bold">v2025.1</span>
+              <span className="text-slate-500">Data Integrity</span>
+              <span className="text-brand-gold">100% Secure</span>
             </div>
           </div>
           <div className="pt-4">
-             <div className="p-4 bg-slate-900/50 rounded-xl border border-white/5">
-                <p className="text-[10px] text-slate-500 leading-relaxed italic uppercase tracking-wider">
-                  System strictly monitored for unauthorized access. Data quality guaranteed.
+             <div className="p-4 bg-slate-950/80 rounded-xl border border-white/5">
+                <p className="text-[10px] text-slate-500 leading-relaxed uppercase tracking-widest opacity-80">
+                  Full state packages (UP, MH, RJ, GJ) available at customized enterprise rates.
                 </p>
              </div>
           </div>
@@ -158,12 +158,12 @@ const AIStatusIndicator = () => (
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
         <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
       </span>
-      <span className="font-bold">Protocol Active</span>
+      <span className="font-bold">Grid Live</span>
     </div>
     <div className="w-px h-3 bg-white/10"></div>
     <div className="flex items-center gap-2">
        <Activity className="w-3 h-3 animate-pulse" />
-       <span>Buffer: 0ms</span>
+       <span>Scan Rate: 0.1ms</span>
     </div>
   </div>
 );
@@ -195,30 +195,30 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
       <PurchaseModal isOpen={isPurchaseOpen} onClose={() => setIsPurchaseOpen(false)} ac={selectedAC} stateName={state.name} />
       
       <button onClick={onBack} className="group flex items-center gap-2 text-slate-500 text-[10px] font-black mb-12 hover:text-brand-cyan transition-all uppercase tracking-[0.4em]">
-        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" /> Main Database
+        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" /> Main Hub
       </button>
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-16">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <Badge color="cyan">{state.name} Archives</Badge>
+            <Badge color="cyan">{state.name} Node</Badge>
             <div className="w-1.5 h-1.5 bg-slate-800 rounded-full"></div>
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Master Node: {state.code}</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Master Key: {state.code}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">Assembly Segments</h1>
+          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">AC Data Segments</h1>
           <div className="flex items-center gap-3 text-slate-500 font-mono text-[12px] uppercase tracking-[0.2em]">
             <Database className="w-4 h-4 text-brand-cyan" />
-            <span>{state.totalSeats} Excel Data Sheets Available</span>
+            <span>{state.totalSeats} Excel Lists Processed</span>
           </div>
         </div>
         <div className="relative w-full lg:w-[450px]">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
           <input 
             type="text" 
-            placeholder={`Search AC by name or number...`} 
+            placeholder={`Filter AC by name or number...`} 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-900/80 border border-white/10 rounded-2xl py-5 pl-14 pr-8 text-white focus:border-brand-cyan outline-none transition-all placeholder:text-[10px] placeholder:tracking-widest"
+            className="w-full bg-slate-900/80 border border-white/10 rounded-2xl py-5 pl-14 pr-8 text-white focus:border-brand-cyan outline-none transition-all placeholder:text-[9px] placeholder:tracking-widest"
           />
         </div>
       </div>
@@ -227,12 +227,12 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
         <div className="ai-scan-line"></div>
         <div className="flex items-center gap-3 mb-6 relative">
           <Sparkles className="w-5 h-5 text-brand-cyan animate-pulse" />
-          <h3 className="text-[11px] font-mono font-black text-brand-cyan uppercase tracking-[0.5em]">AI Demographic Intelligence</h3>
+          <h3 className="text-[11px] font-mono font-black text-brand-cyan uppercase tracking-[0.5em]">AI Grid Insight</h3>
         </div>
         <div className="min-h-[60px] flex items-center relative">
           {aiLoading ? (
             <div className="flex gap-4 items-center text-slate-500 font-mono text-[12px] uppercase tracking-widest">
-              <Activity className="w-4 h-4 animate-spin" /> Synchronizing Analysis...
+              <Activity className="w-4 h-4 animate-spin" /> Fetching Intelligence...
             </div>
           ) : (
             <p className="text-xl text-slate-300 font-light leading-relaxed border-l-4 border-brand-cyan/20 pl-8 italic">{aiInsight}</p>
@@ -243,7 +243,7 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filtered.map((ac) => (
           <div key={ac.id} className="glass-panel p-8 rounded-3xl flex flex-col justify-between gap-8 group hover:border-brand-blue/60 transition-all hover:bg-slate-900/50 border-white/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-all scale-150 rotate-12">
+            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-all scale-150">
                <FileSpreadsheet className="w-20 h-20 text-brand-cyan" />
             </div>
             
@@ -257,9 +257,9 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
               <div>
                 <h3 className="text-2xl font-black text-white group-hover:text-brand-cyan transition-colors mb-2">{ac.name}</h3>
                 <div className="flex items-center gap-3 text-slate-500 font-mono text-[10px] uppercase tracking-tighter font-bold">
-                   <div className="flex items-center gap-1.5 text-brand-success"><Table className="w-3.5 h-3.5" /> VERIFIED 2025 EXCEL</div>
+                   <div className="flex items-center gap-1.5 text-brand-success"><Table className="w-3.5 h-3.5" /> 2025 MASTER FILE</div>
                    <div className="w-1 h-1 bg-slate-800 rounded-full"></div>
-                   <span>{ac.partsCount} PARTS READY</span>
+                   <span>READY FOR EXPORT</span>
                 </div>
               </div>
             </div>
@@ -267,13 +267,13 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
             <div className="space-y-6 relative pt-6 border-t border-white/5">
               <div className="flex justify-between items-center">
                 <div className="text-brand-gold font-black text-3xl terminal-glow">₹{ac.price.toLocaleString()}</div>
-                <div className="text-[9px] text-right text-slate-500 font-mono uppercase tracking-widest leading-none">
-                  High-Accuracy<br/>Full Data Node
+                <div className="text-[9px] text-right text-slate-500 font-mono uppercase tracking-widest leading-none font-bold">
+                  Verified Data<br/>Node Archive
                 </div>
               </div>
               <button 
                 onClick={() => { setSelectedAC(ac); setIsPurchaseOpen(true); }}
-                className="w-full bg-slate-900 hover:bg-brand-blue border border-white/10 hover:border-brand-blue text-white py-4 rounded-xl font-black text-[12px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 transition-all group/btn shadow-lg"
+                className="w-full bg-slate-900 hover:bg-brand-blue border border-white/10 hover:border-brand-blue text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 transition-all group/btn shadow-lg"
               >
                 <Download className="w-4 h-4 group-hover/btn:translate-y-1 transition-transform" /> Get Excel List
               </button>
@@ -294,7 +294,7 @@ const Header = ({ onHome, onContact }: { onHome: () => void, onContact: () => vo
         </div>
         <div>
           <h1 className="text-2xl font-black text-white tracking-tighter uppercase leading-none">Bharat Intel</h1>
-          <p className="text-[10px] text-brand-cyan font-mono tracking-[0.4em] mt-1 uppercase font-bold">Data Core v2.1</p>
+          <p className="text-[10px] text-brand-cyan font-mono tracking-[0.4em] mt-1 uppercase font-bold">Secure Core v2.1</p>
         </div>
       </div>
       
@@ -302,7 +302,7 @@ const Header = ({ onHome, onContact }: { onHome: () => void, onContact: () => vo
         <div className="hidden xl:block"><AIStatusIndicator /></div>
         <button 
           onClick={onContact}
-          className="bg-white hover:bg-brand-cyan text-slate-950 px-8 py-3.5 rounded-2xl text-[11px] font-black transition-all uppercase tracking-[0.3em] shadow-xl active:scale-95"
+          className="bg-white hover:bg-brand-cyan text-slate-950 px-8 py-3.5 rounded-2xl text-[11px] font-black transition-all uppercase tracking-[0.3em] shadow-xl active:scale-95 animate-pulse-slow border-2 border-brand-cyan/20"
         >
           Order Desk
         </button>
@@ -344,13 +344,13 @@ const App = () => {
               
               <div className="max-w-6xl mx-auto space-y-10">
                 <div className="flex justify-center">
-                   <Badge color="cyan">Archive v2025.1 • 100% RELIABLE</Badge>
+                   <Badge color="cyan">Core Protocol v2025.REL • READY</Badge>
                 </div>
                 <h1 className="text-7xl md:text-9xl font-black text-white tracking-tighter leading-[0.9] animate-in fade-in zoom-in duration-700">
-                  Buy <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-blue animate-glitch">AC+ Voterlist in Excel</span>
+                  Buy <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-blue animate-glitch uppercase">AC+ Voterlist in Excel</span>
                 </h1>
                 <p className="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed tracking-tight">
-                  High-impact electoral intelligence for all Indian states. Secure your verified 2025 Assembly Constituency data in <span className="text-white font-bold border-b-2 border-brand-cyan pb-1 uppercase">Excel Format</span> instantly.
+                  High-accuracy electoral intelligence for campaign professionals. Secure your verified 2025 data in <span className="text-white font-bold border-b-2 border-brand-cyan pb-1 uppercase">Excel Format</span> instantly.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-10">
@@ -364,16 +364,16 @@ const App = () => {
 
                 <div className="flex flex-wrap justify-center gap-12 pt-24 max-w-4xl mx-auto">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center"><ShieldCheck className="w-8 h-8 text-brand-success" /></div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">100% Secure</div>
+                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-lg"><ShieldCheck className="w-8 h-8 text-brand-success" /></div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">Secure Access</div>
                   </div>
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center"><Clock className="w-8 h-8 text-brand-cyan" /></div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">Instant Build</div>
+                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-lg"><Clock className="w-8 h-8 text-brand-cyan" /></div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">Instant Sync</div>
                   </div>
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center"><FileSpreadsheet className="w-8 h-8 text-brand-gold" /></div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">Excel XLSX</div>
+                    <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center shadow-lg"><FileSpreadsheet className="w-8 h-8 text-brand-gold" /></div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.3em] font-black text-slate-500">Premium Excel</div>
                   </div>
                 </div>
               </div>
@@ -386,7 +386,7 @@ const App = () => {
                     <Globe className="text-brand-cyan w-10 h-10 animate-pulse" />
                     <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Regional Grid</h2>
                   </div>
-                  <p className="text-slate-500 font-mono text-[14px] uppercase tracking-[0.4em] max-w-xl">Synchronize with state-specific data nodes for Assembly Constituency lists.</p>
+                  <p className="text-slate-500 font-mono text-[14px] uppercase tracking-[0.4em] max-w-xl">Browse state archives for Assembly Constituency voter lists.</p>
                 </div>
               </div>
 
@@ -405,11 +405,11 @@ const App = () => {
                     
                     <h3 className="text-white font-black text-xl mb-3 group-hover:text-brand-cyan transition-colors uppercase tracking-tight leading-tight">{state.name}</h3>
                     <div className="text-[10px] text-slate-600 font-mono uppercase tracking-widest mb-8">
-                      {state.totalSeats} AC Nodes
+                      {state.totalSeats} Nodes
                     </div>
                     
                     <div className="w-full flex items-center justify-center gap-3 text-[11px] font-black text-brand-blue opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 uppercase tracking-widest">
-                      <span>Sync Data</span>
+                      <span>Sync Now</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -432,34 +432,34 @@ const App = () => {
               <h3 className="text-3xl font-black text-white tracking-tighter uppercase">Bharat Data Core</h3>
             </div>
             <p className="text-slate-400 max-w-lg text-lg leading-relaxed font-light">
-              Premium electoral datasets for professional election management. Specialized in high-accuracy <span className="text-brand-cyan font-bold">AC+ Voterlist in Excel</span> extraction and deployment.
+              Trusted source for AC+ Voterlist in Excel extraction across India. Verified data nodes and secure delivery.
             </p>
           </div>
           
           <div>
-            <h4 className="text-white font-black mb-10 text-xs uppercase tracking-[0.4em]">Intelligence Nodes</h4>
+            <h4 className="text-white font-black mb-10 text-xs uppercase tracking-[0.4em]">Quick Access</h4>
             <ul className="space-y-6 text-[11px] text-slate-500 font-black uppercase tracking-[0.3em]">
-              <li onClick={navigateHome} className="hover:text-brand-cyan cursor-pointer transition-colors">State Archives</li>
-              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Voter Analysis</li>
-              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Excel Extraction</li>
+              <li onClick={navigateHome} className="hover:text-brand-cyan cursor-pointer transition-colors">Home Archives</li>
+              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Order Desk</li>
+              <li onClick={navigateContact} className="hover:text-brand-cyan cursor-pointer transition-colors">Bulk Inquiry</li>
             </ul>
           </div>
 
           <div className="space-y-10">
-            <h4 className="text-white font-black mb-2 text-xs uppercase tracking-[0.4em]">System Protocol</h4>
-            <div className="glass-panel p-8 rounded-[2rem] font-mono text-[11px] space-y-5 border-white/5">
+            <h4 className="text-white font-black mb-2 text-xs uppercase tracking-[0.4em]">System Health</h4>
+            <div className="glass-panel p-8 rounded-[2rem] font-mono text-[10px] space-y-5 border-white/5">
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">ENCRYPTION</span>
-                <span className="text-brand-success font-bold">ACTIVE</span>
+                <span className="text-slate-600">DATABASE</span>
+                <span className="text-brand-success font-bold">STABLE</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">VERSION</span>
-                <span className="text-brand-cyan font-bold">2025.REL</span>
+                <span className="text-slate-600">DELIVERY</span>
+                <span className="text-brand-cyan font-bold">INSTANT</span>
               </div>
-              <div className="pt-4 mt-4 border-t border-white/5">
-                <div className="flex items-center gap-3 text-brand-success font-bold">
-                  <div className="w-2 h-2 rounded-full bg-brand-success animate-ping"></div>
-                  ALL NODES ONLINE
+              <div className="pt-4 mt-4 border-t border-white/5 text-center">
+                <div className="flex items-center justify-center gap-3 text-brand-success font-bold text-[9px]">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-success animate-ping"></div>
+                  ALL SYSTEMS NOMINAL
                 </div>
               </div>
             </div>
@@ -467,9 +467,9 @@ const App = () => {
         </div>
         
         <div className="text-center pt-16 border-t border-white/5 px-10 flex flex-col lg:flex-row justify-between items-center gap-10 text-[11px] text-slate-600 font-mono uppercase tracking-[0.5em]">
-          <p>© 2025 {APP_NAME.toUpperCase()} • BHARAT DATA GROUP</p>
+          <p>© 2025 BHARAT INTEL • DATA GROUP</p>
           <div className="flex gap-12 font-black">
-             <span className="hover:text-brand-cyan cursor-pointer transition-colors">Security</span>
+             <span className="hover:text-brand-cyan cursor-pointer transition-colors">Safety</span>
              <span className="hover:text-brand-cyan cursor-pointer transition-colors">Terms</span>
           </div>
         </div>
