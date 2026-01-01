@@ -12,7 +12,6 @@
     
     <script>
       window.process = { env: { API_KEY: "" } };
-
       tailwind.config = {
         theme: {
           extend: {
@@ -28,11 +27,11 @@
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'scan': 'scan 3s linear infinite',
               'glitch': 'glitch 1s linear infinite',
-              'float': 'float 6s ease-in-out infinite',
+              'matrix': 'matrix 20s linear infinite',
             },
             keyframes: {
               scan: { '0%': { top: '-10%' }, '100%': { top: '110%' } },
-              float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+              matrix: { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 1000px' } },
               glitch: {
                 '0%, 100%': { transform: 'translate(0)' },
                 '20%': { transform: 'translate(-1px, 1px)' },
@@ -49,15 +48,6 @@
       body { background-color: #020617; color: #e2e8f0; margin: 0; overflow-x: hidden; }
       .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(148, 163, 184, 0.1); }
       .grid-bg { background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 30px 30px; }
-      
-      #root:empty::before {
-        content: "INITIALIZING DATA CORE...";
-        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        font-family: 'JetBrains Mono', monospace; color: #06b6d4; font-size: 14px;
-        letter-spacing: 6px; animation: blink 1s infinite;
-      }
-      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
-      
       .terminal-glow { text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
       .scanline {
         width: 100%; height: 2px; background: rgba(6, 182, 212, 0.1);
@@ -68,6 +58,13 @@
       ::-webkit-scrollbar-track { background: #020617; }
       ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
       ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+      
+      .ai-scan-bar {
+        position: absolute; height: 100%; width: 2px;
+        background: linear-gradient(to bottom, transparent, #06b6d4, transparent);
+        left: 0; animation: scanH 4s ease-in-out infinite;
+      }
+      @keyframes scanH { 0%, 100% { left: 0; } 50% { left: 100%; } }
     </style>
   <script type="importmap">
 {
@@ -75,6 +72,7 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "vite": "https://esm.sh/vite@^7.3.0",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
