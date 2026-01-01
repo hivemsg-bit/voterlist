@@ -4,11 +4,11 @@ import {
   Download, Terminal, Sparkles, ArrowLeft, X, Mail, 
   User, MessageSquare, Zap, Tag, Table, Globe, 
   Lock, Smartphone, CreditCard, Clock, CheckCircle2, ShieldCheck,
-  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2, Info, Headphones
+  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2, Info
 } from 'lucide-react';
-import { INDIAN_STATES, APP_NAME, CONTACT_WHATSAPP } from './constants.ts';
-import { StateData, ViewState, AssemblyConstituency } from './types.ts';
-import { getPoliticalInsight } from './services/geminiService.ts';
+import { INDIAN_STATES, APP_NAME, CONTACT_WHATSAPP } from './constants';
+import { StateData, ViewState, AssemblyConstituency } from './types';
+import { getPoliticalInsight } from './services/geminiService';
 
 const Badge = ({ children, color = 'blue' }: { children?: React.ReactNode, color?: 'blue'|'gold'|'green'|'red'|'cyan' }) => {
   const colors = {
@@ -39,7 +39,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
             </div>
             <div>
               <h2 className="text-xl font-black text-white tracking-tighter uppercase font-mono">Secure Node Access</h2>
-              <p className="text-[9px] text-brand-cyan font-mono tracking-widest uppercase opacity-70">Handshake verified • Node: {ac.number}</p>
+              <p className="text-[9px] text-brand-cyan font-mono tracking-widest uppercase opacity-70">Verified Protocol • ID: {ac.number}</p>
             </div>
           </div>
           <button onClick={onClose} className="bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors"><X className="w-6 h-6 text-slate-400" /></button>
@@ -47,7 +47,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
         
         <div className="p-8 space-y-6">
           <div className="bg-slate-900/80 border border-brand-cyan/30 rounded-2xl p-6 space-y-4 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
               <FileSpreadsheet className="w-24 h-24" />
             </div>
             <div className="space-y-1 relative">
@@ -57,26 +57,26 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
             <div className="flex items-center gap-3 relative">
               <Badge color="green">AC+ Voterlist in Excel</Badge>
               <div className="w-1 h-1 bg-slate-700 rounded-full"></div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase">2025 Edition</span>
+              <span className="text-[10px] font-mono text-slate-400 uppercase">2025 Release</span>
             </div>
             <div className="pt-6 border-t border-white/5 flex justify-between items-end relative">
               <div>
-                <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1">Transaction Value</p>
+                <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1">Price Point</p>
                 <p className="text-4xl font-black text-brand-gold terminal-glow">₹{ac.price.toLocaleString()}</p>
               </div>
               <div className="text-right">
-                <p className="text-[9px] text-brand-success font-mono uppercase font-bold">Status: Ready</p>
+                <p className="text-[9px] text-brand-success font-mono uppercase font-bold">Status: Synchronized</p>
               </div>
             </div>
           </div>
 
           <button onClick={handleWhatsApp} className="w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm transition-all shadow-xl shadow-blue-600/30 flex items-center justify-center gap-4 group uppercase tracking-[0.2em]">
             <Smartphone className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            Confirm on WhatsApp
+            Get Now on WhatsApp
           </button>
           
           <p className="text-[10px] text-center text-slate-500 font-mono uppercase tracking-widest opacity-60">
-            Automated Delivery via WhatsApp Protocol within 120 seconds.
+            Automated Delivery via WhatsApp Desk.
           </p>
         </div>
       </div>
@@ -97,51 +97,51 @@ const ContactView = ({ onBack }: { onBack: () => void }) => {
       </button>
 
       <div className="text-center space-y-6 mb-20">
-        <Badge color="gold">Official Procurement Node</Badge>
-        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Order Desk</h1>
+        <Badge color="gold">Official Order Desk</Badge>
+        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Inquiry Node</h1>
         <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Need full states or bulk AC voter lists? Our dedicated procurement engine provides high-volume electoral intelligence instantly.
+          Full state packages and bulk electoral datasets are processed via our high-priority support channel.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between hover:bg-slate-900/50 transition-all group">
+        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between hover:bg-slate-900/40 transition-all group">
           <div className="space-y-6">
             <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-lg group-hover:scale-110 transition-transform">
               <Zap className="text-brand-cyan w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Fast Inquiry</h3>
+            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Instant Support</h3>
             <p className="text-slate-400 font-mono text-sm leading-relaxed uppercase tracking-widest">
-              Direct connection to our senior data desk for immediate pricing and samples.
+              Direct connection to our senior data analyst for custom quotes and samples.
             </p>
           </div>
-          <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-600/20">
-            <Smartphone className="w-5 h-5" /> WhatsApp Support
+          <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 shadow-xl">
+            <Smartphone className="w-5 h-5" /> WhatsApp Admin
           </button>
         </div>
 
         <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 space-y-8 bg-slate-900/20">
           <h3 className="text-2xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
-            <Info className="text-brand-cyan w-6 h-6" /> System Telemetry
+            <Terminal className="text-brand-cyan w-6 h-6" /> System Status
           </h3>
           <div className="space-y-4 font-mono text-[11px] uppercase tracking-widest font-bold">
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Security Node</span>
+              <span className="text-slate-500">Node Sync</span>
               <span className="text-brand-success">Synchronized</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Node Status</span>
-              <span className="text-brand-cyan">Active v2025.1</span>
+              <span className="text-slate-500">Extraction Rate</span>
+              <span className="text-brand-cyan">Optimized</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Queue Latency</span>
-              <span className="text-brand-gold">&lt; 120s</span>
+              <span className="text-slate-500">Data Year</span>
+              <span className="text-brand-gold">2025.1 REL</span>
             </div>
           </div>
           <div className="pt-4">
              <div className="p-4 bg-slate-950/80 rounded-xl border border-white/5">
                 <p className="text-[10px] text-slate-500 leading-relaxed uppercase tracking-widest opacity-80 italic">
-                  "High-accuracy extraction protocols ensure 100% data integrity for campaign management."
+                  Premium extraction protocols ensuring 100% precision for voter demographics.
                 </p>
              </div>
           </div>
@@ -158,7 +158,7 @@ const AIStatusIndicator = () => (
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
         <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
       </span>
-      <span className="font-bold">Protocol Live</span>
+      <span className="font-bold">Grid Active</span>
     </div>
     <div className="w-px h-3 bg-white/10"></div>
     <div className="flex items-center gap-2">
@@ -195,20 +195,20 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
       <PurchaseModal isOpen={isPurchaseOpen} onClose={() => setIsPurchaseOpen(false)} ac={selectedAC} stateName={state.name} />
       
       <button onClick={onBack} className="group flex items-center gap-2 text-slate-500 text-[10px] font-black mb-12 hover:text-brand-cyan transition-all uppercase tracking-[0.4em]">
-        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" /> Main Hub
+        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" /> Main Archives
       </button>
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-16">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <Badge color="cyan">{state.name} Node</Badge>
+            <Badge color="cyan">{state.name} Grid</Badge>
             <div className="w-1.5 h-1.5 bg-slate-800 rounded-full"></div>
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Master Key: {state.code}</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Master Node: {state.code}</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">Assembly Segments</h1>
           <div className="flex items-center gap-3 text-slate-500 font-mono text-[12px] uppercase tracking-[0.2em]">
             <Database className="w-4 h-4 text-brand-cyan" />
-            <span>{state.totalSeats} Excel Data Sheets Available</span>
+            <span>{state.totalSeats} AC lists processed in Excel</span>
           </div>
         </div>
         <div className="relative w-full lg:w-[450px]">
@@ -257,9 +257,9 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
               <div>
                 <h3 className="text-2xl font-black text-white group-hover:text-brand-cyan transition-colors mb-2">{ac.name}</h3>
                 <div className="flex items-center gap-3 text-slate-500 font-mono text-[10px] uppercase tracking-tighter font-bold">
-                   <div className="flex items-center gap-1.5 text-brand-success"><Table className="w-3.5 h-3.5" /> VERIFIED 2025 EXCEL</div>
+                   <div className="flex items-center gap-1.5 text-brand-success"><Table className="w-3.5 h-3.5" /> 2025 MASTER ARCHIVE</div>
                    <div className="w-1 h-1 bg-slate-800 rounded-full"></div>
-                   <span>READY FOR SYNC</span>
+                   <span>READY FOR EXPORT</span>
                 </div>
               </div>
             </div>
@@ -268,7 +268,7 @@ const ACList = ({ state, onBack }: { state: StateData; onBack: () => void }) => 
               <div className="flex justify-between items-center">
                 <div className="text-brand-gold font-black text-3xl terminal-glow">₹{ac.price.toLocaleString()}</div>
                 <div className="text-[9px] text-right text-slate-500 font-mono uppercase tracking-widest leading-none font-bold">
-                  Premium Data<br/>Node Key
+                  Verified Data<br/>Node Archive
                 </div>
               </div>
               <button 
@@ -350,7 +350,7 @@ const App = () => {
                   Buy <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-blue animate-glitch uppercase">AC+ Voterlist in Excel</span>
                 </h1>
                 <p className="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed tracking-tight">
-                  High-accuracy electoral intelligence for professionals. Secure your verified 2025 data in <span className="text-white font-bold border-b-2 border-brand-cyan pb-1 uppercase">Excel Format</span> instantly.
+                  Premium electoral datasets for professional campaigns. Secure your verified 2025 data in <span className="text-white font-bold border-b-2 border-brand-cyan pb-1 uppercase">Excel Format</span> instantly.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-10">
@@ -384,9 +384,9 @@ const App = () => {
                 <div className="space-y-6">
                   <div className="flex items-center gap-4">
                     <Globe className="text-brand-cyan w-10 h-10 animate-pulse" />
-                    <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Regional Grid</h2>
+                    <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Regional Hub</h2>
                   </div>
-                  <p className="text-slate-500 font-mono text-[14px] uppercase tracking-[0.4em] max-w-xl">Browse state archives for Assembly Constituency voter lists.</p>
+                  <p className="text-slate-500 font-mono text-[14px] uppercase tracking-[0.4em] max-w-xl">Browse state-wise Assembly Constituency data nodes.</p>
                 </div>
               </div>
 
@@ -409,7 +409,7 @@ const App = () => {
                     </div>
                     
                     <div className="w-full flex items-center justify-center gap-3 text-[11px] font-black text-brand-blue opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 uppercase tracking-widest">
-                      <span>Sync Now</span>
+                      <span>Sync Data</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -429,10 +429,10 @@ const App = () => {
           <div className="col-span-2 space-y-10">
             <div className="flex items-center gap-5">
               <Database className="text-brand-cyan w-8 h-8" />
-              <h3 className="text-3xl font-black text-white tracking-tighter uppercase">Bharat Data Core</h3>
+              <h3 className="text-3xl font-black text-white tracking-tighter uppercase">Bharat Data Hub</h3>
             </div>
             <p className="text-slate-400 max-w-lg text-lg leading-relaxed font-light">
-              Trusted source for AC+ Voterlist in Excel extraction across India. Verified data nodes and secure delivery via encrypted channels.
+              Official source for AC+ Voterlist in Excel extraction across India. High-accuracy verified data nodes for 2025.
             </p>
           </div>
           
@@ -450,7 +450,7 @@ const App = () => {
             <div className="glass-panel p-8 rounded-[2rem] font-mono text-[10px] space-y-5 border-white/5">
               <div className="flex justify-between items-center">
                 <span className="text-slate-600">DATABASE</span>
-                <span className="text-brand-success font-bold">STABLE</span>
+                <span className="text-brand-success font-bold">ONLINE</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-600">DELIVERY</span>
@@ -459,7 +459,7 @@ const App = () => {
               <div className="pt-4 mt-4 border-t border-white/5 text-center">
                 <div className="flex items-center justify-center gap-3 text-brand-success font-bold text-[9px]">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-success animate-ping"></div>
-                  ALL SYSTEMS NOMINAL
+                  ALL NODES NOMINAL
                 </div>
               </div>
             </div>
@@ -469,7 +469,7 @@ const App = () => {
         <div className="text-center pt-16 border-t border-white/5 px-10 flex flex-col lg:flex-row justify-between items-center gap-10 text-[11px] text-slate-600 font-mono uppercase tracking-[0.5em]">
           <p>© 2025 BHARAT INTEL • DATA GROUP</p>
           <div className="flex gap-12 font-black">
-             <span className="hover:text-brand-cyan cursor-pointer transition-colors">Security</span>
+             <span className="hover:text-brand-cyan cursor-pointer transition-colors">Privacy</span>
              <span className="hover:text-brand-cyan cursor-pointer transition-colors">Terms</span>
           </div>
         </div>
