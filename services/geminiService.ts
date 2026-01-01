@@ -1,14 +1,15 @@
+
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize Gemini Client
-// Fix: The API key must be obtained exclusively from the environment variable process.env.API_KEY.
-// Use process.env.API_KEY directly when initializing.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Ensure process.env is safely accessed via a fallback or shim
+const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : "";
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const getPoliticalInsight = async (locationName: string, type: 'STATE' | 'AC'): Promise<string> => {
-  // Guidelines: Do not define process.env or request that the user update the API_KEY.
-  // The key's availability is handled externally.
-  
+  if (!apiKey) {
+    return "AI insights are enabled only with a valid system key.";
+  }
+
   try {
     const prompt = `
       Act as a high-level political data analyst. 

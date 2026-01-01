@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
-      // Shim process.env for browser environment to prevent blank page crashes
+      // Global shim for process.env to prevent ReferenceErrors in browser ESM
       window.process = { env: { API_KEY: "" } };
       
       tailwind.config = {
@@ -119,7 +119,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <!-- Crucial for Vercel: This tag tells the browser to execute your TypeScript code -->
     <script type="module" src="index.tsx"></script>
   </body>
 </html>

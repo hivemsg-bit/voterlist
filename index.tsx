@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.tsx';
 import { Analytics } from "@vercel/analytics/react";
 
 console.log("System Initializing: Bharat Election Data Core...");

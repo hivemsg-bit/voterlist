@@ -3,8 +3,8 @@ export interface AssemblyConstituency {
   name: string;
   number: number;
   lokSabhaName: string;
-  dataYear: string; // Changed from totalVoters to dataYear
-  partsCount: number; // Number of booths/parts
+  dataYear: string; 
+  partsCount: number; 
   price: number;
 }
 
@@ -16,7 +16,16 @@ export interface StateData {
   acs: AssemblyConstituency[];
 }
 
-export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT';
+export interface Enquiry {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  timestamp: string;
+}
+
+export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'ADMIN';
 
 export interface AIResponse {
   text: string;
