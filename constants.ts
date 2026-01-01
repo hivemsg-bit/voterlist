@@ -1,8 +1,7 @@
-
 import { StateData, AssemblyConstituency } from './types.ts';
 
 export const APP_NAME = "Bharat Election Data";
-export const CONTACT_WHATSAPP = "+919876543210"; 
+export const CONTACT_WHATSAPP = "919799479444"; 
 
 // Helper to generate a consistent price between 4000 and 5000
 const getProfessionalPrice = (no: number) => {
