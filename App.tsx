@@ -4,7 +4,7 @@ import {
   Download, Terminal, Sparkles, ArrowLeft, X, Mail, 
   User, MessageSquare, Zap, Tag, Table, Globe, 
   Lock, Smartphone, CreditCard, Clock, CheckCircle2, ShieldCheck,
-  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2, Send
+  BarChart3, Layers, FileSpreadsheet, HardDrive, Share2, Info
 } from 'lucide-react';
 import { INDIAN_STATES, APP_NAME, CONTACT_WHATSAPP } from './constants.ts';
 import { StateData, ViewState, AssemblyConstituency } from './types.ts';
@@ -25,12 +25,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
   if (!isOpen || !ac) return null;
 
   const handleWhatsApp = () => {
-    const text = `नमस्ते! मुझे *AC+ Voterlist in Excel* फाइल चाहिए।
-विधानसभा: ${ac.name}
-AC नंबर: ${ac.number}
-राज्य: ${stateName}
-कीमत: ₹${ac.price}
-कृपया मुझे सुरक्षित डाउनलोड लिंक और पेमेंट डिटेल्स भेजें।`;
+    const text = `नमस्ते! मुझे *AC+ Voterlist in Excel* फाइल चाहिए।\nविधानसभा: ${ac.name}\nAC नंबर: ${ac.number}\nराज्य: ${stateName}\nकीमत: ₹${ac.price}\nकृपया मुझे सुरक्षित डाउनलोड लिंक और पेमेंट डिटेल्स भेजें।`;
     window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -89,7 +84,7 @@ AC नंबर: ${ac.number}
   );
 };
 
-const ContactView = () => {
+const ContactView = ({ onBack }: { onBack: () => void }) => {
   const handleBulkWhatsApp = () => {
     const text = `Hi! I want to enquire about *Bulk Orders* for Electoral Data in Excel format. Please share the pricing for full states.`;
     window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
@@ -97,56 +92,56 @@ const ContactView = () => {
 
   return (
     <div className="min-h-screen pt-40 pb-32 px-6 max-w-[1000px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+       <button onClick={onBack} className="group flex items-center gap-2 text-slate-500 text-[10px] font-black mb-12 hover:text-brand-cyan transition-all uppercase tracking-[0.4em]">
+        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-2 transition-transform" /> Back to Archives
+      </button>
+
       <div className="text-center space-y-6 mb-20">
         <Badge color="gold">Official Order Desk</Badge>
-        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Bulk Data Enquiry</h1>
+        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Order Desk</h1>
         <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Need data for an entire state or multiple constituencies? Our bulk processing engine provides the most competitive rates for high-volume electoral intelligence.
+          Bulk queries and full-state electoral data requests are handled by our dedicated procurement team.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between">
+        <div className="glass-panel p-10 rounded-[2.5rem] border-brand-cyan/20 flex flex-col justify-between hover:bg-slate-900/50 transition-all">
           <div className="space-y-6">
             <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-lg">
               <Zap className="text-brand-cyan w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Fast Track</h3>
+            <h3 className="text-3xl font-black text-white uppercase tracking-tighter">Direct Purchase</h3>
             <p className="text-slate-400 font-mono text-sm leading-relaxed uppercase tracking-widest">
-              Direct connection to our verified WhatsApp data desk for immediate pricing and samples.
+              Get instant pricing and sample sheets via WhatsApp. Verified delivery in minutes.
             </p>
           </div>
           <button onClick={handleBulkWhatsApp} className="mt-12 w-full bg-brand-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3">
-            <Smartphone className="w-5 h-5" /> WhatsApp Support
+            <Smartphone className="w-5 h-5" /> Chat with Admin
           </button>
         </div>
 
         <div className="glass-panel p-10 rounded-[2.5rem] border-white/5 space-y-8">
           <h3 className="text-2xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
-            <Terminal className="text-brand-cyan w-6 h-6" /> System Status
+            <Info className="text-brand-cyan w-6 h-6" /> Node Telemetry
           </h3>
           <div className="space-y-4 font-mono text-[11px] uppercase tracking-widest">
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Node Status</span>
-              <span className="text-brand-success font-bold">Online</span>
+              <span className="text-slate-500">Security Check</span>
+              <span className="text-brand-success font-bold">Passed</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Average Response</span>
-              <span className="text-brand-cyan font-bold">&lt; 5 mins</span>
+              <span className="text-slate-500">Processing Speed</span>
+              <span className="text-brand-cyan font-bold">Fast</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Bulk Capacity</span>
-              <span className="text-brand-gold font-bold">Unlimited</span>
-            </div>
-            <div className="flex justify-between items-center py-3 border-b border-white/5">
-              <span className="text-slate-500">Current Queue</span>
-              <span className="text-slate-400">Low Latency</span>
+              <span className="text-slate-500">Excel Data Sync</span>
+              <span className="text-brand-gold font-bold">v2025.1</span>
             </div>
           </div>
           <div className="pt-4">
              <div className="p-4 bg-slate-900/50 rounded-xl border border-white/5">
-                <p className="text-[10px] text-slate-500 leading-relaxed italic">
-                  "Our system processes millions of voter records daily. For custom extraction requests, please specify the State and AC numbers in your message."
+                <p className="text-[10px] text-slate-500 leading-relaxed italic uppercase tracking-wider">
+                  System strictly monitored for unauthorized access. Data quality guaranteed.
                 </p>
              </div>
           </div>
@@ -425,7 +420,7 @@ const App = () => {
         ) : view === 'STATE_VIEW' && activeState ? (
           <ACList state={activeState} onBack={navigateHome} />
         ) : view === 'CONTACT' ? (
-          <ContactView />
+          <ContactView onBack={navigateHome} />
         ) : null}
       </main>
 
