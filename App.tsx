@@ -1,13 +1,36 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, ChevronRight, Phone, Sparkles, ArrowLeft, X, 
   FileSpreadsheet, ShieldCheck, Activity, Eye, 
-  MessageSquare, Send, Database, Target, Lock, Zap
+  MessageSquare, Send, Database, Target, Lock, Zap, HelpCircle, ChevronDown
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
 import { getPoliticalInsight } from './services/geminiService';
+
+// --- Custom Hook for Dynamic SEO ---
+const usePageSEO = (view: ViewState, state: StateData | null) => {
+  useEffect(() => {
+    let title = "Voter List Excel 2025 Download | All India Assembly Data";
+    let desc = "Download 2025 Voter List in Excel format. Get booth-wise data for Punjab, West Bengal, UP, and all Indian states for election management.";
+
+    if (view === 'STATE_VIEW' && state) {
+      title = `Download ${state.name} Voter List Excel 2025 | AC Wise Data`;
+      desc = `Get ${state.name} 2025-26 Voter List in Excel. Complete booth level data for all ${state.totalSeats} assembly constituencies in ${state.name}.`;
+    } else if (view === 'CONTACT') {
+      title = "Contact Analyst Desk | VoterListExcel.in";
+      desc = "Contact us for custom election data requirements. Bulk excel download for political parties and surveyors.";
+    }
+
+    document.title = title;
+    
+    // Update Meta Description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', desc);
+    }
+  }, [view, state]);
+};
 
 // --- Global UI Components ---
 
@@ -46,6 +69,9 @@ const App = () => {
   const [selectedAC, setSelectedAC] = useState<AssemblyConstituency | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
+  // Apply SEO Logic
+  usePageSEO(view, activeState);
+
   const selectState = (state: StateData) => {
     setActiveState(state);
     setView('STATE_VIEW');
@@ -59,7 +85,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-10">
       <OrderNotification />
       
       {/* NAVIGATION: COMPACT & DARK */}
@@ -85,27 +111,27 @@ const App = () => {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/5 blur-[120px] -z-10 rounded-full"></div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-800 rounded-md mb-4">
                 <Badge variant="blue" className="animate-pulse">Live Repository</Badge>
-                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">2026-27 Electoral Metadata Synchronized</span>
+                <h2 className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">2026-27 Electoral Metadata Synchronized</h2>
               </div>
               <h1 className="text-3xl md:text-6xl font-black mb-4 tracking-tighter uppercase leading-[1.05] text-white">
-                Download <span className="text-blue-500">Voter List</span> <br/>
-                Metadata In Excel Format
+                Download <span className="text-blue-500">Voter List Excel</span> <br/>
+                For Election Management
               </h1>
               <p className="text-slate-400 text-xs md:text-base max-w-xl mx-auto font-medium mb-8 leading-relaxed">
-                Premium 19-column structured data for <span className="text-blue-400">Punjab 2026</span> and <span className="text-blue-400">West Bengal</span>. Optimized for booth-level micro-targeting.
+                Premium 19-column structured data for <span className="text-blue-400">Punjab 2026</span>, <span className="text-blue-400">West Bengal</span>, UP and all India. Optimized for booth-level micro-targeting and Panna Pramukh management.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button 
                   onClick={() => document.getElementById('states')?.scrollIntoView({ behavior: 'smooth' })}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all"
                 >
-                  BROWSE REGISTRY
+                  BROWSE BY STATE
                 </button>
                 <button 
                   onClick={() => setIsPreviewOpen(true)}
                   className="bg-slate-900 border border-slate-800 text-slate-300 px-8 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
                 >
-                  <Eye className="w-4 h-4" /> VIEW SAMPLE
+                  <Eye className="w-4 h-4" /> VIEW EXCEL SAMPLE
                 </button>
               </div>
             </section>
@@ -122,7 +148,7 @@ const App = () => {
                     onClick={() => { const pb = INDIAN_STATES.find(s => s.code === 'PB'); if (pb) selectState(pb); }}
                     className="bg-blue-600/10 hover:bg-blue-600 border border-blue-600/20 text-blue-400 hover:text-white px-6 py-2.5 rounded-md font-bold uppercase text-[9px] tracking-widest transition-all shrink-0"
                   >
-                    ACCESS PUNJAB NODES
+                    ACCESS PUNJAB DATA
                   </button>
                </div>
             </section>
@@ -131,8 +157,8 @@ const App = () => {
             <section id="states" className="px-4 py-8 max-w-7xl mx-auto">
               <div className="mb-6 flex justify-between items-end border-l-2 border-blue-600 pl-4">
                 <div>
-                  <h2 className="text-lg md:text-2xl font-black uppercase tracking-tighter text-white">Archives Registry</h2>
-                  <p className="text-slate-500 text-[10px] font-medium uppercase tracking-widest">Select region for segment-wise extraction</p>
+                  <h2 className="text-lg md:text-2xl font-black uppercase tracking-tighter text-white">Select Your State</h2>
+                  <p className="text-slate-500 text-[10px] font-medium uppercase tracking-widest">Click on state to view constituency list</p>
                 </div>
               </div>
 
@@ -140,7 +166,7 @@ const App = () => {
                 {INDIAN_STATES.map((state) => {
                   const isHigh = state.code === 'PB' || state.code === 'WB';
                   return (
-                    <div 
+                    <article 
                       key={state.id}
                       onClick={() => selectState(state)}
                       className={`p-4 rounded-xl border hover-lift cursor-pointer glass-card ${
@@ -154,14 +180,15 @@ const App = () => {
                         {isHigh && <Badge variant="green">Live</Badge>}
                       </div>
                       <h3 className="text-sm md:text-base font-black uppercase tracking-tight text-white">{state.name}</h3>
-                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-1">{state.totalSeats} AC Nodes Available</p>
-                    </div>
+                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-1">{state.totalSeats} Constituencies</p>
+                    </article>
                   );
                 })}
               </div>
             </section>
 
             <TrustSection />
+            <FAQSection /> 
             <LegalDisclaimer />
           </>
         ) : view === 'STATE_VIEW' && activeState ? (
@@ -184,8 +211,8 @@ const App = () => {
           <PremiumLogo />
           <div className="flex gap-6 text-[8px] font-bold text-slate-500 uppercase tracking-widest">
             <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('HOME')}>Home</span>
-            <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('CONTACT')}>Support</span>
-            <span className="hover:text-blue-500 cursor-pointer">Security Policy</span>
+            <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('CONTACT')}>Analyst Support</span>
+            <span className="hover:text-blue-500 cursor-pointer">Terms of Service</span>
           </div>
           <p className="text-[7px] font-bold text-slate-600 uppercase tracking-widest">© 2025 VOTERLISTEXCEL.IN • DATA REGISTRY</p>
         </div>
@@ -219,20 +246,20 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
   return (
     <div className="max-w-7xl mx-auto px-4 animate-fade-in pb-10">
       <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-blue-500 text-[9px] font-black uppercase tracking-widest mb-6">
-        <ArrowLeft className="w-3 h-3" /> EXIT TO ARCHIVES
+        <ArrowLeft className="w-3 h-3" /> BACK TO STATES
       </button>
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8">
         <div className="space-y-1">
-          <Badge variant="blue">Registry Active</Badge>
-          <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-white">{state.name}</h2>
-          <p className="text-slate-500 font-medium text-xs md:text-sm">Legislative segments for {state.code === 'PB' ? '2026' : '2025-26'} verified.</p>
+          <Badge variant="blue">Data Available</Badge>
+          <h1 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-white">{state.name} Voter List Excel</h1>
+          <p className="text-slate-500 font-medium text-xs md:text-sm">Download {state.code === 'PB' ? '2026' : '2025-26'} booth-wise voter list in Excel format.</p>
         </div>
         <div className="w-full lg:w-[24rem] relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
           <input 
             type="text" 
-            placeholder="Search Segment..." 
+            placeholder={`Search ${state.name} Constituency...`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-slate-900 border border-slate-800 text-white rounded-lg py-2.5 pl-9 pr-4 focus:border-blue-600 outline-none font-bold text-xs transition-all"
@@ -244,22 +271,24 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
       <div className="glass-card rounded-lg p-4 mb-6 relative overflow-hidden">
          <div className="flex items-center gap-2 mb-1">
             <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-            <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Intelligence Analysis</span>
+            <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">AI Intelligence Analysis</span>
          </div>
          {loading ? <div className="animate-pulse h-4 bg-slate-800 rounded w-1/3"></div> : <p className="text-xs md:text-sm font-medium italic text-slate-300">"{insight}"</p>}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         {filtered.map(ac => (
-          <div key={ac.id} className="p-4 rounded-xl glass-card hover-lift group border-slate-800">
-            <div className="flex justify-between items-center mb-4">
-               <span className="text-[10px] font-bold text-slate-600">AC #{ac.number}</span>
-               <Badge variant="green" className="!text-[7px]">Ready</Badge>
+          <div key={ac.id} className="p-4 rounded-xl glass-card hover-lift group border-slate-800 flex flex-col justify-between h-full">
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[10px] font-bold text-slate-600">AC NO. {ac.number}</span>
+                <Badge variant="green" className="!text-[7px]">Available</Badge>
+              </div>
+              <h4 className="text-sm font-black text-white truncate uppercase tracking-tight mb-4">{ac.name}</h4>
             </div>
-            <h4 className="text-sm font-black text-white truncate uppercase tracking-tight mb-4">{ac.name}</h4>
-            <div className="flex items-center justify-between pt-3 border-t border-slate-800/50">
+            <div className="flex items-center justify-between pt-3 border-t border-slate-800/50 mt-auto">
                <span className="text-sm font-black text-blue-500">₹{ac.price}</span>
-               <button onClick={() => onBuy(ac)} className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-[8px] font-black uppercase tracking-widest">GET EXCEL</button>
+               <button onClick={() => onBuy(ac)} className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-[8px] font-black uppercase tracking-widest">BUY EXCEL</button>
             </div>
           </div>
         ))}
@@ -274,11 +303,10 @@ const TrustSection = () => (
   <section className="px-4 py-8 max-w-7xl mx-auto">
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {[
-        { icon: <ShieldCheck className="w-4 h-4" />, title: "Verified Node", desc: "Multi-tier extraction." },
-        { icon: <Target className="w-4 h-4" />, title: "19-Column", desc: "Pro-structured metadata." },
-        /* Fixed error on line 279: Added missing Zap icon import */
-        { icon: <Zap className="w-4 h-4" />, title: "Instant Sync", desc: "WhatsApp delivery node." },
-        { icon: <Lock className="w-4 h-4" />, title: "Encrypted Desk", desc: "Secure data transfer." }
+        { icon: <ShieldCheck className="w-4 h-4" />, title: "Verified Data", desc: "Updated Jan 2025" },
+        { icon: <Target className="w-4 h-4" />, title: "19-Column Excel", desc: "Name, Age, Phone Col" },
+        { icon: <Zap className="w-4 h-4" />, title: "Instant Delivery", desc: "WhatsApp Support" },
+        { icon: <Lock className="w-4 h-4" />, title: "Secure Data", desc: "Encrypted Transfer" }
       ].map((item, idx) => (
         <div key={idx} className="flex gap-3 items-center p-3 glass-card rounded-lg border-slate-800">
           <div className="text-blue-500 shrink-0">{item.icon}</div>
@@ -292,12 +320,37 @@ const TrustSection = () => (
   </section>
 );
 
+const FAQSection = () => (
+  <section className="px-4 py-10 max-w-4xl mx-auto">
+    <div className="text-center mb-8">
+      <h2 className="text-lg md:text-2xl font-black uppercase tracking-tighter text-white">Frequently Asked Questions</h2>
+      <p className="text-slate-500 text-[10px] font-medium uppercase tracking-widest">About Voter List Excel Download Services</p>
+    </div>
+    
+    <div className="space-y-3">
+      {[
+        { q: "What format is the voter list provided in?", a: "We provide the voter list in a clean, structured Excel (XLSX) or CSV format. This includes 19 separate columns including Voter Name, Relative Name, House Number, Age, Gender, and Booth Number." },
+        { q: "Can I filter data by Booth or Ward?", a: "Yes. Our Excel files contain a specific 'Booth Number' and 'Section Number' column, allowing you to easily filter and sort voters for Panna Pramukh management." },
+        { q: "Is the data updated for 2025 elections?", a: "Yes, our database is synchronized with the latest draft and final publication rolls of Jan 2025 for states like Punjab, West Bengal, Delhi, and UP." },
+        { q: "Do you provide phone numbers in the list?", a: "The list contains the standard electoral roll data. We provide the structural column for phone numbers to assist in your own data collection campaigns." }
+      ].map((item, idx) => (
+        <div key={idx} className="glass-card p-4 rounded-lg border-slate-800">
+          <h3 className="text-xs font-black text-white uppercase tracking-wide mb-2 flex items-center gap-2">
+            <HelpCircle className="w-3 h-3 text-blue-500" /> {item.q}
+          </h3>
+          <p className="text-[10px] md:text-xs text-slate-400 leading-relaxed font-medium pl-5">{item.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
 const LegalDisclaimer = () => (
   <section className="px-4 py-6 max-w-7xl mx-auto mb-6">
     <div className="glass-card border-slate-800 rounded-lg p-4 flex gap-4 items-center">
       <Lock className="w-4 h-4 text-slate-600 shrink-0" />
       <p className="text-slate-500 text-[8px] font-bold uppercase tracking-widest text-center md:text-left leading-relaxed">
-        Independent metadata extraction node. All voter archives subject to regional Election Commission privacy mandates and strategic usage guidelines.
+        **Disclaimer:** VoterListExcel.in is an independent data consultancy. We provide data structuring services for publicly available electoral rolls. We are not affiliated with the Election Commission of India. Data is for internal survey and analysis use only.
       </p>
     </div>
   </section>
@@ -314,7 +367,7 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
              <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2 text-white">
                    <FileSpreadsheet className="w-5 h-5 text-blue-500" />
-                   <h3 className="text-base font-black uppercase tracking-tighter">Order Dataset</h3>
+                   <h3 className="text-base font-black uppercase tracking-tighter">Order Excel Data</h3>
                 </div>
                 <button onClick={onClose} className="text-slate-500 hover:text-white transition-all"><X className="w-5 h-5" /></button>
              </div>
@@ -325,17 +378,17 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
                 </div>
                 <div className="flex justify-between items-end pt-3 border-t border-slate-800">
                    <div>
-                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Access Fee</p>
+                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Processing Fee</p>
                       <p className="text-xl font-black text-blue-500">₹{ac.price}</p>
                    </div>
                    <p className="text-[8px] font-bold text-slate-400 uppercase">Excel Export</p>
                 </div>
              </div>
              <button 
-              onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=I want to buy Voter List Excel for AC: ${ac.name} (${stateName})`, '_blank')}
+              onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to buy Voter List Excel for AC: ${ac.name} (${stateName}). Price: ${ac.price}`, '_blank')}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-black uppercase tracking-widest text-[9px] shadow-[0_5px_15px_rgba(37,99,235,0.3)] transition-all"
              >
-               CONFIRM ORDER VIA WHATSAPP
+               GET DATA VIA WHATSAPP
              </button>
           </div>
        </div>
@@ -353,26 +406,26 @@ const ContactView = ({ onBack }: { onBack: () => void }) => {
   return (
     <div className="max-w-5xl mx-auto px-4 animate-fade-in py-8">
       <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-blue-500 text-[9px] font-black uppercase tracking-widest mb-10 transition-all">
-        <ArrowLeft className="w-3 h-3" /> RETURN
+        <ArrowLeft className="w-3 h-3" /> RETURN HOME
       </button>
       <div className="grid md:grid-cols-2 gap-10 items-center">
         <div className="space-y-4">
            <Badge variant="blue">Strategic Support</Badge>
-           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">Expert <br/> <span className="text-blue-500">Consultation</span></h2>
-           <p className="text-slate-500 font-medium text-xs leading-relaxed max-w-sm">Connect with our primary analyst desk for state-wide extraction or custom institutional datasets.</p>
+           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">Expert <br/> <span className="text-blue-500">Data Support</span></h2>
+           <p className="text-slate-500 font-medium text-xs leading-relaxed max-w-sm">Connect with our primary analyst desk for state-wide extraction, bulk pricing, or custom institutional datasets.</p>
            <div 
              onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}`, '_blank')}
              className="flex items-center gap-3 text-white font-black text-sm cursor-pointer hover:text-blue-500 transition-all group"
            >
               <div className="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-lg flex items-center justify-center border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-white transition-all"><MessageSquare className="w-5 h-5" /></div>
-              WhatsApp Analyst Direct
+              Chat on WhatsApp
            </div>
         </div>
         <div className="glass-card p-6 md:p-8 rounded-xl border-slate-800">
            <form onSubmit={handleSubmit} className="space-y-4">
-              <input required type="text" placeholder="Identity Name" className="w-full bg-slate-900 border border-slate-800 rounded-lg py-3 px-4 focus:border-blue-600 outline-none font-bold text-xs text-white" onChange={(e) => setFormData({...formData, name: e.target.value})}/>
-              <input required type="tel" placeholder="+91 Node Number" className="w-full bg-slate-900 border border-slate-800 rounded-lg py-3 px-4 focus:border-blue-600 outline-none font-bold text-xs text-white" onChange={(e) => setFormData({...formData, phone: e.target.value})}/>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-black uppercase tracking-widest shadow-lg flex items-center justify-center gap-2 active:scale-95 text-[9px]">INITIATE REQUEST <Send className="w-4 h-4" /></button>
+              <input required type="text" placeholder="Your Name" className="w-full bg-slate-900 border border-slate-800 rounded-lg py-3 px-4 focus:border-blue-600 outline-none font-bold text-xs text-white" onChange={(e) => setFormData({...formData, name: e.target.value})}/>
+              <input required type="tel" placeholder="Mobile Number" className="w-full bg-slate-900 border border-slate-800 rounded-lg py-3 px-4 focus:border-blue-600 outline-none font-bold text-xs text-white" onChange={(e) => setFormData({...formData, phone: e.target.value})}/>
+              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-black uppercase tracking-widest shadow-lg flex items-center justify-center gap-2 active:scale-95 text-[9px]">SEND ENQUIRY <Send className="w-4 h-4" /></button>
            </form>
         </div>
       </div>
@@ -401,8 +454,8 @@ const OrderNotification = () => {
       <div className="glass-card text-white p-3 px-4 rounded-lg shadow-2xl flex items-center gap-3 border-slate-800">
         <Activity className="w-4 h-4 text-emerald-500 animate-pulse" />
         <div>
-          <p className="text-[7px] font-black text-slate-500 uppercase tracking-widest">Extraction Complete</p>
-          <p className="text-[10px] font-bold tracking-tight uppercase text-white">{order.name}, {order.state}</p>
+          <p className="text-[7px] font-black text-slate-500 uppercase tracking-widest">Recent Purchase</p>
+          <p className="text-[10px] font-bold tracking-tight uppercase text-white">{order.name}, {order.state} Excel Downloaded</p>
         </div>
       </div>
     </div>
@@ -417,7 +470,7 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
           <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
              <div>
                 <h3 className="text-sm font-black text-white uppercase tracking-widest">19-Column Metadata Sample</h3>
-                <p className="text-[8px] font-bold text-slate-500 uppercase">Standard Dataset Node Format</p>
+                <p className="text-[8px] font-bold text-slate-500 uppercase">Excel Data Structure</p>
              </div>
              <button onClick={onClose} className="text-slate-500 hover:text-white transition-all"><X className="w-5 h-5" /></button>
           </div>
@@ -425,16 +478,17 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
              <table className="w-full text-left border-separate border-spacing-0 glass-card rounded-lg overflow-hidden">
                 <thead>
                    <tr className="bg-slate-900 text-slate-400 uppercase text-[8px] tracking-widest font-black">
-                      <th className="p-3">Legislative AC</th><th className="p-3">EPIC Node</th><th className="p-3">Voter Name</th><th className="p-3">Relation</th>
+                      <th className="p-3">AC Name</th><th className="p-3">EPIC / Voter ID</th><th className="p-3">Voter Name</th><th className="p-3">Age/Gender</th><th className="p-3">House No</th>
                    </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800 text-[10px] font-bold text-slate-400">
-                   <tr><td className="p-3">Ajnala (PB)</td><td className="p-3 text-blue-500">IFC262XXXX</td><td className="p-3 text-white">Kuldeep Singh</td><td className="p-3">47 / M</td></tr>
-                   <tr><td className="p-3">Ballygunge (WB)</td><td className="p-3 text-emerald-500">WB/32/XXXX</td><td className="p-3 text-white">Debasish Roy</td><td className="p-3">52 / M</td></tr>
+                   <tr><td className="p-3">Ajnala (PB)</td><td className="p-3 text-blue-500">IFC262XXXX</td><td className="p-3 text-white">Kuldeep Singh</td><td className="p-3">47 / M</td><td className="p-3">12/A</td></tr>
+                   <tr><td className="p-3">Ajnala (PB)</td><td className="p-3 text-blue-500">IFC262XXXX</td><td className="p-3 text-white">Manjit Kaur</td><td className="p-3">45 / F</td><td className="p-3">12/A</td></tr>
+                   <tr><td className="p-3">Ballygunge (WB)</td><td className="p-3 text-emerald-500">WB/32/XXXX</td><td className="p-3 text-white">Debasish Roy</td><td className="p-3">52 / M</td><td className="p-3">88-B</td></tr>
                 </tbody>
              </table>
              <div className="mt-4 p-2 bg-blue-600/10 border border-blue-600/20 rounded text-[7px] font-black text-blue-400 uppercase tracking-widest text-center">
-                + Final export contains Booth ID, Part No, Section, and 12 Advanced Intelligence Columns.
+                + Final export contains Booth ID, Part No, Section Number, Relative Name and Phone Column (Blank).
              </div>
           </div>
        </div>
