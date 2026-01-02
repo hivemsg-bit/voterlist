@@ -318,7 +318,8 @@ const App = () => {
           <StateView 
             state={activeState} 
             onBack={() => setView('HOME')} 
-            onBuy={(ac) => { setSelectedAC(ac); setIsModalOpen(true); }} 
+            onBuy={(ac) => { setSelectedAC(ac); setIsModalOpen(true); }}
+            onContact={() => setView('CONTACT')}
           />
         ) : view === 'NEWS' ? (
           <NewsView onBack={() => setView('HOME')} />
@@ -366,7 +367,7 @@ const App = () => {
 
 // --- Sub-Views ---
 
-const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => void, onBuy: (ac: AssemblyConstituency) => void }) => {
+const StateView = ({ state, onBack, onBuy, onContact }: { state: StateData, onBack: () => void, onBuy: (ac: AssemblyConstituency) => void, onContact: () => void }) => {
   const [search, setSearch] = useState("");
   const [insight, setInsight] = useState("");
   const [loading, setLoading] = useState(false);
@@ -449,6 +450,15 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
               </div>
             </div>
           ))}
+          {/* Missing AC Prompt */}
+          <div className="bg-blue-50/50 p-8 rounded-3xl border border-dashed border-blue-200 flex flex-col items-center justify-center text-center space-y-4">
+             <Info className="w-10 h-10 text-blue-400" />
+             <div>
+                <h4 className="text-lg font-bold text-slate-900">निर्वाचन क्षेत्र नहीं मिला?</h4>
+                <p className="text-xs text-slate-500 font-medium">चिंता न करें, हम सभी निर्वाचन क्षेत्रों का एक्सेल डेटा प्रदान करते हैं।</p>
+             </div>
+             <button onClick={onContact} className="bg-white text-blue-600 border border-blue-100 px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-sm">हमें बताएं <ArrowUpRight className="w-3 h-3 inline ml-1" /></button>
+          </div>
         </div>
       )}
     </div>
@@ -671,7 +681,7 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
   if (!isOpen) return null;
   const sampleData = [
     { sn: 1, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC2625093", nameLoc: "ਕੁਲਦੀਪ ਸਿੰਘ", nameEng: "Kuldeep Singh", relLoc: "ਅਜਾਇਬ ਸਿੰਘ", relEng: "Ajaib Singh", house: "0", age: 47, gender: "Male" },
-    { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀत ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
+    { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
   ];
 
   return (
