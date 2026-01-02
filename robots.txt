@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap link for search engines
-Sitemap: https://www.voterlistexcel.in/sitemap.xml
+Sitemap: https://1b1a14ed-fe7e-47db-aded-6d597e476202.mysimplestore.com/sitemap.xml
