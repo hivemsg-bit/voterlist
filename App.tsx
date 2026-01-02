@@ -7,7 +7,7 @@ import {
   FileSpreadsheet, ShoppingCart, UserCheck, TrendingUp,
   Newspaper, Calendar, ArrowUpRight, Share2,
   Lock, BarChart3, Layers, CheckCircle2, HelpCircle, ChevronDown,
-  Users, Activity, MousePointer2, Eye, Download
+  Users, Activity, MousePointer2, Eye, Download, Info
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP, APP_NAME } from './constants';
 import { StateData, ViewState, AssemblyConstituency, NewsItem } from './types';
@@ -29,12 +29,28 @@ const Badge = ({ children, variant = 'blue' }: { children?: React.ReactNode, var
   );
 };
 
+const LegalDisclaimer = () => (
+  <section className="px-4 py-12 max-w-4xl mx-auto">
+    <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
+      <div className="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center shrink-0">
+        <ShieldCheck className="w-6 h-6" />
+      </div>
+      <div className="space-y-4">
+        <h4 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Legal Disclaimer & Usage Policy</h4>
+        <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-medium">
+          The electoral data provided through www.voterlistexcel.in is sourced from publicly available electoral rolls and is intended solely for political campaign management, voter analysis, and legal election-related purposes. Users are strictly prohibited from using this data for commercial marketing, financial fraud, or any illegal activities. By purchasing our structured excel files, you agree to comply with Indian data protection guidelines and the Election Commission's model code of conduct.
+        </p>
+      </div>
+    </div>
+  </section>
+);
+
 const FAQSection = () => {
   const faqs = [
     { q: "How to download the voter list in excel format?", a: "To download the voter list in excel format, simply select your state from our archive registry, find your assembly constituency, and click on 'Get Excel'. Our admin will provide the direct download link via WhatsApp." },
     { q: "Is the 2025 electoral roll data updated?", a: "Yes, we provide the final 2025 revised electoral rolls. Our voter list in excel format includes the latest names added during the special summary revisions." },
     { q: "Can I use this excel file for mobile campaigning?", a: "Absolutely. Our excel format is optimized for bulk SMS platforms, IVR systems, and political CRM software used for voter micro-targeting." },
-    { q: "What columns are included in the excel file?", a: "The files typically contain Voter ID (EPIC) Number, Name (Local & English), Father/Husband Name, Age, Gender, and Booth/Part details structured for professional filtering." }
+    { q: "What columns are included in the excel file?", a: "The files typically contain Voter ID (EPIC) Number, Name (Local & English), Father/Husband Name, Age, Gender, House No, and 19+ professional data columns structured for filtering." }
   ];
 
   return (
@@ -207,7 +223,7 @@ const App = () => {
                 Latest <span className="text-blue-600 underline decoration-blue-200 underline-offset-8">Voter List in Excel Format</span> 2025
               </h1>
               <p className="text-slate-500 text-sm md:text-xl max-w-3xl mx-auto font-medium leading-relaxed mb-12 px-2">
-                Download verified, searchable electoral rolls for all assembly constituencies. Premium <span className="text-slate-900 font-bold">voter list in excel format</span> optimized for election strategy and booth management.
+                Download verified, searchable electoral rolls for all assembly constituencies. Premium <span className="text-slate-900 font-bold">voter list in excel format</span> with 19+ structured columns optimized for election strategy.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <button 
@@ -258,26 +274,27 @@ const App = () => {
                      <div className="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center border border-blue-600/30">
                         <Table className="w-6 h-6 text-blue-400" />
                      </div>
-                     <h4 className="text-xl font-bold">Pivot-Ready XLS</h4>
-                     <p className="text-slate-400 text-sm leading-relaxed">Our <span className="text-white">voter list in excel format</span> is structured for Microsoft Excel analytics. Ready for demographic filtering instantly.</p>
+                     <h4 className="text-xl font-bold">19-Column Structured</h4>
+                     <p className="text-slate-400 text-sm leading-relaxed">Our <span className="text-white">voter list in excel format</span> includes Name, Father Name (Punjabi/English), Age, House No, EPIC, and Booth details.</p>
                   </div>
                   <div className="space-y-4">
                      <div className="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center border border-emerald-600/30">
                         <CheckCircle2 className="w-6 h-6 text-emerald-400" />
                      </div>
-                     <h4 className="text-xl font-bold">2025 Verified</h4>
+                     <h4 className="text-xl font-bold">2025 Final Roll</h4>
                      <p className="text-slate-400 text-sm leading-relaxed">Direct synchronization with the latest electoral revisions. We ensure 100% data fidelity for election success.</p>
                   </div>
                   <div className="space-y-4">
                      <div className="w-12 h-12 bg-amber-600/20 rounded-xl flex items-center justify-center border border-amber-600/30">
                         <Zap className="w-6 h-6 text-amber-400" />
                      </div>
-                     <h4 className="text-xl font-bold">Fast Retrieval</h4>
+                     <h4 className="text-xl font-bold">Instant Extracts</h4>
                      <p className="text-slate-400 text-sm leading-relaxed">No complex forms. Message us on WhatsApp and receive your custom excel extract link within minutes.</p>
                   </div>
                </div>
             </section>
 
+            <LegalDisclaimer />
             <FAQSection />
           </>
         ) : view === 'STATE_VIEW' && activeState ? (
@@ -644,7 +661,7 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
   const sampleData = [
     { sn: 1, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC2625093", nameLoc: "ਕੁਲਦੀਪ ਸਿੰਘ", nameEng: "Kuldeep Singh", relLoc: "ਅਜਾਇਬ ਸਿੰਘ", relEng: "Ajaib Singh", house: "0", age: 47, gender: "Male" },
     { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
-    { sn: 3, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1293190", nameLoc: "ਬਿਮਲਾ", nameEng: "Bimla", relLoc: "ਰਾਜਾ ਮਸੀਹ", relEng: "Raja Masih", house: "00", age: 38, gender: "Female" },
+    { sn: 3, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1293190", nameLoc: "ਬਿਮਲਾ", nameEng: "Bimla", relLoc: "ਰਾਜਾ ਮਸੀह", relEng: "Raja Masih", house: "00", age: 38, gender: "Female" },
     { sn: 4, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1292796", nameLoc: "ਜੁਗਰਾਜ ਕੌਰ", nameEng: "Jugraj Kaur", relLoc: "ਮਨਦੀਪ ਸਿੰਘ", relEng: "Mandeep Singh", house: "00", age: 31, gender: "Female" },
     { sn: 5, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC2434736", nameLoc: "ਨਵਦੀਪ ਕੌਰ", nameEng: "Navdeep Kaur", relLoc: "ਜਸਪਿੰਦਰ ਸਿੰਘ", relEng: "Jaspinder Singh", house: "00", age: 30, gender: "Female" },
   ];
