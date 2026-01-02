@@ -16,21 +16,16 @@ export interface StateData {
   acs: AssemblyConstituency[];
 }
 
-export interface Enquiry {
+export interface NewsItem {
   id: string;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  timestamp: string;
-  type: 'GENERAL' | 'PURCHASE';
-  status: 'UNPAID' | 'PAID';
-  acName?: string;
-  stateName?: string;
-  amount?: number;
+  title: string;
+  date: string;
+  category: string;
+  summary: string;
+  image?: string;
 }
 
-export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'ADMIN';
+export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'NEWS';
 
 export interface AIResponse {
   text: string;

@@ -1,11 +1,15 @@
+
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
-
+// Political insight generation service using Gemini API.
 export const getPoliticalInsight = async (locationName: string, type: 'STATE' | 'AC'): Promise<string> => {
+  // Always use the API_KEY from environment variables directly.
   if (!process.env.API_KEY) {
     return `AI System: Accessing decentralized archives for ${locationName}. 2025 electoral nodes are synchronized. Micro-targeting protocols active.`;
   }
+
+  // Create a new instance right before making an API call to ensure it always uses the most up-to-date API key.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   try {
     const response = await ai.models.generateContent({
@@ -17,6 +21,7 @@ export const getPoliticalInsight = async (locationName: string, type: 'STATE' | 
       }
     });
 
+    // Access the .text property directly from the response object.
     return response.text || "AI INTELLIGENCE: Data stream synchronized. Strategic demographic clusters identified in this region.";
   } catch (error) {
     console.error("AI Insight Error:", error);

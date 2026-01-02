@@ -2,13 +2,16 @@
 <html lang="hi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bharat Election Data | Buy AC+ Voterlist in Excel (2025)</title>
-    <meta name="description" content="सभी राज्यों की विधानसभा निर्वाचन क्षेत्र (AC) की मतदाता सूची एक्सेल (Excel) फॉर्मेट में प्राप्त करें। 2025 के चुनावों के लिए सबसे सटीक डेटा।">
-    <meta name="keywords" content="voter list excel, AC voter list, election data india, assembly constituency data, 2025 voter list download, assembly constituency voter list excel, चुनाव डेटा, वोटर लिस्ट एक्सेल">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Voter List in Excel Format 2025 | www.voterlistexcel.in - Official Data</title>
+    <meta name="description" content="Download the latest 2025 voter list in excel format for all assembly constituencies. High-quality data for campaign management and political analysis. Instant delivery via www.voterlistexcel.in">
+    <meta name="keywords" content="voter list in excel format, voterlistexcel, assembly constituency voter list excel, 2025 electoral roll excel, download voter list india, election data excel, चुनाव डेटा, वोटर लिस्ट एक्सेल">
+    
+    <link rel="canonical" href="https://www.voterlistexcel.in/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     
     <script>
       window.process = { env: { API_KEY: "" } };
@@ -16,55 +19,46 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
+              sans: ['Plus Jakarta Sans', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
             },
             colors: {
-              slate: { 850: '#151b2e', 900: '#0f172a', 950: '#020617' },
-              brand: { blue: '#2563eb', cyan: '#06b6d4', gold: '#fbbf24', success: '#10b981' }
+              brand: {
+                primary: '#0f172a',
+                secondary: '#2563eb',
+                accent: '#0ea5e9',
+                gold: '#d97706',
+                bg: '#f8fafc'
+              }
             },
             animation: {
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'scan': 'scan 3s linear infinite',
-              'glitch': 'glitch 1s linear infinite',
-              'matrix': 'matrix 20s linear infinite',
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.4s ease-out',
+              'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
             },
             keyframes: {
-              scan: { '0%': { top: '-10%' }, '100%': { top: '110%' } },
-              matrix: { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 1000px' } },
-              glitch: {
-                '0%, 100%': { transform: 'translate(0)' },
-                '20%': { transform: 'translate(-1px, 1px)' },
-                '40%': { transform: 'translate(-1px, -1px)' },
-                '60%': { transform: 'translate(1px, 1px)' },
-                '80%': { transform: 'translate(1px, -1px)' },
-              }
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              slideUp: { '0%': { transform: 'translateY(10px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+              pulseSoft: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.8' } }
             }
           }
         }
       }
     </script>
     <style>
-      body { background-color: #020617; color: #e2e8f0; margin: 0; overflow-x: hidden; }
-      .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(148, 163, 184, 0.1); }
-      .grid-bg { background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 30px 30px; }
-      .terminal-glow { text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
-      .scanline {
-        width: 100%; height: 2px; background: rgba(6, 182, 212, 0.1);
-        position: fixed; top: 0; left: 0; z-index: 100; pointer-events: none;
-        animation: scan 8s linear infinite;
+      body { background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; }
+      .glass-morphism { 
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(226, 232, 240, 0.8);
       }
-      ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: #020617; }
-      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-      ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
-      
-      .ai-scan-bar {
-        position: absolute; height: 100%; width: 2px;
-        background: linear-gradient(to bottom, transparent, #06b6d4, transparent);
-        left: 0; animation: scanH 4s ease-in-out infinite;
-      }
-      @keyframes scanH { 0%, 100% { left: 0; } 50% { left: 100%; } }
+      .hover-lift { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+      .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+      .text-balance { text-wrap: balance; }
+      ::-webkit-scrollbar { width: 5px; }
+      ::-webkit-scrollbar-track { background: #f1f5f9; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
   <script type="importmap">
 {
@@ -81,7 +75,6 @@
 </script>
 </head>
   <body>
-    <div class="scanline"></div>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
