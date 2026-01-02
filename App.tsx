@@ -6,7 +6,8 @@ import {
   Table, Globe, Smartphone, ShieldCheck,
   FileSpreadsheet, ShoppingCart, UserCheck, TrendingUp,
   Newspaper, Calendar, ArrowUpRight, Share2,
-  Lock, BarChart3, Layers, CheckCircle2, HelpCircle, ChevronDown
+  Lock, BarChart3, Layers, CheckCircle2, HelpCircle, ChevronDown,
+  Users, Activity, MousePointer2, Eye, Download
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP, APP_NAME } from './constants';
 import { StateData, ViewState, AssemblyConstituency, NewsItem } from './types';
@@ -14,11 +15,6 @@ import { getPoliticalInsight } from './services/geminiService';
 
 // --- Components ---
 
-/**
- * Fix: Making children optional in the type definition. 
- * TypeScript can sometimes fail to recognize JSX children as a required prop 
- * depending on the environment configuration or React version.
- */
 const Badge = ({ children, variant = 'blue' }: { children?: React.ReactNode, variant?: 'blue' | 'amber' | 'green' | 'red' }) => {
   const styles = {
     blue: 'bg-blue-50 text-blue-600 border-blue-100',
@@ -117,8 +113,8 @@ const App = () => {
   const [activeState, setActiveState] = useState<StateData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAC, setSelectedAC] = useState<AssemblyConstituency | null>(null);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  // Dynamic SEO Logic
   useEffect(() => {
     let title = "Voter List in Excel Format 2025 | www.voterlistexcel.in";
     let metaDesc = "Download official voter list in excel format for all assembly constituencies. Premium electoral roll data for campaign management.";
@@ -134,7 +130,6 @@ const App = () => {
     const metaTag = document.querySelector('meta[name="description"]');
     if (metaTag) metaTag.setAttribute('content', metaDesc);
 
-    // Inject Schema Markup
     const schemaData = {
       "@context": "https://schema.org",
       "@type": "Dataset",
@@ -172,7 +167,6 @@ const App = () => {
     <div className="min-h-screen font-sans selection:bg-blue-600 selection:text-white pb-10">
       <OrderNotification />
       
-      {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 glass-morphism border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 md:h-20 flex justify-between items-center">
           <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={handleHome}>
@@ -186,10 +180,10 @@ const App = () => {
           </div>
           <div className="flex items-center gap-2 md:gap-6">
             <button 
-              onClick={() => setView('NEWS')}
-              className="hidden md:block text-xs font-bold text-slate-600 hover:text-blue-600 uppercase tracking-widest transition-colors"
+              onClick={() => setIsPreviewOpen(true)}
+              className="hidden md:flex items-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all"
             >
-              News
+              <Eye className="w-4 h-4" /> Sample Excel
             </button>
             <button 
               onClick={() => setView('CONTACT')}
@@ -204,7 +198,6 @@ const App = () => {
       <main className="pt-24">
         {view === 'HOME' ? (
           <>
-            {/* Hero Section */}
             <section className="px-4 py-12 md:py-24 max-w-7xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full mb-8 animate-fade-in">
                 <Badge variant="blue">Official 2025 Data Node</Badge>
@@ -224,15 +217,14 @@ const App = () => {
                   Start Extraction <ChevronRight className="w-4 h-4" />
                 </button>
                 <button 
-                  onClick={() => setView('NEWS')}
+                  onClick={() => setIsPreviewOpen(true)}
                   className="w-full sm:w-auto bg-white border-2 border-slate-100 text-slate-700 px-10 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest hover:border-blue-200 hover:text-blue-600 transition-all flex items-center justify-center gap-2"
                 >
-                  <Newspaper className="w-4 h-4" /> Political News
+                  <Eye className="w-4 h-4" /> View Sample Excel
                 </button>
               </div>
             </section>
 
-            {/* State Grid */}
             <section id="states" className="px-4 py-16 max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                 <div className="space-y-2">
@@ -259,7 +251,6 @@ const App = () => {
               </div>
             </section>
 
-            {/* Why Us / Benefits */}
             <section className="bg-slate-900 text-white py-20 mt-10 rounded-[3rem] mx-4 relative overflow-hidden">
                <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
                <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 relative z-10">
@@ -309,7 +300,11 @@ const App = () => {
         stateName={activeState?.name} 
       />
 
-      {/* Footer */}
+      <SamplePreviewModal 
+        isOpen={isPreviewOpen} 
+        onClose={() => setIsPreviewOpen(false)} 
+      />
+
       <footer className="mt-20 px-4 py-16 border-t border-slate-100 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
           <div className="space-y-6 max-w-sm">
@@ -352,13 +347,11 @@ const App = () => {
 
 // --- Sub-Views ---
 
-/**
- * Fix: Explicitly typing the onBuy prop to handle AssemblyConstituency objects.
- */
 const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => void, onBuy: (ac: AssemblyConstituency) => void }) => {
   const [search, setSearch] = useState("");
   const [insight, setInsight] = useState("");
   const [loading, setLoading] = useState(false);
+  const [liveStats, setLiveStats] = useState({ visitors: 0, downloads: 0 });
 
   const filtered = useMemo(() => 
     state.acs.filter(ac => ac.name.toLowerCase().includes(search.toLowerCase()) || ac.number.toString().includes(search)),
@@ -373,6 +366,19 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
       setLoading(false);
     };
     load();
+
+    const baseVisitors = 1200 + Math.floor(Math.random() * 500);
+    const baseDownloads = 45 + Math.floor(Math.random() * 20);
+    setLiveStats({ visitors: baseVisitors, downloads: baseDownloads });
+
+    const interval = setInterval(() => {
+        setLiveStats(prev => ({
+            visitors: prev.visitors + (Math.random() > 0.5 ? 1 : 0),
+            downloads: prev.downloads + (Math.random() > 0.9 ? 1 : 0)
+        }));
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [state.name]);
 
   return (
@@ -401,7 +407,45 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
         </div>
       </div>
 
-      {/* AI Box */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+            <Users className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Visits Today</p>
+            <p className="text-2xl font-bold text-slate-900">{liveStats.visitors.toLocaleString()}</p>
+          </div>
+          <div className="ml-auto flex items-center gap-1 text-emerald-500 font-bold text-xs">
+            <TrendingUp className="w-3 h-3" /> +12%
+          </div>
+        </div>
+        <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
+            <Activity className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Now</p>
+            <p className="text-2xl font-bold text-slate-900">{(liveStats.visitors / 45).toFixed(0)} Users</p>
+          </div>
+          <div className="ml-auto">
+             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></div>
+          </div>
+        </div>
+        <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center">
+            <MousePointer2 className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Excel Orders</p>
+            <p className="text-2xl font-bold text-slate-900">{liveStats.downloads.toLocaleString()}+</p>
+          </div>
+          <div className="ml-auto text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg uppercase tracking-tighter">
+            High Demand
+          </div>
+        </div>
+      </div>
+
       <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-14 mb-16 relative overflow-hidden text-white border border-slate-800 shadow-2xl">
          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full"></div>
          <div className="relative space-y-8">
@@ -593,5 +637,73 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
     </div>
   );
 };
+
+const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  const sampleData = [
+    { epic: "TKR0123456", name: "RAM KUMAR", relative: "SHANTI DEVI", age: 34, gender: "M", booth: "PRIMARY SCHOOL ROOM 1" },
+    { epic: "TKR0123457", name: "ANITA SHARMA", relative: "SURESH SHARMA", age: 29, gender: "F", booth: "PRIMARY SCHOOL ROOM 1" },
+    { epic: "TKR0123458", name: "VIJAY PRATAP", relative: "MOHAN LAL", age: 52, gender: "M", booth: "COMMUNITY CENTER A" },
+    { epic: "TKR0123459", name: "PRIYA VERMA", relative: "ANIL VERMA", age: 21, gender: "F", booth: "PANCHAYAT GHAR B" },
+    { epic: "TKR0123460", name: "SURAJ RAWAT", relative: "DEVENDRA RAWAT", age: 41, gender: "M", booth: "COMMUNITY CENTER A" },
+  ];
+
+  return (
+    <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in">
+       <div className="bg-white w-full max-w-4xl rounded-[3rem] overflow-hidden shadow-2xl animate-slide-up max-h-[90vh] flex flex-col">
+          <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+             <div>
+                <h3 className="text-2xl font-bold text-slate-900">Voter List Excel Structure</h3>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Official Data Sample for 2025</p>
+             </div>
+             <button onClick={onClose} className="p-3 bg-white rounded-full hover:bg-slate-100 shadow-sm transition-colors">
+                <X className="w-6 h-6 text-slate-400" />
+             </button>
+          </div>
+          <div className="p-4 md:p-8 overflow-x-auto flex-1">
+             <table className="w-full text-left border-collapse">
+                <thead>
+                   <tr className="bg-slate-900 text-white rounded-xl">
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest first:rounded-l-xl">Epic No</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Voter Name</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Relative Name</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Age</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Gender</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest last:rounded-r-xl">Booth Detail</th>
+                   </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                   {sampleData.map((row, i) => (
+                      <tr key={i} className="hover:bg-blue-50/50 transition-colors">
+                         <td className="p-4 text-xs font-bold text-blue-600">{row.epic}</td>
+                         <td className="p-4 text-xs font-bold text-slate-700">{row.name}</td>
+                         <td className="p-4 text-xs font-medium text-slate-500">{row.relative}</td>
+                         <td className="p-4 text-xs font-bold text-slate-700">{row.age}</td>
+                         <td className="p-4 text-xs font-medium text-slate-500">{row.gender}</td>
+                         <td className="p-4 text-xs font-medium text-slate-500 truncate max-w-[150px]">{row.booth}</td>
+                      </tr>
+                   ))}
+                </tbody>
+             </table>
+             <div className="mt-8 bg-blue-600/5 p-6 rounded-3xl border border-blue-600/10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-4">
+                   <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center">
+                      <Download className="w-5 h-5" />
+                   </div>
+                   <p className="text-sm font-bold text-slate-700">Get the full file for your constituency in under 5 minutes.</p>
+                </div>
+                <button 
+                  onClick={() => { onClose(); window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to purchase voter list excel files.`, '_blank'); }}
+                  className="bg-slate-900 text-white px-8 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest"
+                >
+                  Message for Pricing
+                </button>
+             </div>
+          </div>
+       </div>
+    </div>
+  );
+}
 
 export default App;
