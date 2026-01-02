@@ -8,7 +8,7 @@ import {
   Newspaper, Calendar, ArrowUpRight, Share2,
   Lock, BarChart3, Layers, CheckCircle2, HelpCircle, ChevronDown,
   Users, Activity, MousePointer2, Eye, Download, Info,
-  MapPin, Clock, ShieldAlert
+  MapPin, Clock, ShieldAlert, Mail, MessageSquare, Send
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP, APP_NAME } from './constants';
 import { StateData, ViewState, AssemblyConstituency, NewsItem } from './types';
@@ -343,10 +343,11 @@ const App = () => {
           </div>
           <div className="flex gap-10">
             <div className="space-y-4 text-center md:text-left">
-              <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Contact</h4>
+              <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Platform</h4>
               <ul className="text-xs font-bold text-slate-600 space-y-3 uppercase tracking-wider">
-                <li className="hover:text-blue-600 cursor-pointer" onClick={() => setView('CONTACT')}>Support Node</li>
-                <li className="hover:text-blue-600 cursor-pointer" onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}`, '_blank')}>WhatsApp</li>
+                <li className="hover:text-blue-600 cursor-pointer" onClick={() => setView('HOME')}>State Archives</li>
+                <li className="hover:text-blue-600 cursor-pointer" onClick={() => setView('NEWS')}>Data News</li>
+                <li className="hover:text-blue-600 cursor-pointer" onClick={() => setView('CONTACT')}>Contact Us</li>
               </ul>
             </div>
           </div>
@@ -454,7 +455,6 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
   );
 };
 
-/* Added missing NewsView component to fix build error */
 const NewsView = ({ onBack }: { onBack: () => void }) => (
   <div className="max-w-4xl mx-auto px-4 animate-fade-in">
     <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-blue-600 text-xs font-bold uppercase tracking-widest mb-10 transition-colors">
@@ -481,19 +481,155 @@ const NewsView = ({ onBack }: { onBack: () => void }) => (
   </div>
 );
 
-const ContactView = ({ onBack }: { onBack: () => void }) => (
-  <div className="max-w-4xl mx-auto px-4 animate-fade-in">
-    <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-blue-600 text-xs font-bold uppercase tracking-widest mb-10 transition-colors"><ArrowLeft className="w-4 h-4" /> Return Home</button>
-    <div className="bg-white p-10 md:p-20 rounded-[4rem] border border-slate-100 text-center space-y-12 shadow-2xl relative overflow-hidden">
-       <div className="space-y-6">
-          <Badge variant="amber">Bulk Procurement Desk</Badge>
-          <h2 className="text-3xl md:text-6xl font-display font-bold text-slate-900 uppercase tracking-tight">Support Node</h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-lg">Need multiple districts or entire state packages? Connect with our dedicated data administrators for premium bulk rates.</p>
-       </div>
-       <button onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I need help with bulk voter list excel files.`, '_blank')} className="w-full md:w-auto bg-blue-600 hover:bg-slate-900 text-white px-16 py-6 rounded-3xl font-bold text-sm uppercase tracking-[0.3em] shadow-2xl shadow-blue-100 transition-all hover:scale-105 active:scale-95">WhatsApp Admin Desk</button>
+const ContactView = ({ onBack }: { onBack: () => void }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    state: '',
+    ac: '',
+    requirement: 'Single AC Data'
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = `नया संपर्क अनुरोध (VoterListExcel.in):\n\nनाम: ${formData.name}\nमोबाइल: ${formData.phone}\nराज्य: ${formData.state}\nAC: ${formData.ac}\nजरूरत: ${formData.requirement}`;
+    window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 animate-fade-in">
+      <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-blue-600 text-xs font-bold uppercase tracking-widest mb-10 transition-colors">
+        <ArrowLeft className="w-4 h-4" /> Return Home
+      </button>
+
+      <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="space-y-12">
+          <div className="space-y-6">
+            <Badge variant="amber">Contact Us</Badge>
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-slate-900 uppercase tracking-tight leading-none">Get in Touch</h2>
+            <p className="text-slate-500 font-medium text-lg leading-relaxed">
+              Have questions about our <span className="text-blue-600 font-bold">voter list in excel format</span>? Our data experts are ready to assist you for single AC or bulk requirements.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <MessageSquare className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-lg">WhatsApp Support</h4>
+                <p className="text-slate-500 font-medium">+91 97994 79444</p>
+                <p className="text-[10px] font-bold text-emerald-500 uppercase mt-1 tracking-widest">Active Now</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center border border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <Mail className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-lg">Official Email</h4>
+                <p className="text-slate-500 font-medium">support@voterlistexcel.in</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6 group">
+              <div className="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center border border-amber-100 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-lg">Official Data Desk</h4>
+                <p className="text-slate-500 font-medium">Verified nodes for all 28 states & UTs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-8 md:p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 blur-3xl -z-10"></div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8">Quick Enquiry Form</h3>
+            
+            <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Your Name</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="Enter full name"
+                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-600 outline-none transition-all font-medium text-sm"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Phone Number</label>
+                  <input 
+                    required
+                    type="tel" 
+                    placeholder="Enter mobile number"
+                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-600 outline-none transition-all font-medium text-sm"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">State Name</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="e.g. Punjab, UP"
+                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-600 outline-none transition-all font-medium text-sm"
+                    value={formData.state}
+                    onChange={(e) => setFormData({...formData, state: e.target.value})}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">AC Name / Number</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="Constituency name"
+                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-600 outline-none transition-all font-medium text-sm"
+                    value={formData.ac}
+                    onChange={(e) => setFormData({...formData, ac: e.target.value})}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Requirement Type</label>
+                <select 
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-600 outline-none transition-all font-bold text-sm"
+                  value={formData.requirement}
+                  onChange={(e) => setFormData({...formData, requirement: e.target.value})}
+                >
+                  <option>Single AC Data</option>
+                  <option>District Level Bulk</option>
+                  <option>Full State Package</option>
+                  <option>Custom Analysis</option>
+                </select>
+              </div>
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-slate-900 text-white py-5 rounded-2xl font-bold uppercase tracking-[0.2em] shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95 mt-8"
+            >
+              Send Request to WhatsApp <Send className="w-4 h-4" />
+            </button>
+            <p className="text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-4">Safe & Secure Lead Generation</p>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, onClose: () => void, ac: AssemblyConstituency | null, stateName?: string }) => {
   if (!isOpen || !ac) return null;
@@ -535,7 +671,7 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
   if (!isOpen) return null;
   const sampleData = [
     { sn: 1, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC2625093", nameLoc: "ਕੁਲਦੀਪ ਸਿੰਘ", nameEng: "Kuldeep Singh", relLoc: "ਅਜਾਇਬ ਸਿੰਘ", relEng: "Ajaib Singh", house: "0", age: 47, gender: "Male" },
-    { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
+    { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", part: 1, secNo: 1, voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀत ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
   ];
 
   return (
