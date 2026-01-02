@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Database, Search, ChevronRight, Phone, 
@@ -13,7 +14,12 @@ import { getPoliticalInsight } from './services/geminiService';
 
 // --- Components ---
 
-const Badge = ({ children, variant = 'blue' }: { children: React.ReactNode, variant?: 'blue' | 'amber' | 'green' | 'red' }) => {
+/**
+ * Fix: Making children optional in the type definition. 
+ * TypeScript can sometimes fail to recognize JSX children as a required prop 
+ * depending on the environment configuration or React version.
+ */
+const Badge = ({ children, variant = 'blue' }: { children?: React.ReactNode, variant?: 'blue' | 'amber' | 'green' | 'red' }) => {
   const styles = {
     blue: 'bg-blue-50 text-blue-600 border-blue-100',
     amber: 'bg-amber-50 text-amber-600 border-amber-100',
@@ -346,7 +352,10 @@ const App = () => {
 
 // --- Sub-Views ---
 
-const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => void, onBuy: (ac) => void }) => {
+/**
+ * Fix: Explicitly typing the onBuy prop to handle AssemblyConstituency objects.
+ */
+const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => void, onBuy: (ac: AssemblyConstituency) => void }) => {
   const [search, setSearch] = useState("");
   const [insight, setInsight] = useState("");
   const [loading, setLoading] = useState(false);
