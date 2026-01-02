@@ -34,7 +34,7 @@ const FAQSection = () => {
     { q: "How to download the voter list in excel format?", a: "To download the voter list in excel format, simply select your state from our archive registry, find your assembly constituency, and click on 'Get Excel'. Our admin will provide the direct download link via WhatsApp." },
     { q: "Is the 2025 electoral roll data updated?", a: "Yes, we provide the final 2025 revised electoral rolls. Our voter list in excel format includes the latest names added during the special summary revisions." },
     { q: "Can I use this excel file for mobile campaigning?", a: "Absolutely. Our excel format is optimized for bulk SMS platforms, IVR systems, and political CRM software used for voter micro-targeting." },
-    { q: "What columns are included in the excel file?", a: "The files typically contain Voter ID (EPIC) Number, Name, Father/Husband Name, Age, Gender, and Booth/Part details structured for professional filtering." }
+    { q: "What columns are included in the excel file?", a: "The files typically contain Voter ID (EPIC) Number, Name (Local & English), Father/Husband Name, Age, Gender, and Booth/Part details structured for professional filtering." }
   ];
 
   return (
@@ -642,46 +642,68 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
   if (!isOpen) return null;
 
   const sampleData = [
-    { epic: "TKR0123456", name: "RAM KUMAR", relative: "SHANTI DEVI", age: 34, gender: "M", booth: "PRIMARY SCHOOL ROOM 1" },
-    { epic: "TKR0123457", name: "ANITA SHARMA", relative: "SURESH SHARMA", age: 29, gender: "F", booth: "PRIMARY SCHOOL ROOM 1" },
-    { epic: "TKR0123458", name: "VIJAY PRATAP", relative: "MOHAN LAL", age: 52, gender: "M", booth: "COMMUNITY CENTER A" },
-    { epic: "TKR0123459", name: "PRIYA VERMA", relative: "ANIL VERMA", age: 21, gender: "F", booth: "PANCHAYAT GHAR B" },
-    { epic: "TKR0123460", name: "SURAJ RAWAT", relative: "DEVENDRA RAWAT", age: 41, gender: "M", booth: "COMMUNITY CENTER A" },
+    { sn: 1, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC2625093", nameLoc: "ਕੁਲਦੀਪ ਸਿੰਘ", nameEng: "Kuldeep Singh", relLoc: "ਅਜਾਇਬ ਸਿੰਘ", relEng: "Ajaib Singh", house: "0", age: 47, gender: "Male" },
+    { sn: 2, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1293216", nameLoc: "ਰਾਣੀ", nameEng: "Rani", relLoc: "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ", relEng: "Gurpreet Singh", house: "00", age: 39, gender: "Female" },
+    { sn: 3, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1293190", nameLoc: "ਬਿਮਲਾ", nameEng: "Bimla", relLoc: "ਰਾਜਾ ਮਸੀਹ", relEng: "Raja Masih", house: "00", age: 38, gender: "Female" },
+    { sn: 4, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC1292796", nameLoc: "ਜੁਗਰਾਜ ਕੌਰ", nameEng: "Jugraj Kaur", relLoc: "ਮਨਦੀਪ ਸਿੰਘ", relEng: "Mandeep Singh", house: "00", age: 31, gender: "Female" },
+    { sn: 5, dist: "Amritsar", tehsil: "Ajnala", ps: "Ramdas", po: "", pin: "143603", psName: "1- Ghonewala", psAddr: "Government Elementary School, Ghonewala", part: 1, secNo: 1, secName: "GHONEWALA", voterId: "IFC2434736", nameLoc: "ਨਵਦੀਪ ਕੌਰ", nameEng: "Navdeep Kaur", relLoc: "ਜਸਪਿੰਦਰ ਸਿੰਘ", relEng: "Jaspinder Singh", house: "00", age: 30, gender: "Female" },
   ];
 
   return (
     <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in">
-       <div className="bg-white w-full max-w-4xl rounded-[3rem] overflow-hidden shadow-2xl animate-slide-up max-h-[90vh] flex flex-col">
+       <div className="bg-white w-full max-w-6xl rounded-[3rem] overflow-hidden shadow-2xl animate-slide-up max-h-[90vh] flex flex-col">
           <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
              <div>
                 <h3 className="text-2xl font-bold text-slate-900">Voter List Excel Structure</h3>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Official Data Sample for 2025</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Detailed Column Registry for 2025</p>
              </div>
              <button onClick={onClose} className="p-3 bg-white rounded-full hover:bg-slate-100 shadow-sm transition-colors">
                 <X className="w-6 h-6 text-slate-400" />
              </button>
           </div>
-          <div className="p-4 md:p-8 overflow-x-auto flex-1">
-             <table className="w-full text-left border-collapse">
+          <div className="p-4 md:p-8 overflow-x-auto flex-1 bg-slate-50/30">
+             <table className="min-w-max w-full text-left border-collapse bg-white rounded-2xl overflow-hidden shadow-sm">
                 <thead>
-                   <tr className="bg-slate-900 text-white rounded-xl">
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest first:rounded-l-xl">Epic No</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Voter Name</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Relative Name</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Age</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest">Gender</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest last:rounded-r-xl">Booth Detail</th>
+                   <tr className="bg-slate-900 text-white">
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">SN</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">District</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Tehsil</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">P.S.</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">P.O.</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Pin</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Polling Station</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Part</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Section</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Voter ID</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Name (Local)</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Name (English)</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Rel. Name (Local)</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Rel. Name (Eng)</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">H.No</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest border-r border-slate-700">Age</th>
+                      <th className="p-4 text-[9px] font-bold uppercase tracking-widest">Gender</th>
                    </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                    {sampleData.map((row, i) => (
-                      <tr key={i} className="hover:bg-blue-50/50 transition-colors">
-                         <td className="p-4 text-xs font-bold text-blue-600">{row.epic}</td>
-                         <td className="p-4 text-xs font-bold text-slate-700">{row.name}</td>
-                         <td className="p-4 text-xs font-medium text-slate-500">{row.relative}</td>
-                         <td className="p-4 text-xs font-bold text-slate-700">{row.age}</td>
-                         <td className="p-4 text-xs font-medium text-slate-500">{row.gender}</td>
-                         <td className="p-4 text-xs font-medium text-slate-500 truncate max-w-[150px]">{row.booth}</td>
+                      <tr key={i} className="hover:bg-blue-50/50 transition-colors text-[11px]">
+                         <td className="p-4 font-bold text-slate-400 border-r border-slate-50">{row.sn}</td>
+                         <td className="p-4 font-bold text-slate-700 border-r border-slate-50">{row.dist}</td>
+                         <td className="p-4 font-medium text-slate-600 border-r border-slate-50">{row.tehsil}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.ps}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.po || "-"}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.pin}</td>
+                         <td className="p-4 font-bold text-slate-700 border-r border-slate-50 max-w-[150px] truncate">{row.psName}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.part}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.secNo}</td>
+                         <td className="p-4 font-bold text-blue-600 border-r border-slate-50">{row.voterId}</td>
+                         <td className="p-4 font-bold text-slate-900 border-r border-slate-50 bg-slate-50/50">{row.nameLoc}</td>
+                         <td className="p-4 font-medium text-slate-700 border-r border-slate-50">{row.nameEng}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.relLoc}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.relEng}</td>
+                         <td className="p-4 font-medium text-slate-500 border-r border-slate-50">{row.house}</td>
+                         <td className="p-4 font-bold text-slate-700 border-r border-slate-50">{row.age}</td>
+                         <td className="p-4 font-medium text-slate-500">{row.gender}</td>
                       </tr>
                    ))}
                 </tbody>
@@ -691,13 +713,13 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
                    <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center">
                       <Download className="w-5 h-5" />
                    </div>
-                   <p className="text-sm font-bold text-slate-700">Get the full file for your constituency in under 5 minutes.</p>
+                   <p className="text-sm font-bold text-slate-700">This exact 19-column structure is provided in every MS Excel extract.</p>
                 </div>
                 <button 
-                  onClick={() => { onClose(); window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to purchase voter list excel files.`, '_blank'); }}
-                  className="bg-slate-900 text-white px-8 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest"
+                  onClick={() => { onClose(); window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to purchase voter list excel files with the 19-column structure.`, '_blank'); }}
+                  className="bg-slate-900 text-white px-8 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg hover:bg-blue-600 transition-all"
                 >
-                  Message for Pricing
+                  Order This Format
                 </button>
              </div>
           </div>
