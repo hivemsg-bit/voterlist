@@ -2,7 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, ChevronRight, Phone, Sparkles, ArrowLeft, X, 
   FileSpreadsheet, ShieldCheck, Activity, Eye, 
-  MessageSquare, Send, Database, Target, Lock, Zap, HelpCircle, ChevronDown, CheckCircle2, UserCheck
+  MessageSquare, Send, Database, Target, Lock, Zap, HelpCircle, ChevronDown, CheckCircle2, UserCheck,
+  Grid3X3
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
@@ -208,6 +209,7 @@ const App = () => {
             <TrustSection />
             <Testimonials />
             <FAQSection /> 
+            <DataCoverageIndex />
             <LegalDisclaimer />
           </>
         ) : view === 'STATE_VIEW' && activeState ? (
@@ -386,6 +388,25 @@ const FAQSection = () => (
   </section>
 );
 
+const DataCoverageIndex = () => {
+  return (
+    <section className="px-4 py-8 max-w-7xl mx-auto border-t border-slate-900 mt-8">
+      <h3 className="text-xs font-black uppercase text-slate-600 mb-4 tracking-widest">Data Coverage Index (SEO Sitemap)</h3>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {INDIAN_STATES.map(state => (
+           <div key={state.id}>
+              <h4 className="text-[10px] font-bold text-slate-400 uppercase mb-2">{state.name} Voter List</h4>
+              <p className="text-[9px] text-slate-600 leading-relaxed font-mono">
+                 {state.acs.slice(0, 12).map(ac => ac.name).join(', ')}...
+                 <span className="text-slate-700 block mt-1">+ {Math.max(0, state.totalSeats - 12)} More Constituencies</span>
+              </p>
+           </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 const LegalDisclaimer = () => (
   <section className="px-4 py-6 max-w-7xl mx-auto mb-6">
     <div className="glass-card border-slate-800 rounded-lg p-4 flex gap-4 items-center">
@@ -513,9 +534,18 @@ const OrderNotification = () => {
 
 const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   if (!isOpen) return null;
+  
+  const columns = [
+    "AC Number", "Part Number", "Section No", "Serial No", 
+    "Voter Name (Eng)", "Voter Name (Hin)", "Relation Name", "Relation Type", 
+    "Age", "Gender", "House No", "EPIC Number", 
+    "Mobile Column", "Booth Name", "Polling Station", "Category", 
+    "Age Group", "Address", "Zipcode"
+  ];
+
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md animate-fade-in">
-       <div className="bg-brand-midnight w-full max-w-3xl rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh] border border-slate-800">
+    <div className="fixed inset-0 z-[1200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md animate-fade-in">
+       <div className="bg-brand-midnight w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] border border-slate-800">
           <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
              <div>
                 <h3 className="text-sm font-black text-white uppercase tracking-widest">19-Column Metadata Sample</h3>
@@ -523,8 +553,25 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
              </div>
              <button onClick={onClose} className="text-slate-500 hover:text-white transition-all"><X className="w-5 h-5" /></button>
           </div>
-          <div className="p-4 overflow-auto bg-brand-midnight">
-             <table className="w-full text-left border-separate border-spacing-0 glass-card rounded-lg overflow-hidden">
+          <div className="p-6 overflow-auto bg-brand-midnight">
+             
+             {/* VISUAL METADATA GRID */}
+             <div className="mb-8">
+                <div className="flex items-center gap-2 mb-3">
+                   <Grid3X3 className="w-4 h-4 text-blue-500" />
+                   <h4 className="text-[10px] font-black text-white uppercase tracking-widest">19-Column Structure Included</h4>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                   {columns.map((col, idx) => (
+                      <div key={idx} className="bg-slate-900 border border-slate-800 p-2 rounded text-[9px] font-bold text-slate-400 text-center uppercase tracking-wide">
+                         {col}
+                      </div>
+                   ))}
+                </div>
+             </div>
+
+             <h4 className="text-[10px] font-black text-white uppercase tracking-widest mb-3">Live Data Preview</h4>
+             <table className="w-full text-left border-separate border-spacing-0 glass-card rounded-lg overflow-hidden mb-6">
                 <thead>
                    <tr className="bg-slate-900 text-slate-400 uppercase text-[8px] tracking-widest font-black">
                       <th className="p-3">AC Name</th><th className="p-3">EPIC / Voter ID</th><th className="p-3">Voter Name</th><th className="p-3">Age/Gender</th><th className="p-3">House No</th>
@@ -537,13 +584,13 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
                 </tbody>
              </table>
              
-             <div className="mt-6 flex flex-col items-center justify-center gap-3">
-                 <p className="text-[10px] text-slate-400">Want full sample file?</p>
+             <div className="flex flex-col items-center justify-center gap-3 bg-blue-900/10 p-4 rounded-lg border border-blue-900/30">
+                 <p className="text-[10px] text-blue-300 font-medium">Need to check the full 19-column file before buying?</p>
                  <button 
                   onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, Please send me a SAMPLE EXCEL file to check quality.`, '_blank')}
-                  className="bg-[#25D366] hover:bg-[#20bd5a] text-black px-6 py-2 rounded-lg font-black uppercase tracking-widest text-[10px] flex items-center gap-2"
+                  className="bg-[#25D366] hover:bg-[#20bd5a] text-black px-6 py-3 rounded-lg font-black uppercase tracking-widest text-[10px] flex items-center gap-2 shadow-lg hover:shadow-emerald-900/20 transition-all"
                  >
-                    <MessageSquare className="w-4 h-4" /> Request Sample on WhatsApp
+                    <MessageSquare className="w-4 h-4" /> Request Full Sample on WhatsApp
                  </button>
              </div>
           </div>
