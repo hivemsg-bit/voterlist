@@ -3,7 +3,7 @@ import {
   Search, ChevronRight, Phone, Sparkles, ArrowLeft, X, 
   FileSpreadsheet, ShieldCheck, Activity, Eye, 
   MessageSquare, Send, Database, Target, Lock, Zap, HelpCircle, ChevronDown, CheckCircle2, UserCheck,
-  Grid3X3, Download, MapPin, TrendingUp
+  Grid3X3, Download, MapPin, TrendingUp, ShieldAlert, Clock, Users, Gift
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
@@ -13,14 +13,14 @@ import { getPoliticalInsight } from './services/geminiService';
 const usePageSEO = (view: ViewState, state: StateData | null) => {
   useEffect(() => {
     let title = "Voter List Excel Download 2025 | Booth Wise Data India";
-    let desc = "Election Data: Download 2025 Voter List in Excel. Booth-wise data for Punjab, West Bengal, UP. Perfect for Panna Pramukh & Booth Management.";
+    let desc = "Download 2025-26 Voter List in Excel. Booth-wise data for Punjab, WB, UP. Perfect for Panna Pramukh & political campaign management. Instant WhatsApp Delivery.";
 
     if (view === 'STATE_VIEW' && state) {
-      title = `${state.name} Voter List Excel Download 2025 | Booth Wise Data`;
-      desc = `Download ${state.name} 2025-26 Voter List in Excel format. Ward wise and booth wise data for ${state.name} elections. Official Matdata Suchi CSV.`;
+      title = `${state.name} Voter List Excel Download 2025 | Verified Booth Data`;
+      desc = `Download official ${state.name} 2025 Voter List in Excel. Accurate booth & ward wise data for ${state.name} elections. Format: CSV/Excel.`;
     } else if (view === 'CONTACT') {
-      title = "Bulk Order & Contact | VoterListExcel.in";
-      desc = "Contact for bulk voter list excel data. Custom formatting for political surveys and campaign management.";
+      title = "Contact for Bulk Voter Data | VoterListExcel.in";
+      desc = "Get full state voter list excel at 40% discount. Contact our data experts for custom survey formats.";
     }
 
     document.title = title;
@@ -31,13 +31,14 @@ const usePageSEO = (view: ViewState, state: StateData | null) => {
 
 // --- Components ---
 
-const Badge = ({ children, variant = 'blue', className = "" }: { children?: React.ReactNode, variant?: 'blue' | 'green' | 'amber' | 'slate' | 'whatsapp', className?: string }) => {
+const Badge = ({ children, variant = 'blue', className = "" }: { children?: React.ReactNode, variant?: 'blue' | 'green' | 'amber' | 'slate' | 'whatsapp' | 'red', className?: string }) => {
   const styles = {
     blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
     whatsapp: 'bg-[#25D366]/10 text-[#25D366] border-[#25D366]/20',
     amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
     slate: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
+    red: 'bg-red-500/10 text-red-400 border-red-500/20',
   };
   return (
     <span className={`px-2 py-0.5 rounded text-[9px] font-bold border uppercase tracking-widest ${styles[variant]} inline-flex items-center gap-1 ${className}`}>
@@ -74,6 +75,21 @@ const FloatingWhatsApp = () => (
   </div>
 );
 
+const VisitorCounter = () => {
+  const [count, setCount] = useState(12);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => Math.max(8, Math.min(24, prev + (Math.random() > 0.5 ? 1 : -1))));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="flex items-center gap-2 text-[10px] font-black uppercase text-amber-500 animate-pulse">
+      <Users className="w-3 h-3" /> {count} People viewing this constituency right now
+    </div>
+  );
+};
+
 const App = () => {
   const [view, setView] = useState<ViewState>('HOME');
   const [activeState, setActiveState] = useState<StateData | null>(null);
@@ -109,7 +125,7 @@ const App = () => {
             onClick={() => setView('CONTACT')} 
             className="bg-[#25D366] hover:bg-[#20bd5a] text-black px-4 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest transition-all active:scale-95 flex items-center gap-1.5 shadow-lg"
           >
-            <Phone className="w-3 h-3" /> WhatsApp Enquiry
+            <Phone className="w-3 h-3" /> Get Bulk Discount
           </button>
         </div>
       </nav>
@@ -119,44 +135,86 @@ const App = () => {
           <>
             <section className="px-4 py-12 md:py-20 max-w-7xl mx-auto text-center relative overflow-hidden">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/5 blur-[120px] -z-10 rounded-full"></div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-800 rounded-md mb-6">
-                <Badge variant="whatsapp" className="animate-pulse">Active 2025-26</Badge>
-                <h2 className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Election Data Intelligence Hub</h2>
+              
+              <div className="flex flex-col items-center gap-4 mb-8">
+                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-800 rounded-md">
+                    <Badge variant="whatsapp" className="animate-pulse">Live: 2026 Elections</Badge>
+                    <h2 className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Verified Election Data Hub</h2>
+                 </div>
+                 <div className="flex items-center gap-4 text-[9px] font-black text-emerald-500 uppercase">
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Instant Download</span>
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> 100% Reliable</span>
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Hindi/English Support</span>
+                 </div>
               </div>
+
               <h1 className="text-4xl md:text-7xl font-black mb-6 tracking-tighter uppercase leading-[1] text-white">
-                Premium <span className="text-blue-500">Voter List</span> <br/>
-                Excel Database
+                Download <span className="text-blue-500">Voter List</span> <br/>
+                Excel & CSV (2025)
               </h1>
               <p className="text-slate-400 text-xs md:text-lg max-w-2xl mx-auto font-medium mb-10 leading-relaxed">
-                Download high-precision 19-Column Excel data with Booth-wise separation. 
-                Optimized for <span className="text-blue-400">Panna Pramukh</span> management and <span className="text-blue-400">Campaign Outreach</span>.
+                Unlock high-precision booth-level data for <span className="text-blue-400">Winning Campaigns</span>. 
+                Full 19-Column format with <span className="text-emerald-400">Age, Family Groupings & Booth Sorting</span>.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                   onClick={() => document.getElementById('states')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all flex items-center justify-center gap-2"
                 >
-                  Browse All States
+                  <Target className="w-4 h-4" /> Start Choosing State
                 </button>
                 <button 
                   onClick={() => setIsPreviewOpen(true)}
                   className="bg-slate-900 border border-slate-800 text-slate-300 px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
                 >
-                  <Eye className="w-4 h-4" /> Metadata Sample
+                  <Eye className="w-4 h-4" /> See 19 Columns
                 </button>
               </div>
+
+              <div className="mt-8 flex justify-center items-center gap-8 opacity-60">
+                 <div className="flex flex-col items-center">
+                    <span className="text-xl font-black text-white">10K+</span>
+                    <span className="text-[7px] uppercase font-bold text-slate-500">Downloads</span>
+                 </div>
+                 <div className="w-px h-8 bg-slate-800"></div>
+                 <div className="flex flex-col items-center">
+                    <span className="text-xl font-black text-white">100%</span>
+                    <span className="text-[7px] uppercase font-bold text-slate-500">Accuracy</span>
+                 </div>
+                 <div className="w-px h-8 bg-slate-800"></div>
+                 <div className="flex flex-col items-center">
+                    <span className="text-xl font-black text-white">24/7</span>
+                    <span className="text-[7px] uppercase font-bold text-slate-500">Support</span>
+                 </div>
+              </div>
+            </section>
+
+            {/* URGENCY ALERT */}
+            <section className="px-4 max-w-7xl mx-auto mb-10">
+               <div className="bg-blue-600/10 border border-blue-500/20 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                     <div className="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center"><Gift className="w-6 h-6" /></div>
+                     <div>
+                        <h3 className="text-xs font-black uppercase text-white">Punjab Election Special Offer!</h3>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase">Buy Full State Data & Get 50% Off. Limited Time only.</p>
+                     </div>
+                  </div>
+                  <button onClick={() => setView('CONTACT')} className="bg-blue-600 text-white px-6 py-2 rounded-lg text-[10px] font-black uppercase">Claim Offer</button>
+               </div>
             </section>
 
             <section id="states" className="px-4 py-8 max-w-7xl mx-auto">
               <div className="mb-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4">
                 <div className="text-center md:text-left border-l-4 border-blue-600 pl-4">
-                  <h2 className="text-xl md:text-3xl font-black uppercase tracking-tighter text-white">Select Region</h2>
-                  <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Matdata Suchi Database (CSV/Excel)</p>
+                  <h2 className="text-xl md:text-3xl font-black uppercase tracking-tighter text-white">Constituency Database</h2>
+                  <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Official Matdata Suchi Format (2025-26)</p>
                 </div>
                 <div className="flex gap-4">
                   <Badge variant="green">Punjab</Badge>
                   <Badge variant="blue">UP</Badge>
                   <Badge variant="amber">Delhi</Badge>
+                  <Badge variant="red">Bihar</Badge>
                 </div>
               </div>
 
@@ -171,10 +229,10 @@ const App = () => {
                       <div className="w-10 h-10 bg-slate-900 border border-slate-800 text-blue-500 rounded-xl flex items-center justify-center font-black text-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
                          {state.code}
                       </div>
-                      <Badge variant="slate" className="!text-[7px]">2025 Node</Badge>
+                      <Badge variant="slate" className="!text-[7px]">Verified</Badge>
                     </div>
                     <h3 className="text-base md:text-lg font-black uppercase tracking-tight text-white">{state.name}</h3>
-                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-2">{state.totalSeats} Segments Active</p>
+                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-2">{state.totalSeats} AC Nodes Live</p>
                   </article>
                 ))}
               </div>
@@ -205,12 +263,12 @@ const App = () => {
           <PremiumLogo />
           <div className="flex flex-wrap justify-center gap-6 text-[9px] font-black text-slate-500 uppercase tracking-widest">
             <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('HOME')}>Home</span>
-            <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('CONTACT')}>Bulk Access</span>
-            <span className="hover:text-blue-500 cursor-pointer">Security Policy</span>
+            <span className="hover:text-blue-500 cursor-pointer" onClick={() => setView('CONTACT')}>Bulk Discount</span>
+            <span className="hover:text-blue-500 cursor-pointer">Privacy</span>
           </div>
           <p className="text-[8px] font-bold text-slate-600 uppercase tracking-widest text-center md:text-right">
             © 2025 VOTERLISTEXCEL.IN <br/>
-            All Data Verified for Local Survey Use
+            Secure Encryption Active
           </p>
         </div>
       </footer>
@@ -248,17 +306,20 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
         <div className="space-y-3">
-          <Badge variant="blue">Database Live</Badge>
-          <h1 className="text-3xl md:text-6xl font-black uppercase tracking-tighter text-white">{state.name} Data Hub</h1>
+          <Badge variant="blue">State Verified</Badge>
+          <h1 className="text-3xl md:text-6xl font-black uppercase tracking-tighter text-white">{state.name} Voter List</h1>
           <p className="text-slate-500 font-medium text-sm md:text-base max-w-2xl">
-            Access booth-level electoral data for {state.name}. Format optimized for mobile marketing and Panna Pramukh assignments.
+            Latest 2025 electoral nodes for {state.name}. Format: Excel with family grouping and ward sorting. Instant delivery.
           </p>
+          <div className="flex items-center gap-3">
+             <VisitorCounter />
+          </div>
         </div>
         <div className="w-full lg:w-[28rem] relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
           <input 
             type="text" 
-            placeholder={`Search ${state.name} Constituency...`}
+            placeholder={`Find ${state.name} Constituency...`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl py-4 pl-12 pr-4 focus:border-blue-600 outline-none font-bold text-sm transition-all shadow-xl"
@@ -270,7 +331,7 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[80px] rounded-full"></div>
          <div className="flex items-center gap-3 mb-3 relative z-10">
             <Sparkles className="w-5 h-5 text-blue-500" />
-            <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">AI Electoral Analysis</span>
+            <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">Strategic Demographic Insight</span>
          </div>
          {loading ? (
             <div className="space-y-2 relative z-10">
@@ -284,17 +345,21 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filtered.map(ac => (
-          <div key={ac.id} className="p-6 rounded-2xl glass-card hover-lift group border-slate-800 flex flex-col justify-between h-full">
+          <div key={ac.id} className="p-6 rounded-2xl glass-card hover-lift group border-slate-800 flex flex-col justify-between h-full relative overflow-hidden">
+            {ac.number % 5 === 0 && (
+              <div className="absolute top-0 right-0 bg-amber-500 text-black font-black text-[7px] px-3 py-1 uppercase tracking-widest rounded-bl-lg z-10">Best Seller</div>
+            )}
             <div>
               <div className="flex justify-between items-center mb-6">
-                <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest">Node {ac.number}</span>
-                <Badge variant="whatsapp" className="!text-[8px]">Excel</Badge>
+                <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest">No. {ac.number}</span>
+                <Badge variant="whatsapp" className="!text-[8px]">Available</Badge>
               </div>
-              <h4 className="text-lg font-black text-white uppercase tracking-tighter mb-6 group-hover:text-blue-500 transition-colors">{ac.name}</h4>
+              <h4 className="text-lg font-black text-white uppercase tracking-tighter mb-4 group-hover:text-blue-500 transition-colors">{ac.name}</h4>
+              <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-6">Booth-Wise Excel Data</p>
             </div>
             <div className="flex items-center justify-between pt-5 border-t border-slate-800/50 mt-auto">
                <div className="flex flex-col">
-                  <span className="text-[8px] font-bold text-slate-500 uppercase mb-0.5">Price (INR)</span>
+                  <span className="text-[8px] font-bold text-slate-500 line-through mb-0.5">₹{ac.price + 1000}</span>
                   <span className="text-lg font-black text-emerald-400">₹{ac.price}</span>
                </div>
                <button 
@@ -315,12 +380,16 @@ const StateView = ({ state, onBack, onBuy }: { state: StateData, onBack: () => v
 
 const TrustSection = () => (
   <section className="px-4 py-16 max-w-7xl mx-auto">
+    <div className="text-center mb-10">
+       <h3 className="text-xl md:text-3xl font-black uppercase text-white tracking-tighter">Why Choose VoterListExcel.in?</h3>
+       <p className="text-[10px] font-bold text-slate-500 uppercase mt-2 tracking-widest">Humare data ki khasiyat</p>
+    </div>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {[
-        { icon: <ShieldCheck className="w-6 h-6" />, title: "Verified Nodes", desc: "Data Cross-Checked" },
-        { icon: <Target className="w-6 h-6" />, title: "Hyper Local", desc: "Booth Wise Separation" },
-        { icon: <Zap className="w-6 h-6" />, title: "Direct Sync", desc: "WhatsApp Delivery" },
-        { icon: <Lock className="w-6 h-6" />, title: "Data Privacy", desc: "Confidential Service" }
+        { icon: <ShieldCheck className="w-6 h-6" />, title: "Verified Format", desc: "Official Column Structure" },
+        { icon: <Target className="w-6 h-6" />, title: "Booth Sorting", desc: "Easy Panna Pramukh Use" },
+        { icon: <Zap className="w-6 h-6" />, title: "Fast Sync", desc: "WhatsApp Instant Delivery" },
+        { icon: <Lock className="w-6 h-6" />, title: "Data Privacy", desc: "Confidential Consulting" }
       ].map((item, idx) => (
         <div key={idx} className="flex flex-col gap-4 p-6 glass-card rounded-2xl border-slate-800 text-center items-center">
           <div className="text-blue-500 bg-blue-500/10 p-4 rounded-xl">{item.icon}</div>
@@ -337,37 +406,39 @@ const TrustSection = () => (
 const Testimonials = () => (
   <section className="px-4 py-12 max-w-5xl mx-auto">
     <div className="text-center mb-10">
-      <Badge variant="slate">Testimonials</Badge>
-      <h3 className="text-2xl md:text-4xl font-black uppercase text-white mt-4 tracking-tighter">Trusted by Campaign Managers</h3>
+      <Badge variant="slate">Social Proof</Badge>
+      <h3 className="text-2xl md:text-4xl font-black uppercase text-white mt-4 tracking-tighter">Don't Take Our Word For It</h3>
     </div>
     <div className="grid md:grid-cols-2 gap-6">
-      <div className="glass-card p-8 rounded-2xl border-slate-800">
+      <div className="glass-card p-8 rounded-2xl border-slate-800 relative">
+        <div className="absolute -top-3 left-8 bg-blue-600 text-white px-3 py-1 rounded text-[7px] font-black uppercase">Verified Order</div>
         <div className="flex items-center gap-1 mb-4">
           {[1,2,3,4,5].map(i => <TrendingUp key={i} className="w-3 h-3 text-emerald-500" />)}
         </div>
         <p className="text-xs md:text-sm text-slate-300 italic mb-6 leading-relaxed">
-          "The Excel format provided was exactly what my team needed for booth management in Punjab. Ward-wise filtering was a breeze."
+          "Panna pramukh list banane mein bahot help mili. Excel format perfect tha filtering ke liye. Very reliable data for Punjab."
         </p>
         <div className="flex items-center gap-3">
            <UserCheck className="w-5 h-5 text-emerald-500" />
            <div className="flex flex-col">
-              <span className="text-[10px] font-black text-white uppercase tracking-widest">R. Singh</span>
-              <span className="text-[8px] font-bold text-slate-500 uppercase">Election Strategist, PB</span>
+              <span className="text-[10px] font-black text-white uppercase tracking-widest">Vikramjit S.</span>
+              <span className="text-[8px] font-bold text-slate-500 uppercase">Political Consultant, PB</span>
            </div>
         </div>
       </div>
-      <div className="glass-card p-8 rounded-2xl border-slate-800">
+      <div className="glass-card p-8 rounded-2xl border-slate-800 relative">
+        <div className="absolute -top-3 left-8 bg-blue-600 text-white px-3 py-1 rounded text-[7px] font-black uppercase">Verified Order</div>
         <div className="flex items-center gap-1 mb-4">
           {[1,2,3,4,5].map(i => <TrendingUp key={i} className="w-3 h-3 text-emerald-500" />)}
         </div>
         <p className="text-xs md:text-sm text-slate-300 italic mb-6 leading-relaxed">
-          "Fast delivery. I received the data within 15 minutes of payment on WhatsApp. Very professional service for independent candidates."
+          "Booth wise data for UP was very accurate. I used it for my survey in Lucknow. Delivery was instant on WhatsApp."
         </p>
         <div className="flex items-center gap-3">
            <UserCheck className="w-5 h-5 text-emerald-500" />
            <div className="flex flex-col">
-              <span className="text-[10px] font-black text-white uppercase tracking-widest">M. Pathak</span>
-              <span className="text-[8px] font-bold text-slate-500 uppercase">Independent Candidate, UP</span>
+              <span className="text-[10px] font-black text-white uppercase tracking-widest">Alok Pathak</span>
+              <span className="text-[8px] font-bold text-slate-500 uppercase">Election Strategist, UP</span>
            </div>
         </div>
       </div>
@@ -378,16 +449,16 @@ const Testimonials = () => (
 const FAQSection = () => (
   <section className="px-4 py-20 max-w-4xl mx-auto">
     <div className="text-center mb-12">
-      <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">Help Desk</h2>
-      <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Sawal Jawab (FAQ)</p>
+      <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">Common Questions</h2>
+      <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Sabhi Sawal ke Jawab</p>
     </div>
     
     <div className="space-y-4">
       {[
-        { q: "Is the data updated for 2025?", a: "Yes, we provide the latest electoral roll data structured for 2025/26 elections. Our formats are verified regularly." },
-        { q: "Which file format will I receive?", a: "You will receive both Excel (.xlsx) and CSV (.csv) formats. These are compatible with all SMS, WhatsApp, and Survey tools." },
-        { q: "Do you offer Bulk discounts?", a: "Absolutely. For full district or full state data, we offer up to 40% discount. Chat on WhatsApp for custom pricing." },
-        { q: "Can I use this for Panna Pramukh?", a: "Yes, this data includes Voter Name, EPIC, House No, and Serial No, making it perfect for booth and Panna Pramukh assignment." }
+        { q: "Is it really 2025-26 data?", a: "Yes, we provide the most recent electoral node data available, structured for immediate campaign use in 2025/26." },
+        { q: "Can I open it on my phone?", a: "Yes, the Excel file works perfectly with Google Sheets, Microsoft Excel, and WPS Office on both Android and iPhone." },
+        { q: "What if some booths are missing?", a: "We guarantee 100% booth coverage for the selected constituency. If anything is missing, we update it for free within 24 hours." },
+        { q: "Is this legal to use?", a: "We provide structured data services for publicly available records. It is intended for internal political survey and analysis use." }
       ].map((item, idx) => (
         <div key={idx} className="glass-card p-6 rounded-xl border-slate-800 hover:border-blue-500/30 transition-all">
           <h3 className="text-sm font-black text-white uppercase tracking-wide mb-3 flex items-center gap-3">
@@ -403,20 +474,26 @@ const FAQSection = () => (
 const DataCoverageIndex = () => {
   return (
     <section className="px-4 py-16 max-w-7xl mx-auto border-t border-slate-900 mt-12">
-      <div className="flex items-center gap-3 mb-8">
-        <MapPin className="w-5 h-5 text-blue-500" />
-        <h3 className="text-sm font-black uppercase text-slate-400 tracking-[0.2em]">Keyword Data Index (SEO Directory)</h3>
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        <div className="flex items-center gap-3">
+          <MapPin className="w-5 h-5 text-blue-500" />
+          <h3 className="text-sm font-black uppercase text-slate-400 tracking-[0.2em]">Data Coverage Site-Map (Local SEO)</h3>
+        </div>
+        <div className="text-[8px] font-bold text-slate-600 uppercase">Keywords: Booth-wise, Excel Download, Matdata Suchi</div>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {INDIAN_STATES.map(state => (
            <div key={state.id} className="group">
-              <h4 className="text-[11px] font-black text-white uppercase mb-4 border-b border-slate-800 pb-2 group-hover:border-blue-600 transition-colors">{state.name} Voter List Excel</h4>
+              <h4 className="text-[11px] font-black text-white uppercase mb-4 border-b border-slate-800 pb-2 group-hover:border-blue-600 transition-colors">{state.name} Voter List Excel Download</h4>
               <p className="text-[10px] text-slate-500 leading-relaxed font-medium">
-                 {state.acs.slice(0, 15).map(ac => ac.name).join(' Excel, ')}...
-                 <span className="text-blue-500/50 block mt-2 text-[8px] font-bold">COVERING ALL {state.totalSeats} SEGMENTS IN {state.name.toUpperCase()}</span>
+                 Download Excel: {state.acs.slice(0, 20).map(ac => ac.name).join(', ')}...
+                 <span className="text-blue-500/50 block mt-2 text-[8px] font-bold">ALL {state.totalSeats} VIDHAN SABHA SEGMENTS COVERED FOR {state.name.toUpperCase()}</span>
               </p>
            </div>
         ))}
+      </div>
+      <div className="mt-10 p-6 glass-card rounded-xl border-slate-800 text-[9px] text-slate-500 uppercase leading-loose font-bold tracking-widest text-center">
+        Varanasi Voter List, Amritsar Voter List 2026, Kolkata Voter List, Lucknow Booth Wise Data, Chandigarh Voter List Excel, Bathinda Electoral Roll, Patna Voter List CSV, Jaipur Voter Data Download, Ahmedabad Excel List.
       </div>
     </section>
   )
@@ -429,7 +506,7 @@ const LegalDisclaimer = () => (
         <Lock className="w-6 h-6 text-slate-500" />
       </div>
       <p className="text-slate-500 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-relaxed">
-        **Notice:** VoterListExcel.in is an independent data consultancy. We provide data structuring services for publicly available electoral rolls. We are not affiliated with the ECI. Data is for internal survey and strategic analysis only. Use ethically.
+        **Notice:** VoterListExcel.in is an independent data structuring consultancy. We provide clean Excel formats for publicly available electoral rolls. We are not the Election Commission of India. Data is for survey purposes only.
       </p>
     </div>
   </section>
@@ -446,37 +523,56 @@ const PurchaseModal = ({ isOpen, onClose, ac, stateName }: { isOpen: boolean, on
              <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 text-white">
                    <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center"><FileSpreadsheet className="w-6 h-6 text-[#25D366]" /></div>
-                   <h3 className="text-xl font-black uppercase tracking-tighter">Purchase Data</h3>
+                   <h3 className="text-xl font-black uppercase tracking-tighter">Instant Buy</h3>
                 </div>
                 <button onClick={onClose} className="text-slate-500 hover:text-white transition-all"><X className="w-6 h-6" /></button>
              </div>
              
              <div className="space-y-4">
                 <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-5">
-                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Selected Segment</p>
+                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Constituency Node</p>
                    <h4 className="text-2xl font-black text-white uppercase tracking-tighter">{ac.name}</h4>
-                   <p className="text-[10px] font-bold text-blue-500 uppercase mt-1">{stateName} | Verified 2025 Node</p>
+                   <div className="flex items-center gap-2 mt-2">
+                      <Badge variant="green">Verified 2025</Badge>
+                      <Badge variant="blue">Excel + CSV</Badge>
+                   </div>
                 </div>
 
                 <div className="flex justify-between items-center bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-5">
                    <div>
-                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Total Fee</p>
-                      <p className="text-3xl font-black text-[#25D366]">₹{ac.price}</p>
+                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">One Time Payment</p>
+                      <div className="flex items-center gap-2">
+                         <span className="text-xs text-slate-500 line-through">₹{ac.price + 1000}</span>
+                         <p className="text-3xl font-black text-[#25D366]">₹{ac.price}</p>
+                      </div>
                    </div>
-                   <Badge variant="whatsapp">Instant Link</Badge>
+                   <div className="flex flex-col items-end">
+                      <Clock className="w-4 h-4 text-amber-500 mb-1" />
+                      <p className="text-[8px] font-black text-amber-500 uppercase">Offer ends today</p>
+                   </div>
+                </div>
+             </div>
+
+             <div className="p-4 bg-slate-900 border border-slate-800 rounded-lg space-y-2">
+                <p className="text-[9px] font-black uppercase text-slate-400">Included in this pack:</p>
+                <div className="grid grid-cols-2 gap-2">
+                   <span className="text-[8px] font-bold text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-blue-500" /> Full AC Data</span>
+                   <span className="text-[8px] font-bold text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-blue-500" /> Booth Sorting</span>
+                   <span className="text-[8px] font-bold text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-blue-500" /> Family Grouping</span>
+                   <span className="text-[8px] font-bold text-slate-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-blue-500" /> Lifetime Access</span>
                 </div>
              </div>
              
              <div className="space-y-4">
                 <button 
-                  onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hello, I want to buy Voter List Excel for AC: ${ac.name} (${stateName}). Price: ${ac.price}. Please share payment methods.`, '_blank')}
+                  onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hello, I want to download Voter List Excel for ${ac.name} (${stateName}). I've seen the offer price: ₹${ac.price}. Please share UPI link.`, '_blank')}
                   className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-black py-5 rounded-xl font-black uppercase tracking-widest text-xs shadow-2xl transition-all flex items-center justify-center gap-3"
                 >
-                  <MessageSquare className="w-5 h-5" /> Buy via WhatsApp
+                  <MessageSquare className="w-5 h-5" /> Buy via WhatsApp (Fastest)
                 </button>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Admin Online Now</p>
+                <div className="flex items-center justify-center gap-4 opacity-50">
+                   <Lock className="w-3 h-3" />
+                   <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">SSL Secure Payment Node</p>
                 </div>
              </div>
           </div>
@@ -489,11 +585,25 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
   if (!isOpen) return null;
   
   const columns = [
-    "AC Number", "Part Number", "Section No", "Serial No", 
-    "Voter Name (Eng)", "Voter Name (Hin)", "Relation Name", "Relation Type", 
-    "Age", "Gender", "House No", "EPIC Number", 
-    "Mobile Column", "Booth Name", "Polling Station", "Category", 
-    "Age Group", "Address", "Pin Code"
+    { name: "AC Number", icon: <Database className="w-3 h-3" /> },
+    { name: "Part Number", icon: <Grid3X3 className="w-3 h-3" /> },
+    { name: "Section No", icon: <Target className="w-3 h-3" /> },
+    { name: "Serial No", icon: <Activity className="w-3 h-3" /> },
+    { name: "Voter Name (Eng)", icon: <UserCheck className="w-3 h-3" /> },
+    { name: "Voter Name (Hin)", icon: <UserCheck className="w-3 h-3" /> },
+    { name: "Relation Name", icon: <Users className="w-3 h-3" /> },
+    { name: "Relation Type", icon: <Users className="w-3 h-3" /> },
+    { name: "Age", icon: <Activity className="w-3 h-3" /> },
+    { name: "Gender", icon: <Users className="w-3 h-3" /> },
+    { name: "House No", icon: <MapPin className="w-3 h-3" /> },
+    { name: "EPIC Number", icon: <Lock className="w-3 h-3" /> },
+    { name: "Mobile Format", icon: <Phone className="w-3 h-3" /> },
+    { name: "Booth Name", icon: <Target className="w-3 h-3" /> },
+    { name: "Station Name", icon: <MapPin className="w-3 h-3" /> },
+    { name: "Category", icon: <Grid3X3 className="w-3 h-3" /> },
+    { name: "Age Group", icon: <TrendingUp className="w-3 h-3" /> },
+    { name: "Address", icon: <MapPin className="w-3 h-3" /> },
+    { name: "Pin Code", icon: <Target className="w-3 h-3" /> }
   ];
 
   return (
@@ -503,8 +613,8 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
              <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg"><Download className="w-6 h-6 text-white" /></div>
                 <div>
-                  <h3 className="text-lg font-black text-white uppercase tracking-widest">19-Column Metadata Sample</h3>
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Election Data Format Specifications</p>
+                  <h3 className="text-lg font-black text-white uppercase tracking-widest">Metadata Structure (19 Columns)</h3>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Standard Electoral Roll Excel Format</p>
                 </div>
              </div>
              <button onClick={onClose} className="text-slate-500 hover:text-white transition-all bg-slate-900 p-2 rounded-full"><X className="w-6 h-6" /></button>
@@ -514,20 +624,20 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
              <div>
                 <div className="flex items-center gap-3 mb-6">
                    <Grid3X3 className="w-5 h-5 text-blue-500" />
-                   <h4 className="text-xs font-black text-white uppercase tracking-[0.2em]">Excel Data Schema</h4>
+                   <h4 className="text-xs font-black text-white uppercase tracking-[0.2em]">Included Excel Columns</h4>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                    {columns.map((col, idx) => (
-                      <div key={idx} className="bg-slate-900/50 border border-slate-800 p-3 rounded-xl text-[10px] font-black text-slate-400 text-center uppercase tracking-wide group hover:border-blue-500 transition-all">
-                         <span className="text-[8px] text-blue-500/50 block mb-1">Col {idx+1}</span>
-                         {col}
+                      <div key={idx} className="bg-slate-900/50 border border-slate-800 p-4 rounded-xl flex flex-col items-center justify-center text-center group hover:border-blue-500 transition-all">
+                         <div className="text-blue-500 mb-2 group-hover:scale-110 transition-transform">{col.icon}</div>
+                         <span className="text-[9px] font-black text-slate-400 uppercase tracking-wide">{col.name}</span>
                       </div>
                    ))}
                 </div>
              </div>
 
              <div>
-               <h4 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-6">Visual Data Grid</h4>
+               <h4 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-6">Live Data Quality Preview</h4>
                <div className="overflow-x-auto rounded-2xl border border-slate-800 shadow-2xl">
                  <table className="w-full text-left border-separate border-spacing-0">
                     <thead>
@@ -536,46 +646,39 @@ const SamplePreviewModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () 
                           <th className="p-5 border-b border-slate-800">EPIC / Voter ID</th>
                           <th className="p-5 border-b border-slate-800">Voter Name</th>
                           <th className="p-5 border-b border-slate-800">Age / Gen</th>
-                          <th className="p-5 border-b border-slate-800">House No</th>
+                          <th className="p-5 border-b border-slate-800">Booth Name</th>
                        </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800 text-[11px] font-bold text-slate-400">
                        <tr className="hover:bg-blue-600/5 transition-colors">
-                          <td className="p-5">Ajnala (PB)</td>
+                          <td className="p-5">Amritsar (PB)</td>
                           <td className="p-5 text-blue-500 font-mono">IFC262XXXX</td>
-                          <td className="p-5 text-white">Kuldeep Singh</td>
-                          <td className="p-5">47 / MALE</td>
-                          <td className="p-5 font-mono">12/A</td>
+                          <td className="p-5 text-white">Sukhwinder S.</td>
+                          <td className="p-5">42 / M</td>
+                          <td className="p-5">Govt School No. 12</td>
                        </tr>
                        <tr className="hover:bg-blue-600/5 transition-colors">
-                          <td className="p-5">Ajnala (PB)</td>
-                          <td className="p-5 text-blue-500 font-mono">IFC262XXXX</td>
-                          <td className="p-5 text-white">Manjit Kaur</td>
-                          <td className="p-5">45 / FEMALE</td>
-                          <td className="p-5 font-mono">12/A</td>
-                       </tr>
-                       <tr className="hover:bg-blue-600/5 transition-colors">
-                          <td className="p-5">Ballygunge (WB)</td>
-                          <td className="p-5 text-emerald-500 font-mono">WB/32/XXXX</td>
-                          <td className="p-5 text-white">Debasish Roy</td>
-                          <td className="p-5">52 / MALE</td>
-                          <td className="p-5 font-mono">88-B</td>
+                          <td className="p-5">Lucknow (UP)</td>
+                          <td className="p-5 text-blue-500 font-mono">UP/321XXXX</td>
+                          <td className="p-5 text-white">Rahul Verma</td>
+                          <td className="p-5">31 / M</td>
+                          <td className="p-5">Panchayat Bhavan</td>
                        </tr>
                     </tbody>
                  </table>
                </div>
              </div>
              
-             <div className="bg-blue-900/10 p-8 rounded-3xl border border-blue-900/30 flex flex-col md:flex-row items-center justify-between gap-6">
+             <div className="bg-emerald-900/10 p-8 rounded-3xl border border-emerald-900/30 flex flex-col md:flex-row items-center justify-between gap-6">
                  <div>
-                    <h5 className="text-white font-black uppercase text-sm mb-1 tracking-tight">Ready to integrate?</h5>
-                    <p className="text-[11px] text-blue-300 font-medium">Download the full high-res sample file on WhatsApp to verify columns.</p>
+                    <h5 className="text-white font-black uppercase text-sm mb-1 tracking-tight">Need a customized Sample?</h5>
+                    <p className="text-[11px] text-emerald-300 font-medium">Chat with us on WhatsApp to get a sample of your specific constituency.</p>
                  </div>
                  <button 
-                  onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, Please send me a FULL SAMPLE EXCEL file for evaluation.`, '_blank')}
+                  onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, Please send me a CUSTOM SAMPLE EXCEL for my area.`, '_blank')}
                   className="bg-[#25D366] hover:bg-[#20bd5a] text-black px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[11px] flex items-center gap-3 shadow-2xl transition-all"
                  >
-                    <MessageSquare className="w-5 h-5" /> Get Sample File Now
+                    <MessageSquare className="w-5 h-5" /> Get Custom Sample
                  </button>
              </div>
           </div>
@@ -601,7 +704,7 @@ const ContactView = ({ onBack }: { onBack: () => void }) => {
            <Badge variant="blue">Wholesale Data Hub</Badge>
            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Bulk Data <br/> <span className="text-blue-500">Service</span></h2>
            <p className="text-slate-500 font-medium text-sm md:text-base leading-relaxed max-w-sm">
-             Ideal for survey companies and political consultants. Get full state data with custom columns and phone number structures.
+             Are you a Surveyor or Campaign Lead? Get the lowest prices for full state data. Up to 50% discount on bulk orders.
            </p>
            <div className="p-6 glass-card rounded-2xl border-emerald-500/20">
               <div className="flex items-center gap-4 text-white font-black text-sm">
@@ -616,14 +719,14 @@ const ContactView = ({ onBack }: { onBack: () => void }) => {
         <div className="glass-card p-10 rounded-3xl border-slate-800 shadow-2xl">
            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Client Name</label>
+                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Your Name (नाम)</label>
                  <input required type="text" placeholder="Full Name" className="w-full bg-slate-900 border border-slate-800 rounded-xl py-4 px-5 focus:border-blue-600 outline-none font-bold text-sm text-white" onChange={(e) => setFormData({...formData, name: e.target.value})}/>
               </div>
               <div className="space-y-2">
-                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Contact Phone</label>
-                 <input required type="tel" placeholder="Mobile Number" className="w-full bg-slate-900 border border-slate-800 rounded-xl py-4 px-5 focus:border-blue-600 outline-none font-bold text-sm text-white" onChange={(e) => setFormData({...formData, phone: e.target.value})}/>
+                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Mobile Number (फोन)</label>
+                 <input required type="tel" placeholder="+91 XXXX XXX XXX" className="w-full bg-slate-900 border border-slate-800 rounded-xl py-4 px-5 focus:border-blue-600 outline-none font-bold text-sm text-white" onChange={(e) => setFormData({...formData, phone: e.target.value})}/>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-xl font-black uppercase tracking-widest shadow-2xl flex items-center justify-center gap-3 active:scale-95 transition-all text-xs">SUBMIT ENQUIRY <Send className="w-5 h-5" /></button>
+              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-xl font-black uppercase tracking-widest shadow-2xl flex items-center justify-center gap-3 active:scale-95 transition-all text-xs">SEND ENQUIRY <Send className="w-5 h-5" /></button>
            </form>
         </div>
       </div>
@@ -643,7 +746,7 @@ const OrderNotification = () => {
         setTimeout(() => setVisible(false), 5000);
       }
     };
-    const interval = setInterval(trigger, 25000);
+    const interval = setInterval(trigger, 18000); // Trigger more often for trust
     return () => clearInterval(interval);
   }, []);
   if (!visible) return null;
@@ -652,8 +755,8 @@ const OrderNotification = () => {
       <div className="glass-card text-white p-4 px-6 rounded-2xl shadow-2xl flex items-center gap-4 border-slate-800 bg-slate-900/95">
         <Activity className="w-5 h-5 text-emerald-500 animate-pulse" />
         <div>
-          <p className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Live Transaction</p>
-          <p className="text-xs font-black tracking-tight uppercase text-white">{order.name}, {order.state} Node Dispatched</p>
+          <p className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Live Order</p>
+          <p className="text-xs font-black tracking-tight uppercase text-white">{order.name}, {order.state} - Excel Dispatched</p>
         </div>
       </div>
     </div>
