@@ -4,7 +4,7 @@ import {
   FileSpreadsheet, ShieldCheck, Activity, Eye, 
   MessageSquare, Send, Database, Target, Lock, Zap, HelpCircle, ChevronDown, CheckCircle2, UserCheck,
   Grid3X3, Download, MapPin, TrendingUp, ShieldAlert, Clock, Users, Gift,
-  FileText, ArrowRight, RefreshCw, Layers
+  FileText, ArrowRight, RefreshCw, Layers, Printer, Smartphone, Headphones, BarChart3, FileDigit
 } from 'lucide-react';
 import { INDIAN_STATES, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
@@ -22,6 +22,18 @@ const usePageSEO = (view: ViewState, state: StateData | null) => {
     } else if (view === 'CONTACT') {
       title = "Contact for Bulk Voter Data | VoterListExcel.in";
       desc = "Get full state voter list excel at 40% discount. Contact our data experts for custom survey formats.";
+    } else if (view === 'PRINTING') {
+      title = "Voter Slip Printing Service | Door-to-Door Delivery";
+      desc = "High quality voter slip (parchi) printing service. Photo slips with candidate symbol. Fast delivery for election campaigns.";
+    } else if (view === 'APP_DEV') {
+      title = "Election Management App | War Room Software";
+      desc = "Get your own Whitelabel Election App. Manage Karyakartas, Search Voters, and handle War Room operations digitally.";
+    } else if (view === 'SURVEY') {
+      title = "Political Survey & IVR Services | Election 2025";
+      desc = "Professional political survey, opinion polls, and IVR call blasting services for election campaigns.";
+    } else if (view === 'DATA_CONVERSION') {
+      title = "Bulk PDF to Excel Data Entry Services | 100% Verified";
+      desc = "Professional Bulk PDF to Excel conversion. We handle millions of rows with manual verification. Accurate data digitization for government records.";
     }
 
     document.title = title;
@@ -71,7 +83,7 @@ const FloatingWhatsApp = () => (
       Chat with Admin
     </div>
     <button 
-      onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to inquire about Voter List Excel.`, '_blank')}
+      onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want to inquire about Voter List Excel or Services.`, '_blank')}
       className="w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform active:scale-95 animate-pulse-soft"
     >
       <MessageSquare className="w-7 h-7" />
@@ -125,11 +137,20 @@ const App = () => {
           <div onClick={handleHome}>
             <PremiumLogo />
           </div>
+
+          {/* New Navigation Menu */}
+          <div className="hidden md:flex items-center gap-6 text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+            <button onClick={() => setView('DATA_CONVERSION')} className={`hover:text-orange-500 transition-colors ${view === 'DATA_CONVERSION' ? 'text-orange-600' : ''}`}>PDF Data Entry</button>
+            <button onClick={() => setView('PRINTING')} className={`hover:text-orange-500 transition-colors ${view === 'PRINTING' ? 'text-orange-600' : ''}`}>Slip Printing</button>
+            <button onClick={() => setView('APP_DEV')} className={`hover:text-orange-500 transition-colors ${view === 'APP_DEV' ? 'text-orange-600' : ''}`}>Election App</button>
+            <button onClick={() => setView('SURVEY')} className={`hover:text-orange-500 transition-colors ${view === 'SURVEY' ? 'text-orange-600' : ''}`}>Survey/IVR</button>
+          </div>
+
           <button 
             onClick={() => setView('CONTACT')} 
             className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 flex items-center gap-1.5 shadow-md"
           >
-            <Phone className="w-3 h-3 text-orange-400" /> Get Bulk Discount
+            <Phone className="w-3 h-3 text-orange-400" /> Contact
           </button>
         </div>
       </nav>
@@ -318,6 +339,14 @@ const App = () => {
           />
         ) : view === 'CONTACT' ? (
           <ContactView onBack={() => setView('HOME')} />
+        ) : view === 'PRINTING' ? (
+          <PrintingView onBack={() => setView('HOME')} />
+        ) : view === 'APP_DEV' ? (
+          <AppDevView onBack={() => setView('HOME')} />
+        ) : view === 'SURVEY' ? (
+          <SurveyView onBack={() => setView('HOME')} />
+        ) : view === 'DATA_CONVERSION' ? (
+          <DataConversionView onBack={() => setView('HOME')} />
         ) : null}
       </main>
 
@@ -341,6 +370,327 @@ const App = () => {
     </div>
   );
 };
+
+// --- NEW PAGES (VIEWS) ---
+
+const DataConversionView = ({ onBack }: { onBack: () => void }) => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 animate-fade-in pb-10">
+      <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-500 text-[9px] font-black uppercase tracking-widest mb-10 group transition-all">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> BACK TO HOME
+      </button>
+
+      {/* Header */}
+      <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 border border-purple-100 rounded-full mb-6">
+          <Badge variant="purple" className="animate-pulse">High Volume Processing</Badge>
+          <span className="text-[10px] font-bold text-purple-700 uppercase tracking-widest">100,000+ Pages Capacity</span>
+        </div>
+        <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 mb-6 leading-tight">
+          Professional Bulk <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">PDF to Excel</span> Data Conversion
+        </h1>
+        <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-3xl mx-auto">
+          Accurate. Manual Verification. Scalable for Millions of Rows.
+        </p>
+      </div>
+
+      {/* Intro & Services */}
+      <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 className="text-2xl font-black uppercase text-slate-900 mb-6">Our Specialized Services</h2>
+          <p className="text-slate-600 mb-8 leading-relaxed font-medium">
+             We provide high-quality data extraction services for clients who need to convert large volumes (1,000 to 1,00,000+ pages) of data from PDF to Excel. We utilize automatic tools and expert manual verification to ensure 100% accuracy.
+          </p>
+          <div className="space-y-4">
+             {[
+               { title: "Bulk Voter List Conversion", desc: "Convert any state's voter list into a structured Excel format." },
+               { title: "Large Scale PDF Processing", desc: "Capacity to process 1 Lakh+ pages of data without errors." },
+               { title: "Multilingual Support", desc: "Convert Punjabi, Hindi, and English data into Unicode or English Excel." },
+               { title: "Government Record Digitization", desc: "Digitize old scanned documents and PDF files into searchable Excel sheets." }
+             ].map((service, i) => (
+               <div key={i} className="flex gap-4 p-4 rounded-xl bg-white border border-slate-100 hover:border-purple-200 transition-all shadow-sm">
+                  <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                    <FileDigit className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-sm text-slate-900 uppercase mb-1">{service.title}</h4>
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium">{service.desc}</p>
+                  </div>
+               </div>
+             ))}
+          </div>
+        </div>
+        
+        <div className="space-y-8">
+           <div className="bg-slate-900 text-white p-8 rounded-3xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-10">
+                 <ShieldCheck className="w-48 h-48" />
+              </div>
+              <h3 className="text-xl font-black uppercase tracking-widest mb-6 border-b border-slate-700 pb-4">Why Choose Us?</h3>
+              <ul className="space-y-4 relative z-10">
+                 <li className="flex items-start gap-3">
+                    <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+                    <div>
+                       <span className="font-bold text-sm uppercase block mb-1">AI-Powered Speed</span>
+                       <span className="text-xs text-slate-400 font-medium">We leverage AI Studio and Gemini technology to accelerate processing speed.</span>
+                    </div>
+                 </li>
+                 <li className="flex items-start gap-3">
+                    <UserCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                       <span className="font-bold text-sm uppercase block mb-1">Manual Quality Check</span>
+                       <span className="text-xs text-slate-400 font-medium">Our team manually verifies every sheet to ensure correct formatting and calculations.</span>
+                    </div>
+                 </li>
+                 <li className="flex items-start gap-3">
+                    <Lock className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+                    <div>
+                       <span className="font-bold text-sm uppercase block mb-1">Data Security</span>
+                       <span className="text-xs text-slate-400 font-medium">Your data remains 100% secure and confidential with us.</span>
+                    </div>
+                 </li>
+                 <li className="flex items-start gap-3">
+                    <Grid3X3 className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                    <div>
+                       <span className="font-bold text-sm uppercase block mb-1">Custom Formatting</span>
+                       <span className="text-xs text-slate-400 font-medium">We format data into specific columns (Address, Pincode, Mobile, Name) as per your requirements.</span>
+                    </div>
+                 </li>
+              </ul>
+           </div>
+        </div>
+      </div>
+
+      {/* Capacity Table */}
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-12">
+        <div className="bg-purple-50 p-6 border-b border-purple-100 text-center">
+           <h3 className="text-xl font-black text-purple-900 uppercase tracking-widest">Service Capacity Table</h3>
+        </div>
+        <div className="overflow-x-auto">
+           <table className="w-full text-left">
+              <thead>
+                 <tr className="bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest border-b border-slate-200">
+                    <th className="p-5">Volume</th>
+                    <th className="p-5">Accuracy</th>
+                    <th className="p-5">Delivery Time</th>
+                 </tr>
+              </thead>
+              <tbody className="text-sm font-bold text-slate-700 divide-y divide-slate-100">
+                 <tr className="hover:bg-purple-50/50 transition-colors">
+                    <td className="p-5">1,000 - 10,000 Pages</td>
+                    <td className="p-5 text-emerald-600 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> 100% Verified</td>
+                    <td className="p-5">Fast Track</td>
+                 </tr>
+                 <tr className="hover:bg-purple-50/50 transition-colors">
+                    <td className="p-5">10,000 - 50,000 Pages</td>
+                    <td className="p-5 text-emerald-600 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Manual Audit</td>
+                    <td className="p-5">Standard</td>
+                 </tr>
+                 <tr className="hover:bg-purple-50/50 transition-colors">
+                    <td className="p-5">50,000 - 1,00,000+ Pages</td>
+                    <td className="p-5 text-emerald-600 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Multi-Layer Check</td>
+                    <td className="p-5">Enterprise Support</td>
+                 </tr>
+              </tbody>
+           </table>
+        </div>
+      </div>
+
+      <div className="flex justify-center">
+        <button 
+           onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I have bulk PDF files for Excel conversion. Need a quote.`, '_blank')}
+           className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-4 rounded-xl font-black text-sm uppercase tracking-widest shadow-xl transition-all flex items-center gap-3 animate-pulse-soft"
+        >
+           <MessageSquare className="w-5 h-5" /> Get Bulk Conversion Quote
+        </button>
+      </div>
+
+    </div>
+  );
+};
+
+const PrintingView = ({ onBack }: { onBack: () => void }) => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 animate-fade-in pb-10">
+      <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-500 text-[9px] font-black uppercase tracking-widest mb-10 group transition-all">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> BACK TO HOME
+      </button>
+
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <Badge variant="orange" className="mb-4">ELECTION 2025 SPECIAL</Badge>
+          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 mb-6">
+            Voter Slip <br/><span className="text-orange-500">Printing Service</span>
+          </h1>
+          <p className="text-slate-500 text-lg mb-8 leading-relaxed font-medium">
+             Don't waste time sorting slips manually. We print high-quality Voter Slips (Parchi) sorted Booth-wise and Ward-wise. Delivered to your campaign office.
+          </p>
+          <div className="space-y-4 mb-8">
+             {[
+               "Photo Slip with Candidate Symbol",
+               "Sorted Booth Wise (Easy Distribution)",
+               "Hindi / English / Regional Language",
+               "QR Code for Polling Station Location"
+             ].map((feature, i) => (
+               <div key={i} className="flex items-center gap-3">
+                 <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                 <span className="text-sm font-bold text-slate-700">{feature}</span>
+               </div>
+             ))}
+          </div>
+          <button 
+             onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I need a quote for VOTER SLIP PRINTING service.`, '_blank')}
+             className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl transition-all flex items-center gap-3"
+          >
+             <Printer className="w-5 h-5" /> Get Printing Rate
+          </button>
+        </div>
+        <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl relative">
+           <div className="absolute -top-4 -right-4 bg-slate-900 text-white px-4 py-2 rounded-lg font-black text-xs uppercase">Minimum Order: 5000</div>
+           <div className="space-y-6">
+             <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex gap-4">
+                <div className="w-16 h-16 bg-white border border-slate-200 rounded-md flex items-center justify-center font-bold text-slate-300 text-xs">PHOTO</div>
+                <div className="space-y-2 flex-1">
+                   <div className="h-3 w-3/4 bg-slate-200 rounded"></div>
+                   <div className="h-3 w-1/2 bg-slate-200 rounded"></div>
+                   <div className="h-3 w-full bg-slate-200 rounded"></div>
+                </div>
+             </div>
+             <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex gap-4 opacity-50">
+                <div className="w-16 h-16 bg-white border border-slate-200 rounded-md flex items-center justify-center font-bold text-slate-300 text-xs">PHOTO</div>
+                <div className="space-y-2 flex-1">
+                   <div className="h-3 w-3/4 bg-slate-200 rounded"></div>
+                   <div className="h-3 w-1/2 bg-slate-200 rounded"></div>
+                   <div className="h-3 w-full bg-slate-200 rounded"></div>
+                </div>
+             </div>
+           </div>
+           <p className="mt-6 text-center text-xs font-bold text-slate-400 uppercase">Sample Preview (B&W / Color Available)</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const AppDevView = ({ onBack }: { onBack: () => void }) => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 animate-fade-in pb-10">
+      <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-500 text-[9px] font-black uppercase tracking-widest mb-10 group transition-all">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> BACK TO HOME
+      </button>
+
+      <div className="bg-slate-900 rounded-3xl p-8 md:p-16 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 blur-[100px] rounded-full"></div>
+        
+        <div className="grid lg:grid-cols-2 gap-12 relative z-10">
+          <div>
+            <div className="inline-block px-3 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full mb-6">
+               <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Whitelabel Solution</span>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-6">
+              Apna Khud Ka <br/><span className="text-blue-500">Election App</span> Banwaye
+            </h1>
+            <p className="text-slate-400 text-base mb-8 leading-relaxed max-w-md">
+              Launch your campaign's official app on Play Store. Features include Voter Search, Karyakarta Directory, and LIVE War Room Dashboard.
+            </p>
+            <div className="grid grid-cols-2 gap-4 mb-8">
+               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                  <Search className="w-5 h-5 text-blue-400 mb-2" />
+                  <h4 className="font-bold text-xs uppercase">Voter Search</h4>
+               </div>
+               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                  <Users className="w-5 h-5 text-emerald-400 mb-2" />
+                  <h4 className="font-bold text-xs uppercase">Karyakarta Mgmt</h4>
+               </div>
+               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                  <Activity className="w-5 h-5 text-orange-400 mb-2" />
+                  <h4 className="font-bold text-xs uppercase">Live War Room</h4>
+               </div>
+               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                  <MapPin className="w-5 h-5 text-purple-400 mb-2" />
+                  <h4 className="font-bold text-xs uppercase">Booth Mapping</h4>
+               </div>
+            </div>
+            <button 
+               onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I am interested in ELECTION APP DEVELOPMENT.`, '_blank')}
+               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl transition-all flex items-center gap-3"
+            >
+               <Smartphone className="w-5 h-5" /> Request App Demo
+            </button>
+          </div>
+          <div className="flex items-center justify-center">
+             <div className="w-64 h-[500px] bg-slate-800 rounded-[2.5rem] border-4 border-slate-700 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-700 rounded-b-2xl"></div>
+                <div className="p-6 mt-8 space-y-4">
+                   <div className="h-20 bg-blue-600 rounded-xl w-full opacity-80"></div>
+                   <div className="h-10 bg-slate-700 rounded-lg w-full"></div>
+                   <div className="grid grid-cols-2 gap-2">
+                      <div className="h-24 bg-slate-700/50 rounded-lg"></div>
+                      <div className="h-24 bg-slate-700/50 rounded-lg"></div>
+                   </div>
+                   <div className="h-32 bg-slate-700/30 rounded-lg w-full"></div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const SurveyView = ({ onBack }: { onBack: () => void }) => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 animate-fade-in pb-10">
+      <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-orange-500 text-[9px] font-black uppercase tracking-widest mb-10 group transition-all">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> BACK TO HOME
+      </button>
+
+      <div className="text-center mb-16">
+         <Badge variant="purple" className="mb-4">Data Driven Campaign</Badge>
+         <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 mb-4">
+           Political <span className="text-purple-600">Survey & IVR</span>
+         </h1>
+         <p className="text-slate-500 max-w-2xl mx-auto">Scientific opinion polls and automated calling campaigns to understand voter pulse.</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8">
+         <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 group hover:border-purple-300 transition-all">
+            <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-6"><Headphones className="w-6 h-6 text-purple-600" /></div>
+            <h3 className="text-xl font-black uppercase text-slate-900 mb-2">IVR Call Campaign</h3>
+            <p className="text-slate-500 text-sm mb-6">Automated voice calls in candidate's voice. Great for event reminders and mass appeal.</p>
+            <ul className="space-y-2 mb-8">
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> 1 Lakh Calls / Hour Capacity</li>
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> Real-time Reporting</li>
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div> Regional Language Support</li>
+            </ul>
+            <button 
+               onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want details about IVR CALL Services.`, '_blank')}
+               className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-black text-[10px] uppercase tracking-widest"
+            >
+               Get IVR Plans
+            </button>
+         </div>
+
+         <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 group hover:border-orange-300 transition-all">
+            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6"><BarChart3 className="w-6 h-6 text-orange-600" /></div>
+            <h3 className="text-xl font-black uppercase text-slate-900 mb-2">Opinion Poll Survey</h3>
+            <p className="text-slate-500 text-sm mb-6">Door-to-Door or Telephonic survey to identify strong and weak booths.</p>
+            <ul className="space-y-2 mb-8">
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Sample Size: 2% - 5% of Voters</li>
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Caste Equation Analysis</li>
+               <li className="text-xs font-bold text-slate-600 flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Swing Voter Identification</li>
+            </ul>
+            <button 
+               onClick={() => window.open(`https://wa.me/${CONTACT_WHATSAPP}?text=Hi, I want details about ELECTION SURVEY Services.`, '_blank')}
+               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-black text-[10px] uppercase tracking-widest"
+            >
+               Get Survey Quote
+            </button>
+         </div>
+      </div>
+    </div>
+  );
+}
 
 // --- Sub-View: State Level ---
 

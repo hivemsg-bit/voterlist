@@ -25,7 +25,7 @@ export interface NewsItem {
   image?: string;
 }
 
-export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'NEWS';
+export type ViewState = 'HOME' | 'STATE_VIEW' | 'CONTACT' | 'NEWS' | 'PRINTING' | 'APP_DEV' | 'SURVEY' | 'DATA_CONVERSION';
 
 export interface AIResponse {
   text: string;
