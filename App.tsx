@@ -10,35 +10,66 @@ import { INDIAN_STATES, CONTACT_WHATSAPP } from './constants';
 import { StateData, ViewState, AssemblyConstituency } from './types';
 import { getPoliticalInsight } from './services/geminiService';
 
+// Add type definition for adsbygoogle
+declare global {
+  interface Window {
+    adsbygoogle?: any[];
+  }
+}
+
 // --- Custom Hook for Dynamic SEO ---
 const usePageSEO = (view: ViewState, state: StateData | null) => {
   useEffect(() => {
+    // 1. Default Home SEO (UNCHANGED)
     let title = "Voter List Excel Download 2025 | Booth Wise Data India";
     let desc = "Download 2025-26 Voter List in Excel. Booth-wise data for Punjab, WB, UP. Perfect for Panna Pramukh & political campaign management. Instant WhatsApp Delivery.";
+    let keywords = "voter list excel download, pdf to excel service, scanned pdf to excel converter, hindi data entry, election data cleaning, raw data formatting, panna pramukh list maker";
 
+    // 2. Logic for Pages
     if (view === 'STATE_VIEW' && state) {
       title = `${state.name} Voter List Excel Download 2025 | Verified Booth Data`;
       desc = `Download official ${state.name} 2025 Voter List in Excel. Accurate booth & ward wise data for ${state.name} elections. Format: CSV/Excel.`;
+      keywords = `${state.name} voter list excel, ${state.name} booth wise data, ${state.name} election roll download, matdata suchi ${state.name}`;
     } else if (view === 'CONTACT') {
       title = "Contact for Bulk Voter Data | VoterListExcel.in";
       desc = "Get full state voter list excel at 40% discount. Contact our data experts for custom survey formats.";
-    } else if (view === 'PRINTING') {
-      title = "Voter Slip Printing Service | Door-to-Door Delivery";
-      desc = "High quality voter slip (parchi) printing service. Photo slips with candidate symbol. Fast delivery for election campaigns.";
+    } 
+    // --- SEO FOR NEW SERVICES (OPTIMIZED FOR GOOGLE RANKING) ---
+    else if (view === 'PRINTING') {
+      title = "Voter Slip Printing Service India 2025 | Photo Parchi & QR Code Slips";
+      desc = "Best Election Voter Slip (Parchi) Printing Service. We provide Booth-wise sorted Photo Slips with Candidate Symbol. Fast Delivery for Punjab, UP, Bihar & All States.";
+      keywords = "voter slip printing, election parchi print, photo voter slip, booth wise slips, election stationary, door to door distribution slips, matdata parchi printing";
     } else if (view === 'APP_DEV') {
-      title = "Election Management App | War Room Software";
-      desc = "Get your own Whitelabel Election App. Manage Karyakartas, Search Voters, and handle War Room operations digitally.";
+      title = "Political Election Management App Software | War Room & Voter Search Tool";
+      desc = "Launch your own Election Campaign App. Features: Karyakarta Management, Booth Analytics, Voter Search, and Digital War Room Software. Whitelabel Solution.";
+      keywords = "election management app, political campaign software, war room app, voter search tool, karyakarta app, political war room dashboard, chunav prachar app";
     } else if (view === 'SURVEY') {
-      title = "Political Survey & IVR Services | Election 2025";
-      desc = "Professional political survey, opinion polls, and IVR call blasting services for election campaigns.";
+      title = "Political Survey Agency & IVR Call Service | Election Opinion Polls India";
+      desc = "Top Rated Political Survey Company. We offer Door-to-Door Surveys, IVR Call Blasting, Opinion Polls, and Caste Equation Analysis for Winning Elections.";
+      keywords = "political survey agency, election opinion poll, ivr call blasting, voter survey india, pre-poll survey, caste analysis report, election campaign management";
     } else if (view === 'DATA_CONVERSION') {
-      title = "Bulk PDF to Excel Data Entry Services | 100% Verified";
-      desc = "Professional Bulk PDF to Excel conversion. We handle millions of rows with manual verification. Accurate data digitization for government records.";
+      title = "Bulk PDF to Excel Data Entry Service | Voter List Digitization Expert";
+      desc = "Convert Scanned Voter Lists (PDF) to Excel with 100% Accuracy. Manual Verification for High Volume Data. Best for Panna Pramukh Lists & Govt Record Digitization.";
+      keywords = "pdf to excel data entry, voter list conversion, bulk data digitization, scanned image to excel, electoral roll processing, manual data verification, hindi typing service";
     }
 
+    // 3. Apply SEO Tags
     document.title = title;
+    
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute('content', desc);
+    
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', keywords);
+    } else {
+      // Create if doesn't exist (safety fallback)
+      const k = document.createElement('meta');
+      k.name = "keywords";
+      k.content = keywords;
+      document.head.appendChild(k);
+    }
+
   }, [view, state]);
 };
 
