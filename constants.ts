@@ -1,8 +1,7 @@
-
 import { StateData, AssemblyConstituency } from './types.ts';
 
 export const APP_NAME = "VoterListExcel.in";
-export const CONTACT_WHATSAPP = "919799479444"; 
+export const CONTACT_WHATSAPP = "918949656466"; 
 
 const getProfessionalPrice = (no: number) => {
   const base = 4200;
