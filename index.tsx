@@ -1,4 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+import React, { ErrorInfo, ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
@@ -13,17 +14,16 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  // Fix: Removed the explicit props redeclaration (line 22) which was unnecessary 
-  // and caused initialization errors in strict TypeScript.
+// Fix: Explicitly extending React.Component and utilizing standard property initializers 
+// to ensure the 'props' property is correctly inherited and typed, resolving the 
+// 'Property props does not exist on type ErrorBoundary' error.
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState = {
     hasError: false
   };
 
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-  }
-
+  // Fix: Removed the constructor as it was redundant for property initialization in modern React/TS.
+  
   public static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
@@ -34,7 +34,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error("Uncaught error:", error, errorInfo);
   }
 
-  public render() {
+  public render(): ReactNode {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
@@ -74,6 +74,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       );
     }
 
+    // Fix: Accessing children from this.props which is now correctly inherited from React.Component.
     return this.props.children;
   }
 }
