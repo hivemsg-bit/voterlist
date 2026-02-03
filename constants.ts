@@ -1,4 +1,3 @@
-
 import { StateData, AssemblyConstituency } from './types.ts';
 
 export const APP_NAME = "VoterListExcel.in";
@@ -15,7 +14,6 @@ const PB_DATA = [
   { no: 1, name: "Sujanpur" }, { no: 2, name: "Bhoa (SC)" }, { no: 3, name: "Pathankot" }, { no: 4, name: "Gurdaspur" }, { no: 5, name: "Dina Nagar (SC)" }, { no: 6, name: "Qadian" }, { no: 7, name: "Batala" }, { no: 8, name: "Sri Hargobindpur (SC)" }, { no: 9, name: "Fatehgarh Churian" }, { no: 10, name: "Dera Baba Nanak" }, 
   { no: 11, name: "Ajnala" }, { no: 12, name: "Raja Sansi" }, { no: 13, name: "Majitha" }, { no: 14, name: "Jandiala (SC)" }, { no: 15, name: "Amritsar North" }, { no: 16, name: "Amritsar West (SC)" }, { no: 17, name: "Amritsar Central" }, { no: 18, name: "Amritsar East" }, { no: 19, name: "Amritsar South" }, { no: 20, name: "Attari (SC)" }, 
   { no: 21, name: "Tarn Taran" }, { no: 22, name: "Khem Karan" }, { no: 23, name: "Patti" }, { no: 24, name: "Khadoor Sahib" }, { no: 25, name: "Baba Bakala (SC)" }, { no: 26, name: "Bholath" }, { no: 27, name: "Kapurthala" }, { no: 28, name: "Sultanpur Lodhi" }, { no: 29, name: "Phagwara (SC)" }, { no: 30, name: "Phillaura (SC)" }, 
-  // Fix: Added missing opening double quote for "Adampur (SC)"
   { no: 31, name: "Shahkot" }, { no: 32, name: "Kartarpur (SC)" }, { no: 33, name: "Jalandhar West (SC)" }, { no: 34, name: "Jalandhar Central" }, { no: 35, name: "Jalandhar North" }, { no: 36, name: "Jalandhar Cantt." }, { no: 37, name: "Adampur (SC)" }, { no: 38, name: "Mukerian" }, { no: 39, name: "Dasuya" }, { no: 40, name: "Urmar" }, 
   { no: 41, name: "Sham Chaurasi (SC)" }, { no: 42, name: "Hoshiarpur" }, { no: 43, name: "Chabbewal (SC)" }, { no: 44, name: "Garhshankar" }, { no: 45, name: "Banga (SC)" }, { no: 46, name: "Nawanshahr" }, { no: 47, name: "Balachaur" }, { no: 48, name: "Anandpur Sahib" }, { no: 49, name: "Rupnagar" }, { no: 50, name: "Chamkaur Sahib (SC)" }, 
   { no: 51, name: "Kharar" }, { no: 52, name: "S.A.S. Nagar" }, { no: 53, name: "Bassi Pathana (SC)" }, { no: 54, name: "Fatehgarh Sahib" }, { no: 55, name: "Amloh" }, { no: 56, name: "Khanna" }, { no: 57, name: "Samrala" }, { no: 58, name: "Sahnewal" }, { no: 59, name: "Ludhiana East" }, { no: 60, name: "Ludhiana South" }, 
@@ -27,15 +25,13 @@ const PB_DATA = [
   { no: 111, name: "Rajpura" }, { no: 112, name: "Dera Bassi" }, { no: 113, name: "Ghanaur" }, { no: 114, name: "Sanour" }, { no: 115, name: "Patiala Urban" }, { no: 116, name: "Samana" }, { no: 117, name: "Shutrana (SC)" }
 ];
 
-// ... (Rest of the state data arrays: DL_DATA, WB_DATA, UP_DATA, etc. are assumed to be similar)
-
 export const generateConstituencies = (stateCode: string, totalSeats: number): AssemblyConstituency[] => {
   const mapData = (dataArr: { no: number, name: string }[], label: string) => {
     return dataArr.map(d => ({
       id: `${stateCode.toLowerCase()}-${d.no}`,
       number: d.no,
       name: d.name,
-      lokSabhaName: `${label} Verified Node`,
+      lokSabhaName: `${label} Node`,
       price: getProfessionalPrice(d.no),
       dataYear: "2025-26",
       partsCount: 200 + (d.no % 50)
@@ -44,7 +40,6 @@ export const generateConstituencies = (stateCode: string, totalSeats: number): A
 
   let realData: { no: number, name: string }[] = [];
   if (stateCode === 'PB') realData = PB_DATA;
-  // (mapping for other states here...)
 
   const baseList = mapData(realData, stateCode);
   const existingNumbers = new Set(baseList.map(ac => ac.number));
