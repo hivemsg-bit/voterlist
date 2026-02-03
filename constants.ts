@@ -4,8 +4,9 @@ export const APP_NAME = "VoterListExcel.in";
 export const CONTACT_WHATSAPP = "918949656466"; 
 
 const getProfessionalPrice = (no: number) => {
-  const base = 300; // Base price for single AC
-  const variance = (no * 17) % 100; 
+  // Base price set to 4500. Variance up to 500 ensures price is between 4500-5000.
+  const base = 4500;
+  const variance = (no * 23) % 501; 
   return base + variance;
 };
 
