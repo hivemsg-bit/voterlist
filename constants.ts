@@ -4,9 +4,9 @@ export const APP_NAME = "VoterListExcel.in";
 export const CONTACT_WHATSAPP = "918949656466"; 
 
 const getProfessionalPrice = (no: number) => {
-  // Base price set to 4500. Variance up to 500 ensures price is between 4500-5000.
+  // Base price 4500 + variance (0-500) = Range 4500 to 5000
   const base = 4500;
-  const variance = (no * 23) % 501; 
+  const variance = (no * 37) % 501; 
   return base + variance;
 };
 
@@ -32,7 +32,7 @@ export const generateConstituencies = (stateCode: string, totalSeats: number): A
       id: `${stateCode.toLowerCase()}-${d.no}`,
       number: d.no,
       name: d.name,
-      lokSabhaName: `${label} Node`,
+      lokSabhaName: `${label} Data Hub`,
       price: getProfessionalPrice(d.no),
       dataYear: "2025-26",
       partsCount: 200 + (d.no % 50)
@@ -51,7 +51,7 @@ export const generateConstituencies = (stateCode: string, totalSeats: number): A
       fullList.push({
         id: `${stateCode.toLowerCase()}-${i}`,
         number: i,
-        name: `${stateCode} AC Segment ${i}`,
+        name: `${stateCode} Constituency ${i}`,
         lokSabhaName: "Verified Node",
         price: getProfessionalPrice(i),
         dataYear: "2025-26",
